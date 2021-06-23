@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <node>
+        <name>RHU NAME</name>
+        <code>036901000</code>
+        <telephone>2444284</telephone>
+        <level>self</level>
+    </node>
+    <node>
+        <name>PHO</name>
+	<code>036900000</code>
+        <telephone>2444284</telephone>
+        <level>parent</level>        
+    </node>
+    <node>
+        <name>RHU NAME</name>
+	<code>036900000</code>
+        <telephone>2444284</telephone>
+        <level>child</level>
+    </node>
+</config>
