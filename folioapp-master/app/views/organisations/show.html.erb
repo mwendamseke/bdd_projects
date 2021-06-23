@@ -1,0 +1,99 @@
+<div class="profile-wrapper" ng-controller="OrganisationShowCtrl">
+
+<!------------------ PROFILE COVER ------------------------------------>
+	<% if @organisation.users.include? current_user %>
+	<button ng-click="editable = !editable", class="toggle-edit"><p>Toggle Edit</p></button>
+	<div class="body-wrapper section">
+		<p ng-show="editable">Please fill in your profile details</p>
+	<% end %>
+
+	<div class="summary row" id="summary-section">
+		<div class="col-md-6 left-hand-side">
+			<div class="col-md-4"></div>
+			<div class="profile-info summary-column col-md-5 col-md-offset-1">
+				<div class="info-wrapper row col-md-12">
+					<div class="picture-options row col-md-12">
+						<div class="change-profile-pic" ng-show="editable">
+							<%= form_for @organisation, html: {multipart: true} do |f| %>
+							<div class="file-field profile-image">
+								<%= f.file_field :avatar, data: {:"ng-file-select" => "onFileSelect($files)"} %>
+								<img ng-show="editable" class="profile-pic editable-pic" id="profile-pic" ng-src="{{imageSrc || organisation.image}}">
+							</div>
+							<%= f.submit class: 'image-submit' %>
+							<% end %>
+						</div>
+						<div class="pic-wrapper" ng-hide="editable">
+							<% if @organisation.image.present? %>
+							<img class="profile-pic" ng-hide="imageSrc" id="profile-pic" ng-src="{{organisation.image}}">
+							<% end %>
+							<img ng-show="imageSrc" class="profile-pic" id="profile-pic" ng-src="{{imageSrc}}">
+						</div>
+					</div>
+					<div class="text-inputs row text-center">
+						<%= render "information" %>
+					</div>
+						<p ng-repeat="membership in user.memberships" class="organisations">{{membership.organisationRole}} of {{membership.organisation}}
+						</p>
+					</div>
+				</div>
+			<div class="col-md-4"></div>
+		</div>
+
+
+<!-- </div> -->
+
+			<!-- </div> end of .profile-info -->
+
+		<div class="col-md-6 right-hand-side">
+			<div class="col-md-2"></div>
+			<div class="profile-preview summary-column col-md-8">
+				<div class="work-preview-header row">
+					<h3 class="col-md-12 text-center" id="selections">{{organisation.name}}'s Opportunities </h3>
+				</div>
+
+				<div class="work-wrapper row" ng-repeat="opp in organisation.opportunities">
+
+					<div class="work-preview-info col-md-9" ng-class="{ 'story': profile.selection == storyPreview }">
+						<div id="info">
+							<h1 class="preview-title">{{opp.title}}</h1>
+
+							<p class="short-description">{{opp.description}}</p>
+							<div class="additional-info">
+								<p>Accepting {{opp.requirements}}</p>
+								<a class="submission" ng-click="submitToThis(opp.id)" href="#">Submit To {{opp.title}}</a>
+								<br>
+								<% if @organisation.users.include? current_user %>
+									<a href="/organisations/{{organisation.id}}/opportunities/{{opp.id}}/submissions">View Submissions</a>
+								<% end %>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="preview-pic pic-wrapper">
+							<img class="selection opportunity-image" id="profile-pic" ng-src="{{opp.image}}">
+						</div>
+						<div class="hr-wrapper"><hr id="after-work" ng-show="!$last">
+						</div>
+					</div>
+
+				</div>
+				<% if @organisation.users.include? current_user %>
+				<div class="work-preview-header row">
+					<h3 class="col-md-12 text-center" id="selections"><%= link_to 'Create Opportunity', new_organisation_opportunity_path(@organisation) %></h3>
+				</div>
+				<% end %>
+			</div>	<!-- end of .profile-preview and col-md-6 -->
+			<div class="col-md-2"></div>
+		</div>
+	</div> <!-- end of .summary .row -->
+
+
+	<div ng-show="showForm" class="portfolio" id="sub-form-section">
+
+		<div ng-include="url"></div>
+
+
+	</div>
+</div>
+

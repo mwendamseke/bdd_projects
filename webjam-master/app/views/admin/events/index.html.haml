@@ -1,0 +1,15 @@
+- @section = :events
+- @page_title = "Events"
+
+%h1 Events
+
+- content_for :section_menu do
+  %ul.actions
+    %li
+      = link_to "New event", new_admin_event_path
+
+- unless @events.empty?
+  %ul
+    - for event in @events
+      %li
+        = link_to h(event.name), [:admin, event]

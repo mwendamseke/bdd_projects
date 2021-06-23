@@ -1,0 +1,9 @@
+<%= form_for @user, html: {multipart: true} do |f| %>
+
+<div class="file-field profile-image">
+	<%= f.file_field :avatar, data: {:"ng-file-select" => "onFileSelect($files)"} %>
+	<img ng-show="editable" class="profile-pic editable-pic" id="profile-pic" ng-src="{{imageSrc || user.userImage}}">
+</div>
+<%= f.submit class: 'image-submit' %>
+
+<% end %>

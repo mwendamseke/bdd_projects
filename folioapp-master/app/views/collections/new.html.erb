@@ -1,0 +1,20 @@
+<div ng-controller="UploadCtrl">
+
+<%= form_for @collection, url: user_collections_path, html: {multipart: true} do |f| %>
+
+	<%= f.label :title %>
+	<%= f.text_field :title %>
+
+	<%= f.label :description %>
+	<%= f.text_area :description %>
+
+	<%= f.label :image %>
+	<%= f.file_field :image, required: true, data: {:"ng-file-select" => "onFileSelect($files)"}  %>
+
+	<img ng-src="{{imageSrc}}" />
+
+	<%= f.submit 'Add Collection' %>
+
+<% end %>
+
+</div>

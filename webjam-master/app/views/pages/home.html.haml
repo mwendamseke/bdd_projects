@@ -1,0 +1,23 @@
+- @section = :home
+- @page_title = "Webjam brings you the latest in piping hot web"
+- @body_class = "home"
+- @mobile_version_path = formatted_home_path(:mobile)
+
+- content_for :top do
+  %h1
+    = image_tag 'webjam-logo.png', :size => '1033x152', :alt => "Webjam"
+
+- content_for :other_content do
+  = render :partial => 'shared/other_content/wtf'
+  = render :partial => 'shared/other_content/latest_news'
+
+- for event in @upcoming_events
+  .item
+    = render :partial => "pages/events/upcoming", :locals => {:event => event}
+
+- @past_events.sort.reverse.each_with_index do |event, index|
+  %div{:class => @past_events.sort.reverse.last == event ? "item last" : "item"}
+    - if index == 0
+      = render :partial => "pages/events/featured_past", :locals => {:event => event}
+    - else
+      = render :partial => "pages/events/past", :locals => {:event => event}

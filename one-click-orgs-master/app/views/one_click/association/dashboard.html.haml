@@ -1,0 +1,22 @@
+%h2 Voting & proposals
+
+- if current_organisation.active? || current_organisation.proposed?
+  = render :partial => 'open_proposals', :locals => {:proposals => @proposals}
+
+- if current_organisation.active?
+  .section
+    = form_reveal_button("Propose a vote", :form_id => 'propose_freeform_form')
+    = form_reveal_button("Propose a new member", :form_id => 'propose_new_member_form')
+    = link_button("Propose an amendment to the constitution", :url => edit_constitution_path)
+    %br.clear
+
+    %div#propose_freeform_form.form-to-hide
+      = render :partial => 'shared/propose_freeform_form'
+
+    %div#propose_new_member_form.form-to-hide
+      %h3 Propose a new member
+      = form_for(@add_member_proposal) do |form|
+        = render :partial => 'add_member_proposals/form', :locals => {:form => form}
+
+- if current_organisation.active?
+  = render :partial => 'timeline', :locals => {:timeline => @timeline}

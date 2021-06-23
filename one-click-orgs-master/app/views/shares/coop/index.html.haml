@@ -1,0 +1,119 @@
+%h2 Shares
+
+- if @tasks.present?
+  %h3 Notifications
+  .section
+    %ul.tasks
+      - @tasks.each do |task|
+        = content_tag_for(:li, task) do
+          = render :partial => 'tasks/task', :locals => {:task => task}
+
+.section
+  %p
+    You currently hold:
+    = pluralize(current_user.shares_count, "share")
+    in
+    = co.name + '.'
+  %p
+    The share value is
+    = number_to_currency(co.share_value_in_pounds, :unit => "£")
+  %p
+    The minimum shareholding is
+    = pluralize(co.minimum_shareholding, "share.", "shares.")
+  - if co.interest_rate
+    %p
+      The rate of interest on share capital is
+      = "#{co.interest_rate}%."
+  - if can?(:read, ShareAccount)
+    %p.organisation_share_account
+      The total number of issued shares is
+      = succeed '.' do
+        %span.balance= -co.share_account.balance
+
+- if @user_share_withdrawals_pending.present?
+  .section
+    %h3 Your share withdrawals
+    %ul.user_share_withdrawals
+      = content_tag_for(:li, @user_share_withdrawals_pending) do |share_withdrawal|
+        %p
+          You applied to withdraw
+          = pluralize(share_withdrawal.amount, 'share')
+          on
+          = share_withdrawal.created_at.to_date.to_s(:long) + '.'
+          - if share_withdrawal.withdrawal_due?
+            The payment is now due.
+          - else
+            Payment will become due on
+            = share_withdrawal.withdrawal_due_date.to_s(:long) + '.'
+
+
+.section
+  - if can?(:create, ShareApplication)
+    = link_button("Apply for more shares", :url => new_share_application_path)
+  - if can?(:create, ShareWithdrawal)
+    = link_button("Withdraw shares", :url => new_share_withdrawal_path)
+  %br.clear
+
+- if can?(:read, ShareTransaction)
+  - if @organisation_share_withdrawals.present?
+    .section
+      %h3 Outstanding share withdrawals
+      %ul.organisation_share_withdrawals
+        - @organisation_share_withdrawals.each do |share_withdrawal|
+          = content_tag_for(:li, share_withdrawal) do
+            = link_to(share_withdrawal.from_account.owner.name, member_path(share_withdrawal.from_account.owner))
+            applied to withdraw
+            = pluralize(share_withdrawal.amount, 'share')
+            on
+            = share_withdrawal.created_at.to_date.to_s(:long) + '.'
+            - if share_withdrawal.withdrawal_due?
+              The withdrawal is now due.
+            - else
+              Payment will become due on
+              = share_withdrawal.withdrawal_due_date.to_s(:long) + '.'
+              = link_button("Waive the notice period", :url => confirm_approve_share_transaction_path(share_withdrawal))
+  - if @organisation_share_applications.present?
+    .section
+      %h3 Outstanding share applications
+      %ul.organisation_share_applications
+        - @organisation_share_applications.each do |share_application|
+          = content_tag_for(:li, share_application) do
+            %p
+              = link_to(share_application.to_account.owner.name, member_path(share_application.to_account.owner))
+              applied for
+              = pluralize(share_application.amount, 'share')
+              on
+              = share_application.created_at.to_date.to_s(:long) + '.'
+              A payment of
+              = "£#{share_application.amount}"
+              is due.
+            %p
+              = form_for(share_application, :url => approve_share_transaction_path(share_application)) do |share_transaction_form|
+                = share_transaction_form.submit("Mark as paid, and allot shares")
+
+- if can?(:read, ShareAccount)
+  %p#download
+    Download:
+    %span.pdf.download
+      = link_to 'PDF', members_path(:format => 'pdf')
+    %span.csv.download
+      = link_to 'CSV', members_path(:format => 'csv')
+  .section
+    %h3 Share ownership
+    %table.share_account_balances
+      %thead
+        %tr
+          %th Member
+          %th Shares
+      %tbody
+        - @members.each do |member|
+          = content_tag_for(:tr, member) do
+            %td= link_to(member.name, member_path(member))
+            %td.balance= member.find_or_build_share_account.balance
+
+- if can?(:update, co)
+  .section
+    = link_button("Adjust share value", :url => edit_share_value_shares_path)
+    = link_button("Adjust minimum shareholding", :url => edit_minimum_shareholding_shares_path)
+    = link_button("Adjust interest rate", :url => edit_interest_rate_shares_path)
+    %br.clear

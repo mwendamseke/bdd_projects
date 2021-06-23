@@ -1,0 +1,92 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+
+<%
+  @title_text = 'All Connections'
+
+  # initialize array to define "Glossary Help" box of links:
+  @glossary_help_entries = [
+    [ 'Subject', 'Help:GlossaryPtoZ#anchor_Subject' ],
+    [ 'Predicate', 'Help:GlossaryPtoZ#anchor_Predicate' ],
+    [ 'Object', 'Help:GlossaryAtoO#anchor_Object' ],
+    [ 'Title', 'Help:GlossaryPtoZ#anchor_Title' ]
+  ]
+ %>
+
+
+<div class="headline">
+  <%= popup_help_icon "Help, connections list",
+        "Help:Popup/HeaderConnectionsIndex"
+  -%>Listing all defined connections
+</div>
+<div class="noncontent vertical-link-list"
+    style="float: left; margin-left: 2em;">
+  <%= render :partial => 'index_outbound_links' %>
+</div>
+
+<table class="tight-table index-table" style="clear: both;">
+  <% @connection_actions_help_icon_used = false %>
+
+  <tr style="color: #b0b0ff;">
+    <th style="text-decoration: underline;">Subject</th>
+    <th style="text-decoration: underline;">Predicate</th>
+    <th style="text-decoration: underline;">Object</th>
+  </tr>
+
+  <% @connections.each do |connection| %>
+    <% content_tag :tr, :id => connection.id do %>
+      <td class='firstrow secondrow'><%=
+        link_with_tooltip "#{h filter_parenthetical connection.subject.title}",
+          h( connection.subject.name ),
+          item_by_name_path(connection.subject.name) -%>
+        <br />
+        <span class="link-set"><% generate_connection_links(connection) %></span>
+      </td>
+      <td class='firstrow secondrow'><%=
+        link_with_tooltip(
+          "#{h filter_parenthetical connection.predicate.title}",
+          h( connection.predicate.name ),
+          item_by_name_path(connection.predicate.name) )
+      -%></td>
+      <td class='firstrow secondrow'>
+        <% if connection.kind_of_obj == Connection::OBJECT_KIND_ITEM %>
+          <%= link_with_tooltip(
+                "#{h filter_parenthetical connection.obj.title}",
+                h( connection.obj.name ),
+                item_by_name_path(connection.obj.name)  )
+          -%>
+        <% else %>
+          <%= h connection.scalar_obj %>
+        <% end %>
+      </td>
+<!--
+      <td><%= unless connection.connection_desc.nil?
+                link_to "#{h connection.connection_desc.name}",
+                item_path(connection.connection_desc)
+              end %></td>
+  -->
+    <% end %>
+  <% end %>
+</table>
+
+
+<div class="horizontal-link-list">
+  <%= render :partial => 'index_outbound_links' %>
+</div>

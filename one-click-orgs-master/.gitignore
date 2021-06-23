@@ -1,0 +1,29 @@
+.bundle
+.DS_Store
+._*
+.rvmrc
+.*.swp
+.yardoc
+config/database.yml
+config/initializers/local_settings.rb
+coverage/*
+db/*.sqlite3
+log/*
+spec/mailers/log
+tmp/**/*
+vendor/bundle/*
+vendor/gems/*
+doc/app
+tmp/restart.txt
+.sass-cache
+bin
+public/assets
+
+# Cucumber HTML output
+tmp/features.html
+tmp/features.relizy.html
+
+# Cucumber Parallel logs
+tmp/parallel_runtime_cucumber.log
+
+.byebug_history

@@ -1,0 +1,8 @@
+log/*
+public/mugshots
+.DS_Store
+config/database.yml
+previous_failures.txt
+.rsync_cache
+.bundle/
+/db/pgdata

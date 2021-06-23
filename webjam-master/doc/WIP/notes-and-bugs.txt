@@ -1,0 +1,100 @@
+URLS:
+webjam.com.au/webjam8
+webjam.com.au/webjam8/presentations/2
+webjam.com.au/people/lachlanhardy
+webjam.com.au/news/2008/wasnt-webjam8-great
+
+TAGS:
+webjam
+webjam8
+webjam:event=8
+webjam8:presentation=2
+webjam8:photos=featured
+webjam8:videos=featured
+webjam:peep=lachlanhardy
+
+
+
+TODO - priorities:
+
+integrate flat presentation page
+add "directions" to "address" events
+remove hacky static address in rsvp email
+
+TODO:
+
+cross-browser testing
+
+Polling
+ - add Ma.gnolia + Delicious polling
+ - Technorati polling? Some other blog service?
+ - http://www.google.com/support/faqs/bin/static.py?page=faq_blog_search.html&hl=en
+
+wire up sponsors structure to db
+custom error (404 + 500) page
+tshirt linkage
+generate Google sitemap
+create proper span/anchor switching for primary-nav
+integrate Register and Login into one screen
+fix login to account for Flickr's occasional '77694982@N00' instead of 'alanstairs'
+improve Latest News post body extractor
+confirm identity with Yahoo! etc (http://blog.nerdbank.net/2008/06/why-yahoo-says-your-openid-site.html)
+Add GetSatisfaction mojo: http://getsatisfaction.com/widgets
+
+
+Lisa's feedback:    (whenever this list gets to zero - ask Lisa for another expert review!)
+suggests single line only for archive - ?? check on this now we've fixed newline bug
+default mugshot looks like an alien...
+promote sponsorship opportunities more
+add info about what owning an account entails - contact from WJ, benefits etc
+why doesn't it remember URL for login?
+Send unlogged in users to custom login/registration page with explanation about why they need to have an account to attend etc
+Latest news looks silly against currently latest news article
+
+
+BUGS:
+
+form error messages suck
+validate microformats
+
+FF2 on XP:
+registration alignment
+scrollbar at foot of blog post
+rogue border at bottom blog post
+
+IE6:
+Top tabs look weird
+Login is apparently not too cool
+
+
+TODO later:
+
+make mugshot form layout look good
+lame column sizing on Edit profile page
+tie RSVPs to Proposals? how?
+Integrate Upcoming? http://flickr.com/photos/tags/upcoming%3Aevent%3D262836/
+
+Confirm our website identity with Yahoo! ?? (for better registration)
+Merge registration and login into one process.
+Add parsing for @username string to all user content (http://lachstock.com.au/inc/js/status.js has good regex)
+Comments feed
+Build hotted up active version for events!
+
+
+DYLAN'S TOTO:
+I haven't looked above. I should. Here are some things I've been thinking about:
+•	layout of upcoming events thing
+•	funkiness with front page top event in windows FF2 around the rego things
+•	news archives weird borders left cols
+•	admin is ugly
+•	microformats:
+	⁃	hcard
+	⁃	hcalendar
+	⁃	hatom
+•	RDF
+•	profile page = gross and should not be (see webjam.ai file for what it should be)
+•	valid markup? (oops. My bad - LH.)
+•	valid css? (we has it!)
+•	Browser testing -- Chrome, IE6, IE7, IE8, FF2, FF3, Opera, Iphone and Saruman's Wizard Crystal Globe
+•	sitemap
+•	custom 404 page

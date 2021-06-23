@@ -1,0 +1,14 @@
+Dear <%=raw(  @member && @member.name || 'member'  )%>,
+
+a new proposal has been created by <%=raw(  @proposal.proposer.name || @proposal.proposer.email  )%>.
+
+<%=raw(  @proposal.title  )%>
+
+<%=raw(  @proposal.description  )%>
+
+Please visit <%=raw(  proposal_url(@proposal)  )%> to vote on it.
+
+Thanks
+
+<%=raw @organisation_name%>
+Powered by One Click Orgs http://oneclickorgs.com/

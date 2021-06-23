@@ -1,0 +1,56 @@
+- @page_title = h(@post.title)
+- @regular_version_path = post_path(@post.year, @post.permalink)
+
+%p.post-timestamp
+  = @post.published_at.to_date.to_s(:long)
+
+.post-body
+  = @post.body
+
+%p.by
+  Posted by
+  %strong= @post.user.nick_name
+
+-# <li class="tags"><span>Tagged</span>
+-# <ul>
+-# <li><a href="#" rel="tag">Sydney</a>,</li>
+-# <li><a href="#" rel="tag">winners</a>,</li>
+-# <li><a href="#" rel="tag">wrap-up</a>, and</li>
+-# <li><a href="#" rel="tag">something else</a></li>
+-# </ul>
+
+- unless @post.comments.empty?
+  %h2 Comments
+  %ul#comments
+    - for comment in @post.comments
+      %li{:id => "comment-#{comment.id}"}
+        .body= format_user_html(comment.body)
+        .info
+          %span.when= time_ago_in_words comment.created_at
+          %span.who
+            ago by
+            =h comment.user.nick_name
+  -# if current_user
+  -#  %li.new
+  -#    - form_tag post_comments_url(:year => @post.year, :permalink => @post.permalink) do
+  -#      %fieldset
+  -#        %label{ :for => "new_comment" }
+  -#          = text_area_tag 'comment[body]', nil, :cols => '57', :rows => '4', :id => 'new_comment'
+  -#          %span.note (Nice HTML is welcome, but please keep the naughty stuff to yourself!)
+  -#      %fieldset
+  -#        %input{ :type => "submit", :value => "Add comment"}
+    
+-# %ul.group
+-#   -# if !current_user
+-#   %li
+-#     %a.item.button{:href => post_path(@post.year, @post.permalink)} Leave a comment via the regular site
+
+%ul.group
+  - if @next_post
+    %li
+      %a.item.button.post{:href => formatted_post_path(@next_post.year, @next_post.permalink, :mobile)}= "Next: #{h @next_post.title}"
+  - if @previous_post
+    %li
+      %a.item.button.post{:href => formatted_post_path(@previous_post.year, @previous_post.permalink, :mobile)}= "Previous: #{h @previous_post.title}"
+  %li
+    %a.item.button{:href => formatted_posts_path(:mobile)} News archive

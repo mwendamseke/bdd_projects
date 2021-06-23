@@ -1,0 +1,15 @@
+.row-fluid
+  .span-12
+    = render :partial => "sub_nav"
+    .page-header
+      %h2= "#{@cal_course.name} | #{day.capitalize}"
+    = form_for @student, url: "#{wizard_path}", :cal_course_id => @cal_course.id do |f|
+      #timeslots
+      .row-fluid
+        .span-12 
+          - if not Semester::past_deadline?(params[:semester_id])
+            .pull-right
+              = f.submit "Save", :class => "btn btn-primary"
+              = f.submit "Save & Continue", :class => "btn btn-primary"
+      .row-fluid.spacer
+        = render :partial => "day_selection", :locals => { :day => day, :calendar_id => day, :timeslots => @timeslots, :student => @student}

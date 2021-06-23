@@ -1,0 +1,7 @@
+%h2 Registration Details
+
+= form_for(@registration_form, :as => :registration_form, :url => registration_form_path, :method => :put) do |form|
+
+  = render(:partial => 'form', :locals => {:form => form})
+  %p
+    = form.submit "Save changes"

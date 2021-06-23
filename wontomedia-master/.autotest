@@ -1,0 +1,118 @@
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see <http://www.gnu.org/licenses/>.
+
+
+require "autotest"
+
+Autotest.add_hook :initialize do |at|
+
+      # the default patterns provided by autotest for the Rails
+      # directory structure don't work for us as-is.  The following
+      # block completely replaces the contents of been unable to get
+      # autotest's remove_mapping method to work,
+      # ZenTest*/lib/autotest/rails.rb
+  at.clear_mappings  # get rid of defaults
+
+      # *on*top*of* defaults provided by autotest/rails.rb
+      # primarily because we use git, but got this RE from the net, and most
+      # of the other exclusions seem sensible, too
+  at.add_exception %r%^\./(?:\.git|\.hg|\.svn|framework|gems|schema|\.DS_Store|autotest|bin|.*\.sqlite3)% 
+
+
+      # "unit" tests (not just Rails "unit tests are model tests", but
+      # tests of individual classes/files that don't require a
+      # controller to be executed during testing) are all stored under
+      # test/unit, in a directory structure that mirrors the top-level
+      # Rails directory structure (app, config, db, lib).  So the test
+      # for the model "mod" are found in
+      # test/unit/app/models/mod_test.rb, rather than
+      # test/unit/mod_test.rb
+
+    # controller "development" (unit) tests in normal Rails directory
+  at.add_mapping %r%^app/controllers/(.*)\.rb$% do |_, m|
+    if m[1].index('application') then
+      at.files_matching(
+        %r%^test/(unit/app/views|functional|integration)/.*_test\.rb$% )
+    else
+      a = [ "test/functional/#{m[1]}_test.rb" ]
+      m[1] =~ /^(.+)_controller/
+
+      # local convention: int. test names include all used controller names
+      a.concat at.files_matching( %r%^test/integration/.*#{$1}.*_test\.rb$% )
+    end
+  end
+
+    # relocation of standard rails components/tests
+  # m[1] => models, helpers (maybe "views" if any .rb files
+  at.add_mapping %r%^app/(.+)/(.*)\.rb$% do |_, m|
+    "test/unit/app/#{m[1]}/#{m[2]}_test.rb"
+  end
+  # m[1] => views, views/layouts (probably not any others)
+  at.add_mapping %r%^app/(.+)/(.*)\.html\.erb$% do |_, m|
+    "test/unit/app/#{m[1]}/#{m[2]}_test.rb"
+  end
+
+    # some tests that I like but don't seem common
+  at.add_mapping %r%^config/routes\.rb$% do
+    at.files_matching %r%^test/unit/config/.*routes?_test\.rb$%
+  end
+  at.add_mapping(%r%^lib/(.*/)?([^/]*)\.rb$%) do |_, m|
+    at.files_matching %r%^test/unit/lib/#{m[1]+m[2]}_test\.rb$%
+  end
+
+    # tests on database (schema, seed content, anything app depends on)
+  at.add_mapping(%r%^db/(.*)schema\.rb$%) do |_, m|
+    "test/unit/db/#{m[1]}schema_test.rb"
+  end
+  at.add_mapping %r%^db/fixtures/(.*)\.yml$% do |_, m|
+    "test/unit/db/fixtures/#{m[1]}_data_test.rb"
+  end
+  # haven't decided yet whether to insist all migrations work forever, but...
+  at.add_mapping(%r%^db/migrate/[0-9]+_(.+)\.rb$%) do |_, m|
+    at.files_matching %r%^test/unit/db/migrate/.*#{m[1]}.*_test.rb%
+  end
+
+
+      # and some structural stuff
+  # if a test changes, run just that test
+  at.add_mapping %r%^test/.*_test\.rb$% do |filename, _|
+    filename
+  end
+
+  # if files with global effects change, rerun everything
+  at.add_mapping %r%^config/((boot|environment(s/test)?)\.rb|database\.yml)% do
+    at.files_matching %r%^test/.+_test\.rb$%
+  end
+
+  # if a test *helper.rb file changes, run all tests parallel-to and below it
+  at.add_mapping %r%^test(.*)/[^/]*helper\.rb$% do |_, m|
+    at.files_matching %r%^test#{m[1]}/.*_test\.rb$%
+  end
+
+  # if a fixture changes, run all the tests likely to be dependent on it
+  #   Note: likely have multiple view tests dependent on a single fixture
+  at.add_mapping %r%^test/fixtures/(.+)s\.yml$% do |_, m|
+    ["test/unit/app/model/#{m[1]}_test.rb",
+       "test/functional/#{m[1]}s_controller_test.rb" ]                    +
+      at.files_matching(%r%^test/unit/app/views/#{m[1]}s/.*_test\.rb$%)   +
+      at.files_matching(%r%^test/integration/.*#{m[1]}.*_test\.rb$%)
+  end
+end
+
+require 'autotest/restart'
+require 'autotest/redgreen'
+require 'autotest/timestamp'

@@ -1,0 +1,84 @@
+// Place all the styles related to the organisations controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.new-organisation textarea, div.new-organisation input, div.new-organisation label {
+	display: block;
+	margin: 0 auto;
+	width: 60%;
+	margin-bottom: 1em;
+}
+
+div.org-image {
+	margin-bottom: 2em;
+	background-color: black !important;
+}
+
+div.org-image input.org-submit {
+	width: 20%;
+}
+
+/*input#organisation_image.opp-file-field {
+	width: 150px;
+	height: 150px;
+}*/
+
+.org-image input[type="file"] {
+/*	width: 150px;
+	height: 150px;*/
+}
+
+
+
+div.new-organisation label {
+	text-align: center;
+	color: white;
+	text-transform: uppercase;
+	letter-spacing: 0.05rem;
+}
+
+div.network-field textarea::-webkit-input-placeholder, div.network-field textarea {
+	font-family: 'Vollkorn', serif;
+	font-style: italic;
+	color: #b3b2b5 !important;
+}
+
+
+div.file-field.profile-image label {
+	margin-top: 35%;
+}
+
+div.new-organisation {
+	margin-top: 10%;
+}
+
+div.new-organisation textarea, div.new-organisation input {
+	border: none;
+	color: black;
+	resize: none;
+	text-align: center;
+}
+
+div.new-organisation textarea:focus, div.new-organisation input:focus {
+	outline: none;
+}
+
+
+div.org-wrap-sub input.form-submit {
+	margin: 0 auto !important;
+	background: none;
+	border: 1px solid rgba(0,0,0,0.4);
+	border-radius: 50px;
+	font-size: 15px;
+	color: rgba(0,0,0,0.4);
+	width: 60px;
+	height: 25px;
+	vertical-align: center;
+	cursor: pointer;
+	outline: none;
+}
+
+div.org-wrap-sub input.form-submit:hover {
+	color: black;
+	border: 1px solid black;
+}

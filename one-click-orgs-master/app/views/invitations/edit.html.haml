@@ -1,0 +1,23 @@
+- content_for(:head) do
+  = javascript_include_tag 'invitations_edit'
+
+%h2 Choose your password
+%p
+  Welcome to
+  = organisation_name + ','
+  = @invitation.name + '.'
+  To begin, please choose a password:
+= form_for(@invitation) do |invitation_form|
+  = error_messages_for(@invitation)
+  %p
+    = invitation_form.label :password
+    = invitation_form.password_field :password
+  %p
+    = invitation_form.label :password_confirmation
+    = invitation_form.password_field :password_confirmation
+  = invitation_form.hidden_field :terms_and_conditions
+  %p
+    = invitation_form.submit("Continue")
+
+- content_for(:lightbox) do
+  = render(:partial => 'shared/founding_member_disclaimer', :locals => {:show_founding_warnings => @show_founding_warnings})

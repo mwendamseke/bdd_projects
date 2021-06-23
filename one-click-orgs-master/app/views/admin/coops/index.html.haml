@@ -1,0 +1,47 @@
+%h2 Co-ops
+
+%h3 Co-ops awaiting registration
+%ul.proposed_coops
+  - @proposed_coops.each do |coop|
+    = content_tag_for(:li, coop) do
+      %h4
+        = coop.name
+        (
+        = coop.domain(:only_host => true)
+        )
+      - if coop.members.first
+        %p
+          %strong Founder:
+          = coop.members.first.name
+          \<
+          = link_to(coop.members.first.email, "mailto:#{coop.members.first.email}")
+          \>
+      %p
+        %strong Registered Office Address:
+        = coop.registered_office_address
+      %p
+        %strong Objects:
+        = coop.objectives
+      %p
+        = link_to("View full information", admin_coop_path(coop))
+      %br.clear
+
+%h3 Co-ops in the draft stage
+%ul.pending_coops
+  - @pending_coops.each do |coop|
+    = content_tag_for(:li, coop) do
+      %h4
+        = link_to(coop.name, admin_coop_path(coop))
+        (
+        = coop.domain(:only_host => true)
+        )
+
+%h3 Active co-ops
+%ul.active_coops
+  - @active_coops.each do |coop|
+    = content_tag_for(:li, coop) do
+      %h4
+        = link_to(coop.name, admin_coop_path(coop))
+        (
+        = coop.domain(:only_host => true)
+        )

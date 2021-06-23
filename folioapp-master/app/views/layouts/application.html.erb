@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+  <title>Folioapp</title>
+  <link href='http://fonts.googleapis.com/css?family=Vollkorn:400italic,400' rel='stylesheet'>
+  <link rel="stylesheet" href="http://reset5.googlecode.com/hg/reset.min.css">
+	 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Merriweather:400,300,700">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,900">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700">	
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans">
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Cardo:400,400italic">
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+
+
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= csrf_meta_tags %>
+  <!-- <base href="/" /> -->   
+</head>
+<body>
+
+
+
+<% if user_signed_in? %>
+ <div class="logo-centered">
+  	<button id="trigger-overlay" type="button"><img src="http://placehold.it/300.jpg" class="logo-button">
+  	</button>
+ </div>
+
+<div class="overlay overlay-slidedown">
+	<button type="button" class="overlay-close">Close</button>
+	<nav>
+		<ul>
+			<li><!-- <a href="#">Profile</a> -->
+			<%= link_to 'Profile', user_path(current_user.id) %>
+			</li>
+			<li><a href="#">Search</a></li>
+			<% if current_user.submissions.any? %>
+			<li>
+			<%= link_to 'Your Submissions',user_submissions_manager_path(current_user.id) %>
+			</li>
+			<% end %>
+			<li>
+			<% if current_user.memberships.any? && current_user.organisations.any? {|org| org.opportunities.any? } %>
+			<%= link_to "Works Submitted To #{current_user.organisations.first.name} ", organisation_opportunity_submissions_path(current_user.organisations.first, current_user.organisations.first.opportunities.first.id) %></li>
+			<% end %>
+			<li><%= link_to "Log Out", destroy_user_session_path, method: :delete %></li>
+		</ul>
+	</nav>
+</div>
+
+
+<% end %>
+
+<%= yield %>
+
+
+<!-- <<<<<<< HEAD
+
+<%= link_to "Log Out", destroy_user_session_path, method: :delete, class: 'log-out', style: 'display:none' %>
+=======
+>>>>>>> 49300746ff46b60bbfd6754470e2a80d4ba7f5f2 -->
+
+
+
+  <%= javascript_include_tag 'application'%>
+
+</body>
+</html>

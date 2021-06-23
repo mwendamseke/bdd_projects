@@ -1,0 +1,29 @@
+<%= link_to 'Go to your profile', current_user %>
+
+<%= link_to 'Create Organisation', new_organisation_path %>
+
+<% if current_user.submissions.any? %>
+
+	<h1>Your Submissions</h1>
+
+	<% current_user.submissions.each do |submission| %>
+
+		Submitted to <%= submission.opportunity.title %> for <%= submission.organisation.name %>:
+
+		<%= submission.work.title %>
+		<%= image_tag submission.work.image.url, class: 'submitted-pic' %>
+		Status: <%= submission.status %>
+
+	<% end %>
+<% end %>
+
+<% if current_user.organisations.any? %>
+
+		<% current_user.organisations.each do |org| %>
+
+			<%= link_to "#{org.name}", organisation_path(org) %>
+			
+		<% end %>
+
+
+<% end %>

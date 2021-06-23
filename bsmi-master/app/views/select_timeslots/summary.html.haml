@@ -1,0 +1,27 @@
+.row-fluid
+  .span-12
+    = render :partial => "sub_nav"
+    .page-header
+      %h2= "#{@cal_course.name} | Summary"
+    %h2 Selected Timeslots
+    = render :partial => "week_calendar", :locals => { :height => 700, :calendar_id => :rank, :timeslots => @timeslots}
+    %h2 Timeslot Preferences
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Rank
+          %th Day
+          %th Start Time
+          %th End Time
+      %tbody
+        - @preferences.each do |p|
+          %tr
+            %td
+              = p.ranking
+            %td
+              = p.timeslot.day.capitalize
+            %td
+              = p.timeslot.start_time.strftime("%l:%M %P")
+            %td
+              = p.timeslot.end_time.strftime("%l:%M %P")
+

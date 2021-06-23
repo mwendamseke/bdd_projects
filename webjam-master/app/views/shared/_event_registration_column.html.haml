@@ -1,0 +1,83 @@
+.column
+  .numbers
+    - if event.full?
+      %p.full
+        %strong Sold out!
+    - else
+      %p
+        %strong= event.rsvps_left
+        %span spots left
+
+.column
+  %dl.registration
+    / RSVPs
+    - if logged_in? && current_user.rsvp_for(event)
+      %dt
+        %span.button.closed.long
+          = pluralize(event.rsvps_left, "spot")
+          left
+      %dd
+        %p
+          %strong You&rsquo;re attending!
+          %a{:href => event_rsvp_pike_path(event)} Changed your mind?
+    - elsif event.full?
+      %dt
+        %span.button.closed Too late
+      %dd
+        %p
+          %strong Want to attend?
+          Sorry, all full up!
+    - elsif !logged_in?
+      %dt
+        = link_to "Attend", new_session_path(:return_to => event_rsvp_path(event)), :class => "button rsvp"
+      %dd
+        %p
+          %strong Want to attend?
+          There are still spots
+    - else
+      %dt
+        - form_tag event_rsvp_path(event), :class => "button rsvp" do |form|
+          = submit_tag 'Attend'
+      %dd
+        %p
+          %strong Want to attend?
+          = "Only #{pluralize(event.rsvps_left, "spot")}, get on it."
+
+  / Proposals
+  / TODO: If they've submitted a proposal
+  %dl.registration
+    - if logged_in? && (proposal = current_user.proposal_for(event))
+      %dt
+        %span.button.closed.long
+          = pluralize(event.held_at.to_date - Time.now.to_date, "day")
+          of <abbr title="preparation">prep</abbr> left
+      %dd
+        %p
+          %strong Proposal submitted!
+          We&rsquo;ll email to confirm.
+          %a{:href => event_presentation_proposal_path(event)} Edit it
+    - elsif event.not.proposals_open?
+      %dt
+        %span.button.closed Too late
+      %dd
+        %p
+          %strong Want to present?
+          Sorry, no more are being accepted.
+    - elsif !logged_in?
+      %dt
+        = link_to "Present", new_session_path(:return_to => event_presentation_proposal_path(event)), :class => "button rsvp"
+      %dd
+        %p
+          %strong Want to present?
+          You have 
+          = pluralize(event.proposals_close_at.to_date - Time.now.to_date, "day")
+          left to submit a proposal.
+    - else
+      %dt
+        = link_to "Present", event_presentation_proposal_path(event), :class => "button rsvp"
+      %dd
+        %p
+          %strong Want to present?
+          You have 
+          = pluralize(event.proposals_close_at.to_date - Time.now.to_date, "day")
+          left to submit a proposal!

@@ -1,0 +1,6 @@
+= render :partial => "shared/event_title", :locals => {:event => event}
+%a.details{ :href => event_path(event) } Details
+
+= render :partial => "shared/event_registration_column", :locals => {:event => event}
+
+= sponsor_major_content(event)

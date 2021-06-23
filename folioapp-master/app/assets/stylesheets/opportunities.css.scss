@@ -1,0 +1,36 @@
+// Place all the styles related to the opportunities controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.requirements-field label.requirements-label {
+	color: black !important;
+	font-family: Lato, sans-serif;
+	text-transform: none;
+	font-weight: 300;
+
+
+}
+
+select #opportunity_requirements {
+	margin: 0 auto;
+}
+
+div.file-field.opp-image {
+	width: 150px;
+	height: 150px;
+}
+
+input#opportunity_image.opp-file-field {
+	width: 150px;
+	height: 150px;
+}
+
+.opp-file-field input[type="file"] {
+	width: 150px;
+	height: 150px;
+}
+
+label.opp-thumb-label {
+	margin-top: 34% !important;
+}
+

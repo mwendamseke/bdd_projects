@@ -1,0 +1,15 @@
+%h2 Please review and confirm your membership at the bottom of the page
+
+%p
+  I,
+  = current_user.name + ','
+  accept the invitation to become a member of the Association
+  = "\"#{@organisation_name}\""
+  and agree to abide by its constitution.
+
+= render :partial => 'shared/constitution', :locals => {:allow_changes => false}
+
+= form_tag(:controller => :welcome, :action => :induct_member) do
+  = submit_tag "I agree to abide by the constitution of #{@organisation_name}"
+
+%p= link_to("Cancel", {:action => 'cancel_membership'}, {:class => 'cancel'})

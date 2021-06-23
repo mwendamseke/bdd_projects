@@ -1,0 +1,3 @@
+capybara*
+.rvmrc
+test.sqlite3

@@ -1,0 +1,19 @@
+ 
+  <a class="name" ng-show="editable" href="#" name="profile[name]" editable-text="organisation.name" onaftersave="updateProfile('name', $data)"><h1 class="name">{{organisation.name || "Name" }}</h1></a>
+	<h1 class="name" ng-hide="editable">{{organisation.name || "Name" }}</h1>  
+
+
+  <a class="profession" ng-show="editable" href="#" name="profile[profession]" editable-text="organisation.organisationType" onaftersave="updateProfile('organisation_type', $data)"><p class="profession">{{organisation.organisationType || "Type of Organisation" }}</p></a>
+  <p class="profession" ng-hide="editable">{{organisation.organisationType || "Type of Organisation" }}</p>
+
+
+
+  <a class="network" ng-show="editable" href="#" name="profile[network]" editable-text="organisation.network" onaftersave="updateProfile('network', $data)"><p class="network">{{organisation.network || "Network" }}</p></a>
+  <p ng-hide="editable" class="network">{{organisation.network || "Network" }}</p>
+
+  <hr>
+
+  <a class="short-bio" ng-show="editable" href="#" name="profile[bio]" editable-text="organisation.description" onaftersave="updateProfile('description', $data)"><p class="short-bio">{{organisation.description || "Description" }}</p></a>
+  <p ng-hide="editable" class="short-bio">{{organisation.description || "Description" }}</p>
+
+  <hr>

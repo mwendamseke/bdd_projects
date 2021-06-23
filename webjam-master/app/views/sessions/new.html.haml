@@ -1,0 +1,39 @@
+- @page_title = "Jammer? Login!"
+- @body_class = "login"
+
+- content_for :head do
+  = javascript_include_tag 'openid-register'
+  
+- content_for :other_content do
+  = render :partial => 'shared/other_content/login'
+
+.item.last
+  %h1
+    %strong Log in
+    to your Webjam account
+    
+  %p
+    Don't have a Webjam account yet?
+    = link_to "Register one!", new_user_path
+
+  - if @openid_url_not_found 
+    %p.error
+      No registered jammers with OpenID
+      =h @openid_url
+      found.<br />
+      Do you want to
+      = link_to "register", new_user_path(:openid_url => @openid_url)
+      instead?
+
+  - elsif @authentication_error
+    %p.error
+      There was an authentication error:
+      =h @authentication_error
+
+  - form_tag(create_session_path, :id => 'login') do
+    %fieldset
+      %label#openid-url-label{ :for => "openid_url" }
+        %span#labeltext Enter your OpenID URL
+        = text_field_tag 'openid_url', @openid_url, :id => 'openid_url'
+    %fieldset
+      = submit_tag 'Login', :class => "submit"

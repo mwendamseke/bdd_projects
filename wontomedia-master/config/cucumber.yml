@@ -1,0 +1,61 @@
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see <http://www.gnu.org/licenses/>.
+
+<%
+  uber_common  = "--color --strict "
+  common       = uber_common + "--format progress "
+  tags_common  = "--tags ~@invalid"
+  tags_rake    = "--tags ~@extended"
+  static       = "-r features/support/static.rb  -r features/step_definitions "
+  dynamic      = "-r features/support/dynamic.rb -r features/step_definitions "
+  static_only  = "--exclude=dynamic   features "
+  dynamic_only = "--exclude=static    features "
+%>
+
+
+manual:
+ <%= uber_common + dynamic %> <%= tags_common + " --tags ~@not_for_selenium" %> --format pretty
+
+default:
+ <%= uber_common + dynamic %> <%= tags_common + " " + tags_rake +
+     " --tags ~@not_for_selenium" %> --format pretty features
+
+selenium:
+ <%= common      + dynamic %> <%= tags_common + " " + tags_rake +
+     " --tags ~@not_for_selenium" %> features
+
+
+  # profiles to be used from rake
+static_acceptance:
+  <%= common + static  %>
+    <%= tags_common+" "+tags_rake+" --tags ~@wip        " + static_only %>
+static_unfinished:
+  <%= common + static  %>
+    <%= tags_common+" "+tags_rake+" --tags  @wip        " + static_only %>
+dynamic_acceptance:
+  <%= common + dynamic %>
+    <%= tags_common+" "+tags_rake+" --tags ~@wip        " + dynamic_only %>
+dynamic_unfinished:
+  <%= common + dynamic %>
+    <%= tags_common+" "+tags_rake+" --tags  @wip        " + dynamic_only %>
+
+autotest:
+  <%= common + static  %>
+    <%= tags_common+" "+tags_rake+" --tags ~@wip -r lib " + static_only %>
+autotest-all:
+  <%= common + static  %>
+    <%= tags_common+" "+tags_rake+"              -r lib " + static_only %>

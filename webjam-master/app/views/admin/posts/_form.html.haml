@@ -1,0 +1,24 @@
+= f.error_messages
+
+%fieldset
+  %label{ :for => "post_user_id" }
+    Author
+    = f.select :user_id, User.find(:all, :conditions => { :admin => true }, :order => 'nick_name ASC').collect {|u| [h(u), u.id]}, :include_blank => true
+  %label{ :for => "post_event_id" }
+    Event
+    = f.select :event_id, Event.all(:order => 'name DESC').collect {|e| [h(e.name), e.id]}, :include_blank => true
+  %label{ :for => "post_title" }
+    Title
+    = f.text_field :title
+  %label{ :for => "post_permalink" }
+    Permalink
+    = f.text_field :permalink
+  %label{ :for => "post_body" }
+    Body
+    = f.text_area :body
+  %label{ :for => "post_published_at" }
+    Published at
+    = f.text_field :published_at
+
+%fieldset
+  = submit_tag "Save", :class => "submit"

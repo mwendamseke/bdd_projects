@@ -1,0 +1,36 @@
+.page-header
+  %h1 Students
+/%h2= "Seach Student By Name:" /
+
+%table.table.table-hover
+  %tr
+    %th= link_to 'First Name', students_path(:sort => 'first_name')
+    %th= link_to 'Last Name', students_path(:sort => 'last_name')
+    %th Email
+    %th Mentor Teacher(s)
+    - if semester
+      %th Preference
+      %th Placement
+    /*** DELETE 
+    /%th Remove
+
+  - @all_student.each do |student|
+    %tr
+      %td= link_to student.user.first_name, student
+      %td= student.user.last_name
+      %td= student.user.email
+      %td
+        - student.mentor_teachers.each do |m|
+          - if m.user != nil
+            %ul.unstyled
+              %li= "#{m.user.first_name} #{m.user.last_name}"
+      - if semester
+        %td
+          - student.cal_courses.each do |c|
+            %ul.unstyled
+              %li=link_to "#{c.name} Preferences", student_select_timeslots_path(student.id, semester.id, c.id)
+        %td
+          %ul.unstyled
+            %li=link_to 'View/Edit Placement(s)', edit_placements_student_path(student.id, semester.id)
+      /*** DELETE 
+      /%td= link_to 'Delete', student, method: :delete, data: { confirm: 'Are you sure?' }

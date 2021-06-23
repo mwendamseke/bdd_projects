@@ -1,0 +1,72 @@
+%h2 Members
+
+- if @membership_applications_pending.present?
+  .section
+    %h3 Membership applications received
+
+- if @membership_issues.present?
+  .section
+    %h3 Membership issues
+    %ul.tasks
+      - @membership_issues.each do |task|
+        = content_tag_for(:li, task) do
+          = render :partial => 'tasks/task', :locals => {:task => task}
+
+- if @founder_member
+  %h3 Invite a new Founder Member
+  = form_for(@founder_member) do |form|
+    = render :partial => 'founder_members/form', :locals => {:form => form}
+
+%p#download
+  Download:
+  %span.pdf.download
+    = link_to 'PDF', members_path(:format => 'pdf')
+  %span.csv.download
+    = link_to 'CSV', members_path(:format => 'csv')
+
+.section
+  - if co.active?
+    %h3 List of Members
+  -else
+    %h3 List of Founder Members
+  %table.members
+    %tr
+      %th Name
+      %th Email
+      %th Last login
+      %th Joined
+    - @members.each do |member|
+      %tr
+        %td
+          = image_tag("#{member.gravatar_url(24)}", :class => 'gravatar', :alt => "#{member.name}", :width => '24', :height => '24')
+          = link_to "#{member.name}", member_path(member)
+        %td
+          = member.email
+        %td
+          - if member.last_logged_in_at
+            = member.last_logged_in_at.to_s(:long_ordinal)
+        %td
+          - if member.inducted_at
+            = member.inducted_at.to_date.to_s(:long_ordinal)
+
+- if @pending_members
+  .section
+    %h3 Invitations sent
+    %table.pending_members
+      %tr
+        %th Name
+        %th Email
+      - @pending_members.each do |member|
+        %tr
+          %td
+            = image_tag("#{member.gravatar_url(24)}", :class => 'gravatar', :alt => "#{member.name}", :width => '24', :height => '24')
+            = link_to "#{member.name}", member_path(member)
+          %td
+            = member.email
+
+
+- if can?(:update, co) && co.active?
+  .section
+    %h3 Members settings
+    = link_button("Amend the membership application form", :url => edit_membership_application_form_path)
+    %br.clear

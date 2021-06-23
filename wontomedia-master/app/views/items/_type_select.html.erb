@@ -1,0 +1,49 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+
+<% if @item.sti_type.nil? %>
+  <p class="inputpara">
+    <%= f.label :sti_type, "Type" %>
+    <%= popup_help_icon "Help for type", "Help:Popup/ItemType" %>
+    <%= if @popup_type == "verb"
+          selections = [ [ "Property",      "PropertyItem" ] ]
+          @item.sti_type = "PropertyItem"
+        else
+          selections = [
+            [ "- type of item -",          "" ],
+            [ "Category",      "CategoryItem" ],
+            [ "Individual",  "IndividualItem" ],
+            [ "Property",      "PropertyItem" ] ]
+        end
+
+        select_tag "item[sti_type]",
+          options_for_select( selections,
+                              @item.sti_type.nil? ? "" : @item.sti_type ),
+          :tabindex => "110"
+     %>
+    <%= image_tag "blank_error_icon.png", :id=>"sti_type_error_icon",
+          :alt=>"", :size=>"16x16" %>
+  </p><p class="directions">
+    <span id="sti_type_required">Selection of a type is required.</span>
+  </p>
+<% else %>
+  <%= hidden_field_tag 'item_sti_type', @item.sti_type,
+        :name => 'item[sti_type]' %>
+<% end %>

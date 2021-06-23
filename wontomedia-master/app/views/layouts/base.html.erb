@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <% if @title_text %>
+      <title><%= @title_text +
+                   (@window_title_addendum.nil? ? '' : @window_title_addendum) +
+                   " &mdash; " + WontoMedia.site_title -%></title>
+    <% else %>
+      <title><%= WontoMedia.site_title -%></title>
+    <% end %>
+    <%= stylesheet_link_merged :base %>
+
+    <% if RAILS_ENV == 'test' %>
+      <%= javascript_include_tag 'jquery' %>
+      <script>
+        if (HTMLImageElement){                   // patch compatibility between
+                                                 // jQuery+fancybox and env.js
+          var hackImageConstructor = function(){
+            this.HTMLImageElement = HTMLImageElement;
+            this.HTMLImageElement(document); // note closure
+          }
+          hackImageConstructor.prototype = new HTMLImageElement;
+          window.Image = hackImageConstructor;
+          jQuery.support.opacity = true;     // short-circuit junk in 'fancybox'
+        }
+      </script>
+      <%= javascript_include_merged :topAfterJQuery %>
+    <% else %>
+      <%= javascript_include_merged :top %>
+    <% end %>
+    <% unless RAILS_ENV == 'test'
+         if WontoMedia.analytics and
+            WontoMedia.analytics.google and
+            WontoMedia.analytics.google.profile_id %>
+           <script type="text/javascript">
+             window.google_analytics_uacct =
+               "<%= WontoMedia.analytics.google.profile_id -%>";
+           </script>
+<%       end
+       end %>
+
+    <%= yield :head %>
+  </head>
+  <body style="margin-top: 0">
+    <div id="whole-page">
+      <%= yield(:page_body) or yield %>
+      <%= render :partial => "layouts/footer" %>
+    </div>
+    <%= yield(:first_bottom_page_js) %>
+    <%= javascript_include_merged :bottomJS %>
+    <% unless RAILS_ENV == 'test' # include Google Analytics
+         if WontoMedia.analytics.google and
+            WontoMedia.analytics.google.profile_id %>
+           <script type="text/javascript">
+             var gaJsHost = (("https:" == document.location.protocol) ?
+               "https://ssl." : "http://www.");
+             document.write(unescape("%3Cscript src='" + gaJsHost +
+"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E" ));
+           </script>
+           <script type="text/javascript">
+             try {
+               var pageTracker = _gat._getTracker(
+                 "<%= WontoMedia.analytics.google.profile_id -%>");
+               pageTracker._trackPageview();
+             } catch(err) {}</script>
+      <% end %>
+    <% end %>
+    <%= yield(:last_bottom_page_js) %>
+    <script type="text/javascript">
+      moveAndDisplayDelayedDivs();
+    </script>
+  </body>
+</html>

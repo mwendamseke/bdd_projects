@@ -1,0 +1,2 @@
+module OneClickHelper
+end

@@ -1,0 +1,109 @@
+<% title 'Tasks' -%>
+
+<style type="text/css">
+    .rightSpace {padding-right: 0.5em;}
+    table div   {padding-right: 0.5em;}
+    table th {                                                              text-align: left; }
+    .wide { white-space: nowrap; }
+    .number {                                                               text-align: right;}
+    .dtstart  {                                     color: SteelBlue;}
+    .dtstartHeader {                                color: SteelBlue;       text-align: right;}
+    .duration {                                     color: DarkOliveGreen;  text-align: right;}
+    .durationHeader {                               color: DarkOliveGreen;}
+    .summary a:link    {text-decoration: none;      color: Maroon;}
+    .summary a:visited {text-decoration: none;      color: Maroon;}
+    .summary a:active  {text-decoration: underline; color: Maroon;}
+    .summary a:hover   {text-decoration: none;      color: White;}
+    .summaryHeader {                                color: Maroon;}
+    .description {                                  color: BurlyWood;}
+    .descriptionHeader {                            color: BurlyWood; }
+    .tags    a:link    {                            color:     SkyBlue; }
+    .tags    a:visited {                            color:     SkyBlue; }
+    .tags    a:active  {                            color:        Blue; }
+    .tags    a:hover   {text-decoration: none;      color: DarkSkyBlue; }
+    .tagsHeader {                                   color:     SkyBlue; }
+    .vevent { vertical-align: top; }
+    h3 {font-size: 13px; margin-bottom: 0em;}
+</style>
+
+<table>
+  <tr>
+    <th>
+      <div class="number">
+        <span class="durationHeader">Duration,</span>
+        <span class="wide dtstartHeader">Start</span>
+      </div> 
+    </th>
+    <th>
+      <div>
+        <span class="summaryHeader">Title</span>
+        <span class="descriptionHeader">Description,</span>
+        <span class="tagsHeader">Tags</span>
+      </div>
+    </th>
+    <th>
+      <%= link_to 'New', new_task_path %>
+    </th>
+  </tr>
+<% current_date = 'Ongoing' %>
+<% @tasks.each do |task| %>
+  <% if task.stop.nil? %>
+    <tr>
+      <td>
+        <div class="durationHeader number">
+          <h3>Ongoing</h3>
+        </div>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+  <% elsif current_date != human_longer_date(task.start) %>
+    <% current_date = human_longer_date(task.start) %>
+    <tr>
+      <td>
+        <div class="dtstartHeader">
+          <h3>
+            <%= current_date %>
+          </h3>
+        </div>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+  <% end %>
+  <tr class="vevent">
+    <td>
+      <div class="wide number duration">
+        <span class="value-title" title="<%= microformats_duration task.duration %>"> </span>
+        <%= human_duration task.duration %>
+      </div>
+      <div class="wide number dtstart">
+        <span class="value-title" title="<%= microformats_date_time task.start %>"> </span>
+        <%= human_time task.start %>
+      </div>
+    </td>
+    <td>
+      <div>
+        <span class="summary">
+          <%= link_to task.title.presence || '-- No Title! --', task, :class => 'url' %>
+        </span>
+        <span class="description">
+          <%= task.description %>
+        </span>
+      </div>
+      <div class="tags">
+        <% task.tags.each do |tag| %>
+          <%= link_to tag.name, tag, 'rel' => 'tag' %>
+        <% end %>
+      </div>
+    </td>
+    <td>
+      <%= form_for task, :url => switch_to_task_path(task), :html => { :method => :post } do |f| %>
+        <span class="actions">
+          <%= f.submit 'Again', :title => 'Switch to this again' %>
+        </span>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>

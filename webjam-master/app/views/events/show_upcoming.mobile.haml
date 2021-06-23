@@ -1,0 +1,66 @@
+- @page_title = "#{h @event.name} #{h @event.location}"
+- @regular_version_path = event_path(@event)
+
+- content_for :javascript_inits do
+  = javascript_tag mobilePhotoNavigatorInitJavascript(".photos", @featured_photos)
+
+.event-info
+  .hype= @event.hype
+
+  %dl.where
+    %dt
+      %a.map{:href => @event.map_url}= image_tag "icons/map.gif", :size => "40x40", :alt => "Map"
+    %dd
+      %a.map{:href => @event.map_url}= @event.address
+
+  %dl.when
+    %dt
+      %span.day
+        - day = @event.local_held_at.strftime("%d")
+        - if day[0..0] != "0"
+          %span.day-1>= day[0..0]
+        %span.day-2>= day[1..1]
+        %span.ord>= day.to_i.ordinalize[2..4]
+      %span.month= @event.local_held_at.strftime("%b")
+    %dd
+      = @event.local_held_at.to_date.to_s(:long)
+      %br
+      Doors open at
+      = @event.local_held_at.to_datetime.to_s(:time_12hr).downcase.sub(/^0/,'')
+      (RSVP only)
+
+- if @featured_photos.first
+  %h2
+    - if @photos_from_previous_event
+      = "Photos from #{@previous_event.tag}"
+    - else
+      = "Photos tagged #{@event.tag}"
+  .photos
+    .photo
+      = render :partial => "shared/event_photo", :locals => {:photo => @featured_photos.first}
+
+  - unless @photos_from_previous_event
+    .more
+      %a.button{:href => formatted_event_photos_path(@event, :mobile)} More photos
+        
+- unless @latest_tweets.empty?
+  %h2 Tweets
+  %ul.tweets
+    - for tweet in @latest_tweets
+      %li
+        = render :partial => 'shared/tweet', :locals => {:tweet => tweet}
+  - if @more_tweets
+    .more
+      %a.button{:href => formatted_event_tweets_path(@event, :mobile)} More tweets
+  
+- unless @event.posts.empty?
+  %h2 News
+  %ul.group
+    - for post in @event.posts
+      %li
+        = render :partial => "shared/news_post", :locals => {:post => post}
+
+- if @previous_event
+  %h2 Previous Event
+  %ul.group
+    %li= render :partial => "shared/event_item", :locals => {:event => @previous_event}

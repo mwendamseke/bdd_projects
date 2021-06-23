@@ -1,0 +1,18 @@
+Dear <%=raw( @member && @member.name || 'member' )%>,
+
+a new decision has been made.
+
+<%=raw( @proposal.title )%>, by <%=raw( @proposal.proposer.name || @proposal.proposer.email )%>
+
+<%=raw( @proposal.description )%>
+
+<%=raw( decision_url(@proposal.decision) )%>
+<% if @proposal.decision_notification_message -%>
+
+<%=raw( @proposal.decision_notification_message )%>
+<% end -%>
+
+Thanks
+
+<%=raw @organisation_name%>
+Powered by One Click Orgs http://oneclickorgs.com/

@@ -1,0 +1,38 @@
+
+<div class="new-organisation container">
+
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="org-form-wrapper col-md-6">
+		<%= form_for @submission, url:organisation_opportunity_submissions_path do |f| %>
+
+		
+			<div class="row">
+				<div class="col-md-12 genre-field role-field">
+					<%= f.label :work, 'Select Work' %>
+					<%= f.select(:work, @available_works, {}, class: "form-control") %>
+				</div>
+			</div>
+
+			<br><br><br>
+
+			<div class="row">
+				<div class="col-md-12 description-field org-desc-field sub-message">
+			<%= f.text_area :message, placeholder: "Write your message to #{@opportunity.organisation.name} " %>
+				</div>
+			</div>
+
+
+
+			<div class="row org-wrap-sub">
+				<div class="col-md-12">
+			<%= f.submit 'Submit', class: 'form-submit org-submit' %>
+				</div>
+			</div>
+
+		<% end %>
+
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+</div>

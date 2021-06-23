@@ -1,0 +1,69 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+
+<% unless @this_is_non_information_page or ENV['RAILS_ENV']=='test' %>
+  <% if WontoMedia.ads.amazon and
+        WontoMedia.ads.amazon.associate_id %>
+
+    <!-- specifying the height for this div prevents re-layout when content
+         is added later in page load.  Must update if ad unit changes -->
+    <div id="block-amazon-ad" class="box"
+        style="width: 99%; height: 600px; text-align: center;"></div>
+    <script>
+      addToDivsToMove('block-amazon-ad');
+    </script>
+
+    <% content_for :last_bottom_page_js do %>
+      <div id="block-amazon-ad-content" style="display: none;">
+        <script type="text/javascript"><!--
+            // adjust for our fluid-width layout as possible
+          // TODO: really ought to repeat these calculations in a
+          //   window-resize event handler....
+          divWidth = $('block-amazon-ad').style.width;
+          if (divResult = divWidth.match(/^([0-9.]+)%$/)){
+            floatWidth = $('float-left').style.width;       // always a %
+            floatWidth = parseFloat(floatWidth) / 100;
+
+            divWidth = parseFloat(divResult[0]) / 100;
+            divWidth = divWidth * floatWidth * window.innerWidth;
+            amazon_ad_width = Math.floor(divWidth - 4).toString();
+          }
+          else if (divResult = divWidth.match(/^([0-9.]+)px$/))
+            amazon_ad_width = (parseInt(divResult[0]) - 4) + "px";
+
+          amazon_ad_width = (parseInt(amazon_ad_width) >= 160)? "160":"120";
+
+
+            // boiler-plate from Amazon
+          amazon_ad_tag = "<%= WontoMedia.ads.amazon.associate_id -%>";
+          amazon_ad_height = "600";
+          amazon_ad_logo = "hide";
+          amazon_ad_border = "hide";
+          amazon_color_border = "f8f8ff";
+          amazon_color_link = "1D43C0";
+          amazon_color_logo = "040460";
+          //-->
+        </script>
+        <script type="text/javascript"
+                src="http://www.assoc-amazon.com/s/ads.js"></script>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

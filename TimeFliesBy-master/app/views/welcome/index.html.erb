@@ -1,0 +1,155 @@
+<% title "Home", false -%>
+
+<div id="content">
+  <div id="header">
+    <h1>TimeFliesBy.com</h1>
+    <h5>Simple time tracking that works for me</h5>
+  </div>
+
+  <div>
+    <h2>Already know what you are doing?</h2>
+    <div style="padding:1em;">
+      <%= link_to 'New Task', new_task_path, :class => 'big_button' %>
+    </div>
+  </div>
+  
+  <div>
+    <h2>How it works</h2>
+    <ol>
+      <li>
+        <h2>Simple</h2>
+        <h4>Quick and Easy</h4>
+        <ul>
+          <li>
+            Create a <%= link_to 'New Task', new_task_path %>.
+          </li>
+          <li>
+            Enter a title and click "Switch Now" to start the timer.
+          </li>
+          <li>
+            When finished with the current task, create a <%= link_to 'New Task', new_task_path %>.
+          </li>
+          <li>
+            TimeFliesBy.com automatically ends the previous task for you.
+          </li>
+          <li>
+            Any time you want to see your progress, click <%= link_to 'Tasks', tasks_path %>.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h2>Flexible</h2>
+        <h4>Unlimited Tags</h4>
+        <ul>
+          <li>
+            Create some <%= link_to 'Tags', new_tag_path %> up front, e.g.
+            <ul>
+              <li>Work</li>
+              <li>Family</li>
+              <li>Personal</li>
+              <li>Household</li>
+              <li>Play</li>
+              <li>etc.</li>
+            </ul>
+          </li>
+          <li>
+            Use them in your <%= link_to 'New Task', new_task_path %> or "Edit" in <%= link_to 'Tasks', tasks_path %>.
+          </li>
+        </ul>
+        <h4>You are in control</h4>
+        <ul>
+          <li>
+            You can manually adjust the start and stop any time.
+          </li>
+          <li>
+            We call this fudging.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h2>Streamlined</h2>
+        <h4>Efficient Task Switching</h4>
+        <ul>
+          <li>
+            Starting a <%= link_to 'new task', new_task_path %> automatically ends the current task and starts the new one.
+          </li>
+          <li>
+            Keep creating a <%= link_to 'new task', new_task_path %> to create a continuous timeline.
+          </li>
+          <li>
+            You can effectively track your whole life, but who would want to besides me?
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h2>Tick-Tock</h2>
+        <h4>Goes the Clock</h4>
+        <ul>
+          <li>
+            Time doesn't stop even though you may want to stop tracking it.
+          </li>
+          <li>
+            Create a dummy filler task and let it run until you are ready to track again.
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+</div>
+
+<div id="sidebar">
+  <ul id="sidebar-items">
+    <li>
+      <h3>Resources</h3>
+      <ul class="links">
+        <li>
+          <a href="http://relishapp.com/esambo/timefliesby"><%= image_tag 'relish_smaller.png', alt: 'RelishApp', border: '0' %> Features</a>
+        </li>
+        <li><a href="http://github.com/esambo/TimeFliesBy"><%= image_tag 'GitHub.ico', border: '0' %> Source Code</a></li>
+        <li><a href="http://www.pivotaltracker.com/projects/34616"><%= image_tag 'Pivotal_Tracker.ico', alt: 'Pivotal Tracker', border: '0' %> Stories</a></li>
+        <li>Recommend: <g:plusone size="small"></g:plusone></li>
+        <li><strong>Email:</strong> support at timefliesby dot com</li>
+        <li>
+          <a href="http://twitter.com/share" class="twitter-share-button" data-count="none" data-via="TFliesBy">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script> if you like this
+        </li>
+      </ul>
+    </li>
+  </ul>
+    <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+    <script>
+        new TWTR.Widget({
+          version: 2,
+          type: 'profile',
+          rpp: 4,
+          interval: 6000,
+          width: 250,
+          height: 300,
+          theme: {
+            shell: {
+              background: '#CCC',
+              color: '#666'
+            },
+            tweets: {
+              background: '#FFF',
+              color: '#039',
+              links: '#999'
+            }
+          },
+          features: {
+            scrollbar: false,
+            loop: false,
+            live: false,
+            hashtags: true,
+            timestamp: true,
+            avatars: false,
+            behavior: 'all'
+          }
+        }).render().setUser('TFliesBy').start();
+    </script>
+</div>
+<div id="footer">
+  <hr>
+  Copyright &copy; 2011 Emmanuel Sambo, released under the MIT license
+</div>
+<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>

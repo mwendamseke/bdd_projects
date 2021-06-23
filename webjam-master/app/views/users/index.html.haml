@@ -1,0 +1,16 @@
+- @section = :blog
+- @page_title = "Webjam Peeps"
+- @body_class = "peeps"
+
+- content_for :other_content do
+  = default_other_content
+  
+.item.last
+  %h1
+    Webjam Peeps
+  %ul.peeps
+    - for user in @users
+      %li
+        = peeps_user_link_with_avatar(user)
+
+  = will_paginate @users

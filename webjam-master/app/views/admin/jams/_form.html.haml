@@ -1,0 +1,42 @@
+= hidden_field_tag "proposal_id", params[:proposal_id]
+
+%fieldset
+  %label{:for => 'jam_title'}
+    Title *
+    =f.text_field :title
+
+  %label{:for => 'jam_number'}
+    Number *
+    =f.text_field :number
+
+  %label{:for => 'jam_description'}
+    Description *
+    =f.text_area :description
+
+  %label
+    Proposing user
+    - if @jam.proposing_user
+      = @jam.proposing_user.full_name
+      = f.hidden_field :proposing_user_id
+    - else
+      nil
+    
+  -if @jam.presentation_proposal
+    %label
+      = link_to 'Original proposal', admin_event_proposal_path(@event,@jam.presentation_proposal_id)
+      = f.hidden_field :presentation_proposal_id
+
+  %label{:for => "jam_place"}
+    Place
+    = f.text_field :place
+
+  %label{:for => "jam_prize"}
+    Prize
+    = f.text_field :prize
+      
+  %label{:for => "jam_published_at"}
+    Published at
+    = f.text_field :published_at
+  
+  %fieldset
+    = submit_tag "Save", :class => "submit"

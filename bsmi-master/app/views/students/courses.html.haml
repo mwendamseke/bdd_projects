@@ -1,0 +1,10 @@
+.page-header
+  %h1 Enrollment
+
+%table.table.table-hover
+  %tr
+    %th Courses Enrolled In
+
+  - @cal_courses.each do |cal_course|
+    %tr
+      %td= cal_course.name

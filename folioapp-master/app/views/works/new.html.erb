@@ -1,0 +1,9 @@
+<div ng-controller="UploadCtrl">
+
+<% if @upload_type == "art" %>
+	<%= render "art" %>
+<% elsif @upload_type == "writing" %>
+	<%= render "writing" %>
+<% end %>
+
+</div>

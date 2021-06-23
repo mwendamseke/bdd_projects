@@ -1,0 +1,20 @@
+<div class="container" ng-controller="SubmissionIndexCtrl">
+<% if @opportunity.submissions.none? %>
+	No submissions yet
+<% else %>
+
+	<div class="row">
+		<h1 class="name subs">Submissions For <%= @opportunity.title %> </h1>
+	</div>
+
+
+	<% @submissions.in_groups_of(3, false) do |submission_triplet| %>
+		<div class="row">
+			<%= render submission_triplet %>
+		</div>
+	<% end %>
+
+<% end %>
+
+
+</div>

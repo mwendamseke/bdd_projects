@@ -1,0 +1,15 @@
+- content_for(:head) do
+  = javascript_include_tag 'change_quorum_resolutions'
+%h2 Changing quorum for General Meetings
+= form_for(@change_quorum_resolution) do |form|
+  = render(:partial => 'form', :locals => {:form => form})
+  %p
+    = form.check_box :certification
+    = form.label :certification, "I certify that the Board has decided to ask the Members to accept this quorum."
+  %p
+    = form.check_box :pass_immediately
+    = form.label :pass_immediately, "I certify that this resolution has already been passed by the Membership."
+  %p.pass_immediately_true{:style => "display: none;"}
+    = form.submit "Amend the quorum"
+  %p.pass_immediately_false
+    = form.submit "Start a vote of Members"

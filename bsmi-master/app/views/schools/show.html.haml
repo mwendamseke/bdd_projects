@@ -1,0 +1,39 @@
+%p#notice= notice
+
+.page-header
+  %h1 
+    = @school.name
+
+.pull-right
+  = link_to 'Edit', edit_school_path(@school), :class => 'btn'
+  
+
+%h2 School Information
+
+%table.table
+  %tr
+    %td
+      %b Name:
+    %td
+      = @school.name
+  %tr
+    %td
+      %b Level:
+    %td
+      = @school.level
+  %tr
+    %td
+      %b District:
+    %td
+      = link_to @school.district.name, @school.district if @school.district
+
+%h2 Mentor Teachers
+%table.table
+  %tr
+    %th First Name
+    %th Last Name
+  - @school.mentor_teachers.each do |m|
+    %tr
+      %td= link_to m.user.first_name, m
+      %td= m.user.last_name
+

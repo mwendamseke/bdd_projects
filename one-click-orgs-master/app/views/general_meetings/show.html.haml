@@ -1,0 +1,54 @@
+%h2 General Meeting
+
+%p
+  %strong Date:
+  = @general_meeting.happened_on.to_s(:long_ordinal)
+%p
+  %strong Starting at:
+  = @general_meeting.start_time
+%p
+  %strong Venue:
+  = @general_meeting.venue
+
+- if @general_meeting.past?
+  - if @general_meeting.minuted?
+    %h3 Minutes
+    - if can?(:edit, @general_meeting)
+      %p= link_to("Edit these minutes", edit_general_meeting_path(@general_meeting))
+    - @general_meeting.agenda_items.each do |agenda_item|
+      %h4= agenda_item.title
+      = simple_format(agenda_item.minutes)
+    %h4 Other minutes
+    = simple_format(html_escape(@general_meeting.minutes))
+    %h3 Attendees
+    %ul.participants
+      - @general_meeting.participants.each do |participant|
+        = content_tag_for(:li, participant) do
+          = link_to(participant.name, member_path(participant))
+  - else
+    %p The minutes for this meeting have not been recorded yet.
+    - if can?(:edit, @general_meeting)
+      %p= link_to("Record minutes for this meeting", edit_general_meeting_path(@general_meeting))
+
+-else
+  %h3 Agenda
+  %ol.agenda_items
+    - @general_meeting.agenda_items.each do |agenda_item|
+      = content_tag_for(:li, agenda_item) do
+        = agenda_item.title
+  = simple_format(html_escape(@general_meeting.agenda))
+  %h3 Resolutions to be considered
+  - if @general_meeting.resolutions.empty?
+    %p No resolutions are to be considered at this meeting.
+  - else
+    %ol.resolutions
+      - @general_meeting.resolutions.each do |resolution|
+        = content_tag_for(:li, resolution) do
+          %h4= resolution.title
+          = simple_format(resolution.description)
+          - if resolution.open?
+            %p
+              = link_to("Vote on this resolution online before the meeting.", resolution_path(resolution))
+
+  - if can?(:edit, @general_meeting)
+    %p= link_to("Record minutes for this meeting", edit_general_meeting_path(@general_meeting))

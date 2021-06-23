@@ -1,0 +1,30 @@
+%h2 Cast your vote
+
+%p
+  At the AGM on
+  = @annual_general_meeting.happened_on.to_s(:long) + ', '
+  = pluralize(@election.seats, "seat")
+  will become vacant on the Board of Directors.
+
+%p
+  The following
+  = pluralize(@nominations.count, "candidate")
+  have been nominated for possible election to the Board.
+
+%p
+  Rank the candidates in order of your preference, entering
+  '1' for your most preferred candidate, '2' for your next
+  preferred candidate, and so on.
+
+%p
+  If there is a candidate you do not wish to see elected,
+  leave their ranking blank.
+
+= form_for([@election, @ballot]) do |ballot_form|
+  %ul
+    - @nominations.each do |nomination|
+      = content_tag_for(:li, nomination) do
+        = nomination.name
+        = ballot_form.text_field("ranking_#{nomination.id}", :style => "width: 3em;")
+  %p
+    = ballot_form.submit("Save my vote")

@@ -1,0 +1,593 @@
+/****
+Webjam
+http://webjam.com.au
+20070812
+
+TOC
+- =Generic Rules
+	-- =Generic Text
+		 --- =Links
+		 --- =Headings
+		 --- =Body Text
+		 --- =Avatars
+		 --- =Feeds etc
+	-- =Generic Forms
+- =Structure
+	-- =Mobile Header
+	-- =Main Content
+		 --- =Content
+				 ---- =Posts
+		 		 		  ----- =hAtom
+							----- =Comments
+		     ---- =Join Form
+				 ---- =Profile
+				 ---- =Peeps
+		 --- =Other Content
+		 	   ---- =WTF
+		 	   ---- =Latest
+	-- =Footer
+- =JS Enabled
+
+****/
+
+
+/* - =Generic Rules - */
+
+	/* -- =Generic Text -- */
+
+		/* --- =Links --- */
+		a:link {color: #ccc;}
+		a:visited {color: #fff;}
+		a:hover, a:active, a:focus {color: #f03e00; text-decoration: none;}
+		
+		#content a.details {background: #0d0e0e url('/stylesheets/images/bg-details.gif') no-repeat 100% 8px; color: #f03e00; margin: 1.6em 1.6em 0 0; padding: 0 16px 0 0;}
+		
+		/* --- =Headings --- */
+		h1, h2, h3, h4, h5, h6 {font-family: Futura, "Franklin Gothic Medium", Calibri, "URW Gothic L", Helvetica, Arial, sans-serif; font-weight: 300; margin: 0 0 0.5em;}
+		h1,
+		body.home #content h2 {font-size: 2.572em;}
+		h2 {font-size: 1.714em;}
+		h3 {font-size: 1.45em;}
+    	body.home h3,
+    	body.event h2.date {font-size: 1.143em;}	
+/*    h4 {font-size: 1.4em;}
+    h5 {font-size: 1.2em;}
+    h6 {font-size: 1.1em;}*/
+		
+		#wrapper p.title {background: #0e0e0e; color: #666; font-size: 1.5em; font-weight: 300;}
+			#wrapper p.title strong {background: #0e0e0e; color: #fff; font-weight: 300;}
+		
+		/* --- =Body Text --- */
+    #maincontent p,
+    #maincontent li,
+    #maincontent ol,
+    #maincontent ul {margin: 0 0 1em 0;}
+    #maincontent ul {}
+      #maincontent ul li {list-style-position: outside; list-style-type: disc; margin: 0 0 0.5em 1em;}
+    #maincontent ol {}
+      #maincontent ol li {list-style-position: outside; list-style-type: decimal; margin: 0 0 0.5em 1.4em;}  
+    
+    #maincontent strong {font-weight: 700;}
+    #maincontent em {font-style: italic;}
+    
+    #content p {font-size: 1.143em; line-height: 1.5; margin: 0 0 1em 0;}
+			
+		.amp {background: #0d0e0e; color: #666; font: italic 100 1.25em Baskerville, "Goudy Old Style", "Palatino", Georgia, "Book Antiqua", serif; position: relative; top: 2px;}
+		
+		.tag {background: #0d0e0e; color: #F03E00; font: italic 100 1em "Trebuchet MS", Arial, Helvetica, sans-serif;}
+		
+		.note {background: #0d0e0e; color: #666; font: italic 100 1.25em "Trebuchet MS", Arial, Helvetica, sans-serif;}
+		  .note a:link,
+		  .note a:visited {background: #0d0e0e; color: #aaa;}
+		  
+		
+    #content p.notice {background: #232323; color: #fff; font-size: 1.5em; padding: 0.2em 0.4em 0.2em 0.4em;}
+		
+		/* --- =Avatars --- */      
+    .user-avatar {position: relative;}
+      .user-avatar img {position: absolute; top: -2px;}
+        .user-avatar .url {margin: 0 0 0 30px;}
+
+		/* --- =Feeds etc --- */
+		.item h2 {position: relative;}
+      .item h2 .feed {background: url('/images/icons/icon-feed.gif') no-repeat 0 0; display: block; height: 18px; left: 3em; position: absolute; text-indent: -9999px; top: 0.4em; width: 18px;}
+      
+      #latest h2 .feed {left: 5.7em; top: 0.4em;}
+
+	/* -- =Generic Forms -- */
+
+	form {clear: both; float: left; padding: 0 0 2em 0;}
+		fieldset {margin: 0; padding: 0;}
+			fieldset fieldset {clear: both;}
+		form label {clear: both; display: block; float: left; font-weight: bold; margin: 0 0 0.4em 0; padding: 0.5em 0 0 0; width: auto;}
+			form label span {display: block; float: left; margin: 0.2em 0 0 0; width: 8em;}
+				form label span.note {clear:both; color: #565757; font: 0.86em "Trebuchet MS", Arial, Helvetica, sans-serif; margin: 0.5em 0 0 9em; width: auto;}
+		input {background: #e6e5e5; color: #000; float: left; font: 1em/1.3 "Trebuchet MS", Arial, Helvetica, sans-serif; width: 14em;}
+		select {float: left; width: 10em;}
+		textarea {float: left; width: 27em;}
+			input.checkbox {margin: 0.4em 0; width: auto;}
+			input.submit {margin: 0.4em 0 0 8em; width: 14.3em;}
+			form.button-to {display: inline; margin: 0; padding: 0;}
+			
+	/* -- =Error messages -- */
+	.errorExplanation {}
+	  .errorExplanation h2 {color: red;}
+	  .errorExplanation li {color: red;}
+	  
+	/* -- = Generic layout -- */
+	#content .clear-off {clear: both; margin: 3em 0 0.5em 0;}
+	
+	div.pagination {clear: both; margin: 0 0 1em 0; text-align: center;}
+	
+	dl.peep-card {font-size: 0.875em; min-height: 140px; padding: 0 0 1em 150px; position: relative;}
+    dl.peep-card dt.fn {font-size: 1.1em;}
+    dl.peep-card dd {margin: 0 0 1em 0;}
+    dl.peep-card dd.nickname {font-size: 0.97em;}
+      dl.peep-card dd.nickname a {}
+    dl.peep-card dd.url {margin: 0;}
+      dl.peep-card a {}
+    dl.peep-card dd.img {left: 0; position: absolute; top: 0;}
+      dl.peep-card dd.img img {}
+    dl.peep-card dd.facets {margin: 1em 0 0 0;}
+      dl.peep-card dd.facets ul {}
+        #maincontent dl.peep-card dd.facets ul li {display: inline; margin: 0;}
+          dl.peep-card dd.facets ul li a {}
+    dl.peep-card dd.contact .button {float: none; margin: 1em 0 0 0; width: 100%;}
+	div.show-media {background: #0d0e0e; height: 400px; margin:  0 0 1em 0; padding: 0; width: 437px;}
+
+/* - =Structure - */
+body {background: #2a2e2f url('/stylesheets/images/bg-body.gif') no-repeat center center; color: #fff; font: 62.5%/1.3 "Trebuchet MS", Arial, Helvetica, sans-serif; margin: 0; padding: 0;}
+	body.home {}
+	
+#mobile a {
+  display: block;
+  color: #fff;
+  margin: 15px;
+  background-color: #222;
+  padding: 0.75em 0;
+  font-size: 240%;
+  text-align: center;
+  font-family: Helvetica, "Lucida Grande";
+  font-weight: bold;
+  text-decoration: none;
+  -webkit-border-radius: 20px;
+  border: 2px solid;
+  border-color: #555 #111 #111 #555;
+}
+#mobile a .explanation {
+  color: #bbb;
+}
+	
+#page {font-size: 1.4em; margin: 4em auto 0; position: relative; width: 70em;}
+
+	ul.primary-nav {background:#373d3f; color: #eee; position:absolute; top:-1.8em; left: 0.1em; display: block; list-style:none; }
+		ul.primary-nav li {display:block; float:left; padding: 0.2em 1em 0.4em 1em}
+		  body.home ul.primary-nav li.home a {background:#373d3f; color: #000; text-decoration: none;}
+
+	#account-tools {margin: 0 0 1.5em 0; position: absolute; right: 0; top: -2.3em;}
+		#account-tools li {background: #0e0e0e; float: left; font-size: 0.94em; line-height: 2; margin: 0 1em 0 0; text-align: center;}
+			
+		#account-tools li.logout {}
+			#account-tools li.logout form.button-to input {background: #0e0e0e; border: 1px solid #f03e00; border-bottom: none; color: #fff; cursor: pointer; float: none; font-family: "Trebuchet MS", Arial, Helvetica, sans-serif; font-size: 1em; margin: 0; padding: 0.5em; width: auto;}
+			#account-tools li.logout form.button-to input:hover {background: #f03e00; border: 1px solid #0e0e0e; border-bottom: none; color: #0e0e0e; cursor: pointer;}
+		  
+		  #account-tools li a {display: block; padding: 0.2em 1em 0.4em 1em;}
+			#account-tools li a:link,
+			#account-tools li a:visited {background: #0e0e0e; border: 1px solid #f03e00; border-bottom: none;  color: #fff; text-decoration: none;}
+			#account-tools li a:hover,
+			#account-tools li a:active,
+			#account-tools li a:focus,
+			body.account #account-tools li.account a {background: #f03e00; border: 1px solid #0e0e0e; border-bottom: none;  color: #0e0e0e;}
+				
+        #account-tools li a.user-avatar .vcard img {top: 3px;}
+        #account-tools li a.user-avatar .vcard span.fn {margin: 0 0 0 30px;}
+
+	#wrapper {background: #0d0e0e; border: 1px solid #000; border-bottom: none; float: left; position: relative; width: 70em;}
+
+	body.home h1,
+	#pagetitle {background: #0e0e0e url('/stylesheets/images/bg-perth.jpg') no-repeat 0 0; border-bottom: 1px solid #7C1315; height: 146px; font-size: 1.8em; margin: 0; text-align: center;}
+	#pagetitle {font-size: 1.8em;}
+		body.home h1 img,
+		#pagetitle img {border: none; font-size: 0.4em; height: 15.2em; max-height: 152px; width: 97em; max-width: 1033px;}
+		
+		#phat-digits {font: 100 10.286em/1.2 Futura, Helvetica, Arial, sans-serif; left: 2.29em; position: absolute; top: -0.12em;}
+		
+	
+	/* -- =Main Content -- */
+	#maincontent {}
+	
+		/* --- =Content --- */
+		#content {border-left: 1px solid #333; margin: 0 0 0 23.2em; padding: 0.4em 0 1em;}
+		#content.full {border: none; margin: 0;}
+		
+		  #content .item {border-bottom: 1px solid #333; overflow: auto; padding: 1.45em 1em; position: relative;}
+		  #content.full .item {margin: 0 auto 0 auto; width: 36em;}
+		  #content .item.last {border: none; padding: 1.45em 1em 0 1em;}
+		    #content .item .item-details {overflow: auto; margin: 0 0 1em 0;}
+
+    		  body.home #content .item-details h2,
+    		  body.event #content h1 {float: left; margin: 0 0.4em 0 0; width: auto;}
+    		  body.home #content .item-details h3,
+    		  body.event #content h2.date {float: left; letter-spacing: 0.1em; padding: 1.3em 0 0; text-transform: uppercase; width: auto;}
+    		  
+    		  #content a.details,
+    		  .item .button {display: block; float: right; font-size: 1em; font-weight: 100; letter-spacing: 0.1em; padding: 0.18em 0.3em; text-transform: uppercase; width: 5.1em;}
+    		  
+    		  #content .item a.details {position: absolute; right: 1em; top: 1.2em;}
+    		  #content .item p a.details {position: static; width: auto;}
+    		  
+    		  .item .button {text-align: center; text-decoration: none;}
+    		  .item .button:link,
+    		  .item .button:visited {background: #f03e00; color: #fff;}
+    		  .item .button:hover,
+    		  #content .item .rsvp input:hover,
+    		  .item .button:active,
+    		  .item .button:focus {background: #fff; color: #f03e00;}
+    		  
+    		  #content .item form.button {float: none; left: -0.6em; padding: 0; position: relative;}
+    		    #content .item form.button input {cursor: pointer; letter-spacing: 0.1em; padding: 0.1em 0.6em; text-transform: uppercase;}
+    		  
+    		  #content .item .rsvp input {background: #f03e00; color: #fff; border: none; width: 5.8em;}
+    		  
+    		  #content .item .login {width: 11em;}
+    		  
+    		  #content .item li.option form.button {padding: 0; width: auto;}
+    		  
+    		  #content .item span.closed,
+    		  #content .item span.closed:hover,
+    		  #content .item span.closed:active,
+    		  #content .item span.closed:focus {background: #4d4d4d; color: #fff;}
+    		  
+    		  #content .item span.long,
+    		  #content .item span.long:hover,
+    		  #content .item span.long:active,
+    		  #content .item span.long:focus {
+    		    font-size: 0.8em;
+    		    width: 6.375em; /* (1 / 0.8em .button font size) * .button value */
+    		    padding: 0.225em 0.375em; /* (1 / 0.8em .button font size) * .button value */
+    		  } 
+    		
+    		#content .item .column {float: left; margin: 0 0.5em 0 0; width: 21.5em;}
+
+			/*Upcoming events*/
+			div.item-details.vevent h2 a {text-decoration:none}
+			div.item-details.vevent h2 a:active, div.item-details.vevent h2 a:focus, div.item-details.vevent h2 a:hover {color:#ccc}
+    		
+    		.numbers {margin: 0 0 1em 0; text-align: center;}
+    		  #content .numbers p {background: #f03e00; color: #000; line-height: 1; margin: 1em auto 0.5em auto;  padding: 0 0 0.2em 0; width: 8em;}
+    		  #content .numbers p.full {padding: 0.5em 0.4em 0.6em 0.4em; width: 18em;}
+    		    .numbers strong {display: block; font-size: 3em;}
+    		
+    		  dl.registration {clear: both; margin: 0 0 1em 0; padding: 0 0 0 1em;}
+    		    dl.registration dt {font-weight: 300; float: right; margin: 0.2em 0 0 0; width: auto;}
+              dl.registration dt form input {width: auto;}
+    		    dl.registration dd {font-size: 0.857em;}
+    		      dl.registration dd p {margin: 0 0 0.6em 0;}
+    		        dl.registration dd p strong {display: block; font-size: 1.083em;}
+    		        
+    		#content .item .slideshow {height: 390px; margin: 0 0 0.4em 0;}
+			    #content .slideshow img {height: 350px; overflow:hidden; margin: 0 0 0.4em 0;}
+    		  #content .slideshow ul li {list-style-type: none; margin: 0;}
+    		  
+    	#sponsors {}
+    	  #sponsors .item-details a.details {padding: 0 1em 0 0; right: 0; top: 0.4em; width: auto;}
+    		.sponsors {background: #232323; clear: both; color: #ddd; margin: 0 0 0.2em 0; padding: 1em 1em 0 1em;}
+    		  .sponsors h3 {float: left; font-size: 1.143em; text-transform: uppercase; margin: 0.6em 1em 0 0; width: 9.5em;}
+    		  .sponsor-logos {overflow: auto;}
+    		    #content .sponsor-logos li {float: left; list-style-type: none; margin: 0; width: auto;}
+    		    .sponsor-logos a {display: block; min-height: 40px; margin: 0 1em 1em 1em; text-align: center; width: 110px;}
+    		      
+    		      .major h3 {color: #fff;}
+    		      .micro h3 {color: #ccc;}
+    		    
+    		    #event-details {}
+    		      #content #event-details .item-details {margin: 0;}
+    		      #event-details .map {float: left; width: auto;}
+    		        #event-details .map iframe {height: 300px; width: 425px;}
+    		        #event-details .map a {display: block;}
+    		      #event-details dl {float: left; margin: 0 0 0 1em; width: 13em;}
+    		        #event-details dt {margin: 0 0 0.5em 0;}
+    		          #event-details dt strong {display: block; font-size: 1.25em; margin: 0 0 1em 0;}
+    		        #event-details dd {margin: 0 0 0.5em 0;}
+    		    
+    		    #related-posts {}
+    		      #content #related-posts .item-details {margin: 0;}
+    		      #related-posts ul {font-size: 1.25em;}
+    		        #related-posts ul li {list-style-type: none;}
+    		        
+    		
+    	#winners {}
+    	  #content #winners .item-details {margin: 0;}
+    	    #winners dl {float: left; margin: 0 0.5em 0 0; min-height: 100px; padding: 0 0 0 105px; position: relative; width: 14.3em;}
+    	    #winners dl.first {float: none; margin: 0 0 2em 0; min-height: 200px; padding: 0 0 0 315px; width: auto;}
+    	    
+    	      #winners dl dt,
+    	      #winners dl dt a {font-weight: 700;}
+    	      #winners dl.first dt {font-size: 1.5em; font-weight: 300;}  
+    	      
+    	      #winners dd {}
+    	      #winners dd.place,
+    	      #winners dd.prize {}
+    	      #winners dd.place strong,
+    	      #winners dd.prize strong {font-weight: 300;}
+    	      #winners dd.img {height: 90px; left: 5px; position: absolute; top: 3px; width: 90px;}
+    	        #winners dl.first dd.img {height: 176px; top: 5px; width: 300px;}
+    	      
+    	        #winners dl dd p {font-size: 1em; line-height: 1.2; margin: 0;}
+    	        #winners dl.first dd p {margin: 1em 0 0 0;}
+    	        #winners dl.first dd.place p,
+    	        #winners dl.first dd.prize p {margin: 0;}
+
+    	.media {}
+    	  #content .media .item-details {margin: 0;}
+    	    .media .item-details h2 {float: left; margin: 0 1em 0 0; width: auto;}
+    	    #content .media .item-details p {line-height: 2.4;}
+    	  .media ul {}
+    	    #words ul {margin: 0 0 1em 0;}
+    	  
+    	    #content .media li {float: left; list-style: none; margin: 0 1em 1em 0; width: auto;}
+        	  #videos li {margin: 0 1.16em 1em 0;}
+        	  #words li {float: none; font-size: 0.95em; list-style-type: disc; margin: 0 0 0.3em 0.7em;}
+        	    #words li a {font-size: 1.053em; margin: 0 0.3em 0 0; text-transform: capitalize;}
+        	    
+      ul.tweets {}
+        #maincontent #other-content ul.tweets li {list-style: none; margin: 0 0 1em 0;}
+          ul.tweets li strong {}
+            ul.tweets li strong a {background: #0d0e0e; color: #f03e00; text-decoration: none;}
+
+      /* ---- =Presentation ---- */
+      #title {border-bottom: 1px solid #333; padding: 1px 2em 0.5em 0; text-align: right;}
+        #title p {background: #f03e00; color: #fff; display: inline; font-size: 1.143em; padding: 0.4em 0.8em; left: -0.2em; position: relative; top: -0.4em;}
+          #title h1 {background: #0d0e0e; color: #4d4d4d; display: inline;}
+          #title h1 strong {background: #0d0e0e; color: #fff;}
+         
+        body.presentation .item .video {background: #808080; color: #4d4d4d; height: 370px; margin: 0 0 1.45em 0; text-align: center; width: 450px;} /* TODO: add real styles when video player added */       
+			
+			/* ---- =Posts ---- */
+			
+				/* ----- =hAtom ----- */
+				.hfeed {padding: 1em;}
+				
+				.hentry {border-bottom: 1px solid #292a2a;}
+					.hentry .entry-title {background: #0e0e0e; color: #fff; margin: 0 0 0.4em;}
+					#content .hentry ul.byline {border-bottom: 1px solid #292a2a; border-top: 1px solid #525353; float: left; font-size: 0.8em; list-style-type: none; margin: 0 1em 2em 0; padding: 0.5em 0 0.2em; width: 100%;}
+						#content .hentry .byline li, #content .hentry .entry-footer li {float: left; list-style-type: none;}
+						#content .hentry .byline li.comments {background: #0e0e0e url('/images/icons/icon-comments-full.gif') no-repeat 0 1px; padding: 0 0 0 20px; float:right; width: auto;}
+						.hentry .byline .updated {}
+					.hentry .entry-content {clear: both; padding: 0 0 1.5em .2em;}
+					.hentry .author {}
+						.hentry .vcard {}
+						  .hentry .vcard img {top: -4px;}
+						.hentry .vcard .fn {}
+					#content .hentry .entry-footer {border: 1px solid #292a2a; border-left: none; border-right: none; float: left; font-size: 0.8em; font-weight: 100; margin: 0 0 0.08em 0; padding: 0.5em 0 0 0; width: 100%;}
+							#content .hentry .entry-footer li.post-date {background: #0e0e0e url('/images/icons/icon-post.jpg') no-repeat 0 2px; color: #fff; padding: 0 0 0 20px;}
+							#content .hentry .entry-footer li.tags {background: #0e0e0e url('/images/icons/icon-tag.jpg') no-repeat 0 1px; color: #fff; float: right; padding: 0 0 0 5.2em; position: relative; width: 16em;}
+								#content .hentry .entry-footer li.tags span {left: 20px; position: absolute; top: 0; width: 3.1em;}
+								#content .hentry .entry-footer li.tags ul {}
+								#content .hentry .entry-footer li.tags ul li {display: inline; font-size: 1em; margin: 0; padding: 0 0.2em 0 0;}
+									#content .hentry .entry-footer li.tags ul li a {text-decoration: none;}
+				
+				/* ----- =Comments ----- */
+				#comments {clear: both; padding: 2em 0 0 0;}
+				
+					.comment {margin: 0 0 1.5em 0;}
+            .comment p {margin: 0 1em 1em 1em;}
+            
+            #comments .hentry {border: none; margin: 0 0 1em 0;}
+              #comments .hentry .entry-content {background: #181919; color: #fff; padding: 0.6em 1em 0.5em 1em;}
+            #comments .hentry .entry-content br {margin: 0 0 0.5em 0;}
+            #comments .hentry .entry-content ul br,
+            #comments .hentry .entry-content ol br {left: -9999px; position: absolute; top: -9999px;}
+            
+            #maincontent .comment p.comment-details {background: #0d0e0e url('/stylesheets/images/bg-comment-details.gif') no-repeat scroll 0 100%;  color: #fff; font-size: 0.857em; line-height: 2.8; margin: 0;}
+              p.comment-details a.permalink {float: left; display: block; width: 2em;}
+              p.comment-details .vcard {padding: 0 0 0 20px;}
+                p.comment-details .vcard img {left: 20px;}
+              
+          #comment-form {}
+           #content #comment-form div.item-details {margin: 0;}
+            #comment-form form {width: 100%;}
+                #comment-form fieldset {}
+                  #comment-form label{width: 100%;}
+                    #comment-form label span {left: -9999px; position: absolute; top: -9999px;}
+                    #comment-form textarea {font-size: 1.2em; height: 10em; width: 100%;} 
+                    #comment-form label span.note {margin: 0.5em 0 0 0; position: static;}
+                  #comment-form input.submit{margin: 1.6em 0 0 0.4em;}
+							
+			/* ---- =Archives ---- */
+			body.archive #content ul li {background: #0e0e0e; color: #a2a2a2; list-style-type: none;}
+				body.archive #content ul li a:link {text-decoration: none;}
+			ul.year {float: left; padding: 0 0 0 4.2em; position: relative; width: auto;}
+			    ul.year li {float: left; width: auto;}
+			        ul.year li h2 {font: 100 1.6em/1.3 "Trebuchet MS", Arial, Helvetica, sans-serif; left: 0; position: absolute; top: 0.05em; width: 2.5em;}
+								ul.year li h2 a:link,
+								ul.year li h2 a:visited {background: #0e0e0e; color: #a2a2a2; text-decoration: none;}
+								ul.year li h2 a:hover,
+								ul.year li h2 a:active,
+								ul.year li h2 a:focus {text-decoration: underline;}
+						#content ul.year ul.month {border-bottom: 1px solid #292a2a; float: left; padding: 0 0 0.71em 0; width: 26em;}
+							#content ul.year ul.month li {margin: 0; width: auto;}
+								ul.year ul.month li h3 {float: left; font: 100 1.4em/1.5 "Trebuchet MS", Arial, Helvetica, sans-serif; letter-spacing: 0.1em; margin: 0.2em 0 0 0; text-transform: lowercase; width: auto;}
+									ul.year ul.month li h3 a:link,
+									ul.year ul.month li h3 a:visited {background: #0e0e0e; color: #f03e00; text-decoration: none;}
+										ul.year ul.month li h3 a:hover,
+										ul.year ul.month li h3 a:active,
+										ul.year ul.month li h3 a:focus {background: #0e0e0e; color: #f03e00; text-decoration: underline;}
+								#content ul.year ul.month li p {float: left; font: 100 1em/1.5 "Trebuchet MS", Arial, Helvetica, sans-serif; margin: 0.75em 0 0 1em; width: auto;}
+								#content ul.month ul.posts {float: left; margin: 0; width: 26em;}
+									#content ul.month ul.posts li {display: inline; float: none; font: 100 1em/1.5 "Trebuchet MS", Arial, Helvetica, sans-serif; padding: 0 0.2em 0 0; text-transform: lowercase;}
+										ul.month ul.posts li a:link,
+										ul.month ul.posts li a:visited {background: #0e0e0e; color: #fff; text-decoration: none;}
+										ul.month ul.posts li a:hover,
+										ul.month ul.posts li a:active,
+										ul.month ul.posts li a:focus {background: #0e0e0e; color: #fff; text-decoration: underline;}
+										
+										#content ul.posts li a.comments {background: #0e0e0e url('/images/icons/icon-comments.gif') no-repeat 0 4px; padding: 0 0 0 20px;}
+										ul.posts li a.comments:link,
+										ul.posts li a.comments:visited {}
+										ul.posts li a.comments:hover,
+										ul.posts li a.comments:active,
+										ul.posts li a.comments:focus {}
+			
+			/* ---- =Login Form ---- */			
+			#login {}
+			  #login span {margin: 0.2em 0 0 0;}
+			    #login label span {margin: 0; width: auto;}
+			    
+			    #login span span.service-images {margin: 0 0 0.5em 0; width: 10em;}
+			      #login span span.service-images a {display: block; float: left; margin: 0 0.4em 0 0; width: auto;}
+			      
+			    #login span select {clear: both; margin: 0 0 1em 0; width: 18.4em;}
+			    
+			      #login label .construct-openid input {clear: both;}
+			      #login span em {background: #0d0e0e; clear: both; color: #aaa;}
+			        #login span em strong {background: #0d0e0e; color: #fff;}
+			    
+			    #login input.submit {margin: 0.4em 0 0 0;}
+			
+			p.error {padding: 1em; background-color: #281700;}
+			
+
+			/* ---- =Profile ---- */
+			
+			body.profile #content .media .item-details {margin: 0 0 0.5em 0;}
+			  body.profile #content .media h2 {float: none;}
+			body.profile #content .media p {line-height: 1.5; margin: 0;}
+			
+     body.account #content {float: left; padding: 2em; width: 66em;}
+			  body.account #content .column {float: left; margin: 1em 0 0 4em; width: 24em;}
+			    body.account #content .item {border: none; padding: 0 1em 1em 1em;}
+			      body.account .item form.button-to {margin: 0 0 1em 0;}
+			        body.account #content .item p {margin: 1em 0; width: 24em;}
+			
+			  body.account h2,
+			  body.account h3 {clear: both;}
+			  
+			  body.account form label.description {width: 22.3em}
+        body.account form label.description span {width: 100%}
+        body.account form label.description textarea {width:100%}
+        body.account form label.description span.note {margin-left:0}
+			  
+			  body.account #maincontent ul.identities {margin: 2em 0 0 0;}
+			   body.account #maincontent ul.identities li {clear: both; float: left; margin: -0.5em 0 0 1em; width: 32em;}
+			      body.account ul.identities li a {float: left; position: relative; top: -1em;}
+			      body.account ul.identities li form.button-to {clear: none; float: right;}
+			        body.account ul.identities li form.button-to input {position: relative; top: -1em; width: auto;}
+			  
+			#maincontent #profile-menu {font-size: 0.8em; margin: 3em 0 0 0;}
+				#maincontent #profile-menu li {display: inline; list-style-type: none; margin: 0;}
+					#profile-menu li a:link,
+					#profile-menu li a:visited {}
+					#profile-menu li a:hover,
+					#profile-menu li a:active
+					#profile-menu li a:focus {}
+					
+			dl.vcard {}
+				.vcard dt.fn {float: left; width: auto;}
+				.vcard dd {clear:left}
+					.vcard dd a.url {}
+				
+					.vcard dd.avatar {background: #0d0e0e url('/stylesheets/images/bg-profile-avatar.jpg') no-repeat center top; float: right; padding: 15px 0 0 0; text-align: center;}
+						.vcard dd.avatar a {display: block;}
+						.vcard dd.avatar img {border: 1px solid #373737; margin: 0 0 0.4em 0; padding: 0.7em;}
+						
+			body.contributors {}
+			  body.contributors h2 {margin: 1em 0 0.5em 0;}
+
+  			/* ---- =Peeps ---- */			
+			  #maincontent ul.peeps li {float: left; height: 110px; list-style: none; margin: 0 0 1em 0; width: 100px;}
+			    
+			    ul.peeps li span.user-avatar a.url {display: block; margin: 0; padding: 0.75em; text-decoration: none;}
+		      ul.peeps li span.user-avatar a.url:link {}
+		      ul.peeps li span.user-avatar a.url:visited {}
+		      ul.peeps li span.user-avatar a.url:hover,
+		      ul.peeps li span.user-avatar a.url:active,
+		      ul.peeps li span.user-avatar a.url:focus {background: #f03e00; color: #000;}
+		        ul.peeps li span.user-avatar a img {position: static;}
+			      ul.peeps li span.user-avatar a span {display: block; line-height: 1; text-align: center;}
+			      ul.peeps li span.user-avatar a span.avatar {min-height: 86px; min-width: 82px;}
+			      
+	
+	/* --- =Upcoming events sidebar fo shizznitz--- */
+	#other-content #upcoming-events {border-bottom:none}
+		#upcoming-events ol {margin-top:-1em}
+		#upcoming-events ol, #upcoming-events ol li {list-style:none;padding:0;margin:0}
+			#upcoming-events ol li {position:relative;min-height:5em;border-bottom:1px solid #333;padding:1em 0}
+			#upcoming-events li.last {border-bottom:none}
+				#upcoming-events dl {width:13em}
+					#upcoming-events dt {font-family:Futura,Helvetica,Arial,sans-serif;font-size:1.45em;}
+						#upcoming-events a.summary {text-decoration:none}
+				#upcoming-events dd.when {position:absolute;top:1.1em;right:0;width:5em;background-color:#333}
+					dd.when a {padding-top:.5em;display:block;text-decoration:none;height:4em;text-align:center;color:#0D0E0E;font-family:Futura,Helvetica,Arial,sans-serif}
+					li.next-event dd.when a:link, li.next-event dd.when a:visited {background-color:#f03e00}
+					dd.when a:link, dd.when a:visited {background-color:#ccc}
+					li.next-event dd.when a:hover, li.next-event dd.when a:active, li.next-event dd.when a:focus, dd.when a:hover, dd.when a:active, dd.when a:focus {background-color:#F09464;}
+						dd.when strong.dd {display:block;font-weight:300;font-size:1.714em}
+						dd.when span.mon {text-transform:uppercase}
+		
+		
+		/* --- =Other Content --- */
+		#other-content {float: left; font: 300 1em/1.2 "Trebuchet MS", 'Helvetica Neue', Arial, Helvetica, sans-serif; padding: 2em 0 1em 0; width: 23em;}
+		
+		  #other-content .item {clear: left; border-bottom: 1px solid #333; margin: 0 0 1.5em 0; padding: 0 1em 1em 1em;}
+		  body.archive #other-content .item:first-child {padding-top:0}
+		  body.archive #other-content .item {padding-top:1em}
+		  
+		  #other-content .last {border:none;}
+		  
+		  #other-content #summary {}
+		    #summary p {margin: 0 0 1em 0;}
+		    #summary h2 {font: 300 1em/1.2 "Trebuchet MS", 'Helvetica Neue', Arial, Helvetica, sans-serif; margin: 1em 0 0.1em 0;}
+		    
+		    #summary ol {margin: 0 0 2em 0;}
+		      #summary ol li {list-style-type: decimal;}
+		        #summary ol li a {}
+		    #summary ul {}
+		      #summary ul li {list-style-type: disc; padding: 0 0 0 0.5em;}
+		        #summary ul li a {}
+		        
+		        #summary li strong {display: block;}
+		  
+      /* ---- =WTF ---- */
+      #wtf {}
+  		  #wtf p {margin: 0 0 1em 0;}
+  		  
+  		/* ---- =Shirt ---- */
+  		#shirt {}
+  		  #shirt .tee {text-align: center;}
+  		    #shirt p {margin: 0.5em 0 0 0;}
+		  
+	    /* ---- =Latest ---- */
+	    #latest {}
+  		  #latest h3 {font: 700 1em/1.2 Helvetica, Arial, sans-serif; text-transform: capitalize;}
+			#latest h3 a {text-decoration:none;color:#fff}
+			#latest h3 a:hover, #latest h3 a:active, #latest h3 a:focus {color:#ccc}
+  		  #latest p {}
+  		  #latest ul {}
+  		    #latest ul li {background: #0d0e0e url('/stylesheets/images/bg-more.gif') no-repeat 100% 6px; float: left; list-style-type: none; margin: 0 1em 0 0; padding: 0 12px 0 0; width: auto;}
+  		    #latest ul li.first {background: none; border-right: 1px solid #fff; padding: 0 1em 0 0;}
+  		    #latest ul li.more {clear: both; margin: 1em 0 0 0;}
+		
+		
+	/* -- =Footer -- */		
+    #footer {background: #333; color: #fff; clear: both; font-family: Helvetica, Arial, sans-serif; overflow: hidden;}
+      #footer .column {border-left: 1px solid #0d0e0e; float: left; padding: 2.2em 1.8em 2000px 1.8em; margin: 0 0 -1940px 0; width: 19.6em;}
+      #footer .column.first {border: none;}
+      
+        #footer h2 {font-size: 1.714em; margin: 0 0 1em 0;}
+      
+        #news ul {}
+          #news ul li {list-style-position: inside; list-style-type: disc; margin: 0 0 0.2em 0;}
+          #news ul li.more {list-style-type: none; margin: 1em 0 0 0;}
+            #news ul li.more a {background: #333 url('/stylesheets/images/bg-footer-more.gif') no-repeat 100% 4px; padding: 0 10px 0 0;}
+            
+        #previous ul {}
+          #previous ul li {float: left; margin: 0 2.05em 0.4em 0; width: auto;}
+        
+        #about {}
+          #about p {margin: 0 0 1em 0;}
+		
+
+/* - =JS enabled - */
+
+html.js {}

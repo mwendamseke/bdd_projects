@@ -1,0 +1,15 @@
+- content_for(:head) do
+  = javascript_include_tag 'change_meeting_notice_period_resolutions'
+%h2 Changing notice period for General Meetings
+= form_for(@change_meeting_notice_period_resolution) do |form|
+  = render(:partial => 'form', :locals => {:form => form})
+  %p
+    = form.check_box :certification
+    = form.label :certification, "I certify that the Board has decided to ask the Members to accept this notice period."
+  %p
+    = form.check_box :pass_immediately
+    = form.label :pass_immediately, "I certify that this resolution has already been passed by the Membership."
+  %p.pass_immediately_true{:style => "display: none;"}
+    = form.submit "Amend the notice period"
+  %p.pass_immediately_false
+    = form.submit "Start a vote of Members"

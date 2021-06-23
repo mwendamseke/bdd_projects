@@ -1,0 +1,392 @@
+
+/* color palette:
+  text:                                          black
+  content background:                            white
+  page background:         almost-white blue     #f8f8ff
+  in-content divider:      very light blue       #e8e8ff
+  active area background:  light blue            #d0d0ff
+  content border:          2nd-darkest blue      #b0b0ff
+                           dk blue               #040460
+  error color:             dk red                #990000  ; scaffold.css, .png's
+  unvisited link color:                          #1d43c0
+  visited link color:                            #64439d
+  accent color:                                  yellow
+    (logo fill, bullets)
+  subdued accent:          light yellow          #ffff60
+    (question-mark help icon)
+  accent text:             dark yellow           #f4f420
+*/
+
+
+        /* global settings */
+body, p, ol, ul, td {
+  color: black;
+  font-family: verdana, georgia, "times new roman", arial, helvetica, sans-serif;
+  font-size: small;
+  font-size-adjust: none;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: normal;
+}
+body {
+  background-color: #f8f8ff;
+}
+
+a:link img,
+a:active img,
+a:visited img {
+  border: 0;
+}
+a:link {
+  color: #1d43c0;
+  text-decoration: none;
+}
+a:active {
+  color: #2759ff;
+}
+a:visited {
+  color: #64439d;
+  text-decoration: none;
+}
+a:hover {
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+#column-left,
+#column-right {
+  overflow: hidden;
+}
+div#fancybox-outer {
+  overflow: visible;
+}
+
+
+        /* settings for the basic division of pages into areas and boxes */
+.page-title-text {
+  position: absolute;
+  top: 0;
+  left: 15.5%;
+  height: 8ex;
+  overflow: hidden;
+}
+.content {
+  padding: 2px;
+  background-color: white;
+  border-top: solid 1px #b0b0ff;
+}
+.box {
+  padding: 0;
+  background-color: white;
+  border: solid 1px #b0b0ff;
+  margin-top: 0;
+  margin-bottom: 0.7ex;
+}
+.noncontent {
+  margin: 6px;
+  padding: 2px;
+  background-color: #f8f8ff;
+  border: none;
+}
+.headline {
+  font-size: 150%;
+  margin-left: 2em;
+  margin-top: 2ex;
+}
+.headline:first-child {
+  margin-top: 0;
+}
+
+h2.subheading {
+  font-size: 150%;
+}
+h3.subheading {
+  font-size: 120%;
+  text-decoration: underline;
+}
+.subheading {
+  font-weight: bold;
+  color: #b0b0ff;
+  margin-top: 0;
+  margin-bottom: 1.3ex;
+}
+
+.fine-print {
+  font-size: 60%;
+  color: #040460;
+  text-align: center;
+  padding-top: 1.5ex;
+}
+.blue-text {
+  color: #040460;
+}
+.image-in-text {
+  height: 1.9ex;
+  position: relative;
+  top: 0.25ex;
+}
+hr {
+  width: 62%;
+  height: 1px;
+  border: 0px solid #b0b0ff;
+  text-align: center;
+  color: #b0b0ff;
+  background-color: #b0b0ff;
+}
+
+.horizontal-link-list {
+  text-align: center;
+}
+.horizontal-link-list ul {
+  margin: 0;
+  padding: 0;
+  padding-top: 1ex;
+}
+.horizontal-link-list li {
+  display: inline;
+  white-space: nowrap;
+}
+.horizontal-link-list ul li + li {
+  margin-left: 1.5em;
+}
+.vertical-link-list ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-left: 0.35em;
+  margin-bottom: 0.5ex;
+}
+.vertical-link-list p {
+  padding: 0;
+  margin: 0;
+  line-height: 110%;
+}
+.vertical-link-list li {
+  padding-right: 0.5em;
+  padding-left: 1em;
+  text-indent: -1em;
+}
+.floating-links {
+  float: right;
+  font-size: 80%;
+  margin-right: 6em;
+}
+.link-set {
+  font-size: 70%;
+  margin-left: 0.8em;
+}
+.link-set a {
+  margin-left: 0.4em;
+}
+
+        /* set apart stuff that is in development */
+.unimplemented {
+  font-style: italic;
+}
+p.unimplemented {
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
+
+
+        /* configure our CSS "tool tips" */
+.texthastip {
+  position: relative;
+}
+.texthastip:link {        /* undo the standard Rails link behaviors */
+  color: black;
+  text-decoration: none;
+}
+.texthastip:visited {
+  color: black;
+}
+.texthastip:hover,
+.texthastip:active {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+.linkhastip {
+  position: relative;
+}
+.tip {
+  display: none;
+  font-weight: normal;
+  white-space: nowrap;
+}
+.texthastip:hover .tip,
+.linkhastip:hover .tip {
+  display: block;
+  z-index: 100;
+  color: #040460;
+  background: #f8f8ff;
+  border: solid 1px #e8e8ff;
+  position: absolute;
+  top: 1.2ex;
+  left: 2em;
+}
+
+.title-annotation {
+  font-size: 80%;
+  color: #ccc;
+}
+
+.upper-right-popup-help {
+  float: right;
+}
+
+        /* "universal special cases" .... or something like that */
+p {           margin-top:      0;    }
+table + p {   margin-top:    1.5em;  }
+p + table {   margin-bottom: 1.5em;  }
+#block-glossary-help + div { display: inline; }
+.wrapper {
+  color: #ffff00;
+  letter-spacing: -0.3em;
+}
+
+#block-search {
+  border-width: 2px;
+  border-color: #e8e8ff;
+  border-style: none none solid solid;
+  background: url("/images/transparent_ltblue_background.png") repeat;
+  height: 5.8ex;
+}
+
+#block-search input[type=text] {
+  width: 98.5%;
+  border: solid 1px #b0b0ff;
+}
+#block-search input[type=submit] {
+  border: solid 1px #b0b0ff;
+  background: #e8e8ff;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 0;
+  margin: 2px 0 0 3px;
+}
+
+#block-help {
+  float: right;
+  border-width: 2px;
+  border-color: #e8e8ff;
+  border-style: none solid solid;
+  background: url("/images/transparent_ltblue_background.png") repeat;
+  padding: 0 0.3em;
+  height: 5.8ex;
+}
+#block-help span {
+  font-size: 200%;
+}
+
+#alert_box {
+  width: 30%;
+  position: fixed;
+  top: 18px;
+  left: 35%;
+  z-index: 150;
+  font-size: 110%;
+  font-weight: bold;
+  background: url("/images/transparent_white_background.png") repeat;
+  text-align: center;
+}
+#alert_box_close_link {
+  float: right;
+  border: solid 1px #1d43c0;
+  margin: 0 5px;
+}
+
+
+
+        /* styles first intended for item & connection info tables:
+         *   app/views/ ** /index, home, show                                 */
+table {
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+}
+
+td {
+  vertical-align: top;
+  padding-bottom: 1.5ex;
+  padding-left: 4px;
+  padding-right: 2px;
+}
+
+.connectioncolumn {
+  border-width: thin;
+  border-color: #b0b0ff;
+  border-style: none solid;
+}
+
+.tight-table td {
+  margin: 0;
+  padding: 0;
+}
+.tight-table th {
+  margin: 0;
+  padding: 0;
+}
+.index-table .firstrow {
+  padding-top: 1ex;
+}
+.index-table .secondrow {
+  border-bottom: 1px solid #e8e8ff;
+}
+
+
+
+
+        /* used for input controls & matching instruction text                */
+p.inputpara {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+p.directions {
+  padding-top: 0;
+  margin-top: 0;
+  padding-bottom: 2ex;
+  font-size: 80%;
+  line-height: normal;
+}
+
+
+        /* used for informative-text highlighting in app/views/items/new      */
+.titleSelectedItemDescription {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.bodySelectedItemDescription {
+  font-weight: bold;
+}
+
+.helpTextFlagged {
+  font-weight: bold;
+  color: #990000;
+}
+
+.confirmationTextInvisible {
+  color: white;
+}
+
+.confirmationTextShow {
+  display: inline;
+  color: #b0b0ff;
+}
+
+.activeButton {
+  color: black;
+  background-color: #d0d0ff;
+}
+.inactiveButton {
+  color: #d0d0ff;
+  background-color: #ffffff;
+}
+
+.inactiveLink {
+  font-size: 80%
+}

@@ -1,0 +1,84 @@
+## this file uses same glob conventions as Dir.glob
+
+  # NOTE: file name target of '!source' directive cannot contain spaces
+!source .gitignore
+.git
+Gemfile.lock
+.htaccess
+
+
+    # files that don't match our extension-determines-header-format conventions
+!treat Rakefile                                      !as .rb
+!treat Gemfile                                       !as .rb
+!treat policy/ckFilesUtils/Rakefile                  !as .rb
+!treat .autotest                                     !as .rb
+
+
+    # un- and not-to-be-modified third-party components, expect to be
+    # updated periodically with new versions
+vendor
+public/javascripts/modalbox.js
+public/javascripts/event.simulate.js
+public/javascripts/jquery.js
+public/javascripts/cookies.js
+public/javascripts/fancybox.js
+public/stylesheets/fancybox.css
+config/environments/cucumber.rb
+features/support/paths.rb
+features/support/env.rb
+features/step_definitions/web_steps.rb
+lib/tasks/asset_packager_tasks.rake
+config/initializers/mongrel.rb
+
+    # repeatedly auto-generated from other files
+db/schema.rb
+VERSION.yml
+
+    # frozen source files, have headers compliant with policies when written
+!lock            df1dbdf78eb147032f4e0781ceb79ae1d0984e69
+db/migrate/2009*.rb
+!lock            c049c1171556f276b87be6926a60f91862d058ad
+db/migrate/2010*.rb
+!unlock
+
+    # one-time auto-generated files, never (seldom) to be modified
+    #  "lock" directive contains git commit # of acceptable version
+!lock            4b45222d3f846a9bac9c1317657799862f13a1ba
+config/database-sample-mysql.yml
+config/initializers/inflections.rb
+config/initializers/mime_types.rb
+config/initializers/new_rails_defaults.rb
+config/locales/en.yml
+public/dispatch.rb
+!lock            02bcd62d1931610ffa7608145926782ec8d5d705
+config/boot.rb
+!lock            651adf6bc0e0700e310dca8cc99069cb7261d5b9
+script
+!lock            c9c273b6159826b6652ea94b3dcfa64eb2dd128f
+Capfile
+!unlock
+
+
+    # unmodified (and never to be modified) third-party components we include
+    #  "lock" directive contains git commit # of acceptable version
+!lock            c28928993247871a46e19c538dac6093d327f225
+public/javascripts/controls.js
+public/javascripts/dragdrop.js
+public/javascripts/effects.js
+public/javascripts/prototype.js
+COPYING
+COPYING.DOCUMENTATION
+/LICENSE
+!unlock
+
+    # can't embed license notice in binary files--our originals still
+    # AGPL'ed, though
+*.ico
+*.svg
+*.png
+*.jpg
+*.xcf
+
+    # not worth hassle of license notice
+public/robots.txt
+doc/wiki/page-catalog

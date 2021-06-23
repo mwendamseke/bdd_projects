@@ -1,0 +1,16 @@
+%h2
+  Editing Registration Details for
+  = @organisation.name
+
+= form_for(@registration_form, :as => :registration_form, :url => admin_registration_form_path(@registration_form), :method => :put) do |form|
+
+  = render(:partial => 'registration_forms/form', :locals => {:form => form})
+
+  %h3 Admin-only fields
+
+  %p
+    = form.label :reg_form_business_carried_out, "What business, industry or trade does the society intend to carry out?"
+    = form.text_area :reg_form_business_carried_out
+
+  %p
+    = form.submit "Save changes"

@@ -1,0 +1,864 @@
+// Shorthand and variables
+
+@mixin rounded-corners($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius: $radius
+  border-radius: $radius
+
+// And let's begin
+
+*
+  :margin 0
+  :padding 0
+
+body
+  :background-color $body-background
+  :color $text
+  :font-family $body-font
+  /* Base font size */
+  :font-size $base-font-size
+  /* Prevent Get Satisfaction feedback tab overlapping the container */
+  :padding 0 40px
+
+#container
+  :background-color $container-background
+  :margin 0 auto
+  :max-width 1200px
+  :min-width 800px
+  :padding 12px
+
+div.clear
+  :clear both
+
+/* Induction */
+
+#overlay
+  :-webkit-border-bottom-right-radius 8px
+  :-webkit-border-bottom-left-radius 8px
+  :-moz-border-radius-bottomright 8px
+  :-moz-border-radius-bottomleft 8px
+  :border-bottom-right-radius 8px
+  :border-bottom-left-radius 8px
+  :background $overlay-background
+  :background -moz-linear-gradient(100% 100% 90deg, $overlay-background-highlight, $overlay-background)
+  :background -webkit-gradient(linear, left bottom, left top, from($overlay-background-highlight), to($overlay-background))
+  :border-bottom 1px solid $border
+  :border-left 1px solid $border
+  :border-right 1px solid $border
+  :margin -12px 0 12px
+  a
+    @include rounded-corners(2px)
+    :background #000
+    :background rgba(0, 0, 0, 0.4)
+    :border 1px solid $text
+    :color #fff
+    :margin 0 2px
+    :padding 2px 6px
+    :text-decoration none
+    :text-shadow none
+    &:hover
+      :background #444
+      :background rgba(0, 0, 0, 0.7)
+      :text-decoration none
+  form input, input.button-form
+    :float right
+    :margin-top 0
+    :margin-right 8px
+  h3
+    :margin 0
+    :padding 12px 12px 6px
+    :text-shadow #fff -1px -1px 2px
+  p
+    :color $overlay-text
+    :font-size 1em
+    :line-height 1.6em
+    :margin 0
+    :padding 18px 12px
+    :text-shadow #fff -1px -1px 2px
+
+#overlay.proposed
+  :background $overlay-alternate-background
+  :background -moz-linear-gradient(100% 100% 90deg, $overlay-alternate-background-highlight, $overlay-alternate-background)
+  :background -webkit-gradient(linear, left bottom, left top, from($overlay-alternate-background-highlight), to($overlay-alternate-background))
+
+/* Header */
+
+.control_bar
+  :color $secondary-text
+  :float right
+  :font-size 0.75em
+  :line-height 1.2em
+  :padding 6px 0
+  :text-align right
+  a
+    :text-decoration none
+
+h1.header
+  :font-size 2.25em
+  :font-family $heading-font
+  :margin-bottom 4px
+  a
+    :color $header-text
+    :text-decoration none
+    &:hover
+      :text-decoration underline
+
+#hd
+  :border-bottom 1px solid #999
+  :margin-bottom 12px
+  :padding 6px 0
+
+#hd p
+  :color $secondary-text
+  :font-size 0.7em
+  a
+    :color $secondary-text
+    :text-decoration none
+    &:hover
+      :color $header-highlight
+      :text-decoration underline
+
+/* Basic styles */
+
+br.clear
+  :clear both
+
+h2
+  :color $page-title
+  :font-size 2.25em
+  :font-weight bolder
+  :margin-bottom 0.4em
+
+h3
+  :font-size 1.5em
+  :font-weight bold
+  :margin-bottom 0.2em
+
+h4
+  :font-size 1em
+
+a
+  :color $link
+  &:hover
+    :color $text
+    :text-decoration underline
+
+hr
+  :background-color $hr
+  :border none
+  :color $hr
+  :height 1px
+  :margin 0.8em 0
+
+p
+  :font-size 1em
+  :line-height 1.3em
+  &.auxiliary
+    :text-align right
+  &.sub
+    :margin-left 2em
+
+em
+  :font-style italic
+
+strong
+  :font-weight bold
+
+/* Navigation */
+
+#nav
+  :margin 12px 0
+  li
+    :display inline
+    :padding-right 2em
+  a
+    :text-decoration none
+    &:hover
+      :text-decoration underline
+
+.navitem
+  :display inline
+  :margin 0
+  :padding 0
+
+/* Header notifications */
+
+#notice, #error
+  :font-size 0.8em
+  :margin 12px 0
+  :padding 12px
+
+#notice
+  :background-color $notice-background
+  :clear both
+
+#error
+  :background-color $error-background
+  :color #fff
+
+/* Body */
+
+#bd
+  a
+    &.cancel
+      :color $cancel-link
+      :font-size 0.9em
+  p
+    :color $text
+    :margin-bottom 12px
+    &.helper
+      :font-size 0.9em
+    &.explanation
+      :color $secondary-text
+      :font-size 0.8em
+      a
+        :text-decoration underline
+  ul, ol
+    :margin 0 0 1em 2em
+    li
+      :line-height 1.6em
+  .section
+    :background $section-background
+    :border 1px solid $section-border
+    :margin-bottom 18px
+    :padding 12px
+  div.left
+    :float left
+    :width 49%
+  div.right
+    :float right
+    :width 49%
+  .open-proposals
+    h4
+      :margin 0.8em 0 0.4em
+    span.time-ends
+      :color $secondary-text
+      :font-size 0.8em
+      :font-weight normal
+    p.votes
+      :float left
+      :margin-right 24px
+  section.description
+    /* We style Markdown in descriptions */
+    :background rgba(255, 255, 255, .6)
+    @include rounded-corners(4px)
+    :margin 1em 2em
+    :padding 0.5em 2em
+    :font-size .8em
+    &.missing
+      :border-left 0
+      p
+        :color $secondary-text
+    h1, h2, h3
+      :color $secondary-text
+      :margin 0.4em 0
+    h1
+      :color $text
+      :font-size 1.4em
+    h2
+      :color $text
+      :font-size 1.2em
+    h3
+      :font-size 1.1em
+    p
+      :line-height 1.4em
+    ul, ol
+      :margin 0.4em 2em
+    blockquote
+      :border-left 1px solid $blockquote-sideline
+      :margin-left 2em
+      :padding-left 1em
+  ul.draft_proposals li,
+  ul.resolution_proposals li
+    :clear left
+    :margin-bottom 1em
+    p
+      :margin-bottom 0
+
+img.gravatar
+  @include rounded-corners(2px)
+  :margin-left 3px
+  :margin-right 3px
+  :vertical-align middle
+
+#download
+  :font-size 0.75em
+  :margin-top 6px
+  span.download a
+    @include rounded-corners(2px)
+    :padding 5px 6px 4px 6px
+    :text-decoration none
+  span.pdf a
+    :background-color $pdf-background
+    :color $download-button-text
+    &:hover
+      :background-color $pdf-background-highlight
+  span.csv a
+    :background-color $csv-background
+    :color $download-button-text
+    &:hover
+      :background-color $csv-background-highlight
+  span.txt a
+    :background-color $txt-background
+    :color $download-button-text
+    &:hover
+      :background-color $txt-background-highlight
+
+#bd
+  .comment
+    :background $body-background
+    :border 1px solid $secondary-text
+    :margin 0.8em 0
+    :padding 0.4em
+    :width 60%
+    p
+      :margin 0 0 0.6em 1em
+    p.attribution
+      :margin 0 0 0.6em 0
+
+ul.tasks li
+  :list-style-type square
+
+.guidance
+  :float right
+  :border 1px solid $section-border
+  @include rounded-corners(2px)
+  :background-color $section-background
+  :margin-left 1em
+  :padding 1em
+  :width 150px
+
+p#loading
+  :display none
+  :text-align center
+  :font-weight bold
+  :margin 0 auto 1em
+  img
+    :margin 0 1em 0 0
+
+/* Set up a new organisation */
+
+body.setup
+  h1.header
+    :margin-bottom 12px
+    img
+      :vertical-align middle
+  #bd
+    h2
+      :color $page-title
+    p.explanation
+      :color $secondary-text
+      :font-size 0.8em
+      :margin -12px 0 4px 20px
+      :padding 0.2em
+    div.left, div.right
+      input, label
+        :width 90%
+      input[type="checkbox"]
+        :width auto
+        :margin-left 20px
+    div.left
+      :float left
+      :width 45%
+    div.right
+      :float right
+      :width 51%
+      textarea
+        :height 3em
+        :width 90%
+      input[type="submit"], p#loading
+        :font-size 1.1em
+        :margin 1em auto 0
+        :padding 0.8em 0
+        :width 16em
+    #subdomain_wrapper
+      :border 1px solid $input-border
+      :margin 0 4px 10px 20px
+      :padding .4em
+      :width 90%
+      input
+        :border 0
+        :margin-top 2px
+        :padding 0
+        :width 270px
+        :width 50%
+      #base_domain
+        :color #999
+        :font-size .9em
+        :margin-left -3px
+
+/* Constitution page */
+
+.dynamic
+  @include rounded-corners(2px)
+  :background-color $dynamic-background
+  :border 1px solid $dynamic-border
+  :color $dynamic-text
+  :padding 2px
+
+section.constitution
+  h1
+    :font-size 1.8em
+    :text-align center
+  h2
+    :font-size 1.4em
+  h3
+    :font-size 1em
+  h4
+    :font-style italic
+  dt
+    :font-weight bold
+  dd
+    :margin-left 1em
+
+
+/* Tables */
+
+table
+  :border-collapse collapse
+  :margin 1em 0 2em 0
+  :text-align left
+  th
+    :border-bottom 1px dashed $table-header-border
+    :font-weight bold
+    :white-space nowrap
+  th, td
+    :padding 0.4em 0.6em
+  td.timestamp
+    :white-space nowrap
+  tr.even td
+    :background $table-alternate-background
+
+table.proposals, table.decisions, table.failed_proposals
+  :border 1px $table-border solid
+  :margin auto
+  :width 900px
+  td.vote
+    :text-align center
+    :width 12em
+  form
+    :display inline
+  input
+    :margin auto
+    :width 7em
+  td.proposal_ends_in
+    :text-align center
+    :width 14em
+
+tr.vote_for
+  :background-color $vote-for-background
+  :color #fff
+  &:hover
+    :background-color $vote-for-background-highlight
+
+tr.vote_against
+  :background-color $vote-against-background
+  :color #fff
+  &:hover
+    :background-color $vote-against-background-highlight
+
+tr.vote_in_progress
+  :background-color $vote-in-progress-background
+  :color #fff
+  &:hover
+    :background-color $vote-in-progress-background-highlight
+
+tr.vote_for, tr.vote_against, tr.vote_in_progress
+  a
+    :color #fff
+
+td.resolution, td.resolution_proposal
+  :border 1px solid $border
+  :margin 1em
+  input
+    :float left
+    :margin-right 2em
+
+/* Forms */
+
+label, input, textarea, select
+  :display block
+  :font-family $body-font
+  :font-size 0.9em
+  :margin-bottom 10px
+  :margin-left 20px
+  :padding 0.2em
+  :width 30em
+  &.inline
+    :display inline
+    :margin 0
+    :width auto
+
+p.date_select
+  :padding-left 1.2em
+  input.hasDatepicker
+    // When date selects are converted to a jQuery UI datepicker, the
+    // input element becomes a standard text field, so doesn't need
+    // this extra padding.
+    :margin-left 0
+
+label
+  :padding-right 1em
+  :margin-bottom 2px
+  &.inline
+    :padding 0
+
+input, textarea
+  :border 1px solid #000
+  :padding 0.4em
+
+input[type="button"], input[type="submit"], button,
+p#loading
+  @include rounded-corners(3px)
+  :padding 0.3em 1.2em 0.2em 1.2em
+  :width auto
+
+input[type="button"],
+button,
+form.button_to input[type="submit"]
+  :background-color $button-background
+  :color $button-text
+  &:hover
+    :background-color $button-background-highlight
+
+input[type="submit"],
+p#loading
+  :background-color $submit-button-background
+  :color $submit-button-text
+  :cursor pointer
+  &:hover
+    :background-color $submit-button-background-highlight
+
+// This declaration is repeated in ie.sass with an IE-compatible selector
+// and some layout tweaks; make sure any important changes go there too.
+input[type="radio"],
+input[type="checkbox"]
+  :clear both
+  :float left
+  :margin-bottom 0.3em
+  :margin-right 0.6em
+  :margin-top 0.3em
+  :width auto
+  :border none
+
+.date select
+  :width auto
+  :display inline
+
+input[type="hidden"]
+  :display none
+
+input.button-form-show,
+input.button-form,
+form.button_to input[type="submit"]
+  :cursor pointer
+  :float left
+  :margin 10px 20px 10px 0
+  &.clicked
+    :background-color $button-background-highlight
+
+input.button-form-show
+  :display none
+
+textarea
+  :height 10em
+
+textarea[id$=venue],
+textarea[id=comment_body]
+  :height 5em
+
+select
+  :padding 0
+
+div.open-proposals form
+  :clear none
+  :float left
+  :margin -0.2em 0 0
+
+div.open-proposals form input[type="submit"]
+  :font-size 0.8em
+  :padding 0.3em 1em 0.1em
+
+input#association_subdomain,
+input#coop_subdomain
+  :float left
+  :margin-right 4px
+  :text-align right
+
+form.login
+  :margin-left 1em
+
+form.login label, form.login input
+  :margin-left 0
+
+ul.errors
+  :font-size 0.8em
+
+/* Settings */
+
+#settings_fields
+  h3
+    :margin-top 1em
+  p
+    :margin 0.4em 0
+  label
+    :width 84%
+  input[type="submit"]
+    :margin-top 2em
+
+/* Members */
+
+#member_info
+  :margin 1em 0
+  img
+    :float left
+    :margin 0 1em 1em 0
+  dl
+    :clear left
+
+dt
+  :font-weight bold
+dd
+  :margin-bottom 0.5em
+
+/* Footer */
+
+.footer
+  :border-top 1px solid $footer-line
+  :clear both
+  :color $secondary-text
+  :font-size .75em
+  :margin-top 1em
+  :padding 1em
+  span.right
+    :float right
+  a
+    :text-decoration none
+  img
+    :border none
+    :vertical-align middle
+    &.logo
+      :margin-right 4px
+
+ul.constitution li
+  input[type=hidden]
+    :float right
+    :width 0
+
+div.constitution_proposal
+  :float right
+  :border 1px solid $table-border
+  :padding 0.5em 0.5em 0
+  :background-color #ddd
+  :margin 0 0 0.5em 0.5em
+  label, input, textarea
+    :float none
+    :width auto
+  p
+    :margin 0 0 0.5em
+
+form div.constitution_proposal input#submit
+  :margin 0
+
+ul.founding_members li
+  :clear left
+
+dl.settings
+  dt
+    :font-weight bold
+    :border-top 1px solid $table-border
+    :margin-top 1em
+    :clear right
+
+div.field_with_errors input
+  :border 1px solid $error-background
+
+table.upcoming_meetings,
+table.past_meetings
+  tr
+    :margin 0.5em 0
+  td
+    :min-height 3em
+    :border 1px solid $table-border
+    :background-color $container-background
+
+/* Lightbox */
+
+#lightbox_screen
+  :background-color black
+  :opacity 0.7
+  :position fixed
+  :top 0
+  :left 0
+  :width 100%
+  :height 100%
+  :z-index 10
+
+#lightbox, .lightbox
+  :background #fff
+  :border 2px solid $lightbox-border
+  :font-size 0.9em
+  :left 16%
+  :padding 1%
+  :position absolute
+  :width 66%
+  :z-index 11
+  p
+    button
+      :float right
+      :margin 0 0.4em
+
+/* Pre-release warning bar */
+
+#prerelease_bar
+  :padding 1em
+  :background-color $prerelease_bar
+  :color white
+  @include rounded-corners(4px)
+  :text-align center
+  :font-weight bold
+  :font-size 0.9em
+  :margin 5px 0
+
+/* Login page */
+
+.login_pane
+  :width 48%
+  :float left
+  :border-right 1px solid $border
+  :padding-right 1em
+  :margin-bottom 1em
+.new_member_pane
+  :width 48%
+  :float left
+  :padding-left 1em
+
+/*Directors */
+
+.directors ul.directors
+  :list-style-type none
+  li
+    :border 1px solid $border
+    @include rounded-corners(2px)
+    :margin 1em 0
+    .directorship, .officership
+      :padding 0 10px
+    .directorship
+      :border-bottom 1px solid $border
+    p
+      :min-height 3em
+      :line-height 3em
+    p.name, p.elected_on, p.title
+      :float left
+      :margin-right 1em
+    p.name
+      :font-weight bold
+    p, div
+      &.action
+        :float right
+ul.offices
+  input.button-form
+    :float none
+    :display inline
+
+
+/* Share transactions */
+
+p.share_payment span
+  :font-weight bold
+
+// Co-op checklist
+ul.checklist
+  li
+    :list-style-image asset-url('bullet_green.png', image)
+    &.done
+      :list-style-image asset-url('tick.png', image)
+      h3
+        :text-decoration line-through
+
+/* Co-op registration form */
+#bd
+  form.edit_registration_form
+    p
+      :padding-left 20px
+      :margin-bottom 2em
+    label, input, textarea
+      :margin-left 0
+    label
+      :font-weight bold
+      :font-size 1em
+      :width auto
+      :padding 0
+
+/* Dashboard */
+#bd
+  .dashboard
+    p, div
+      &.left
+        :float left
+      &.right
+        :float right
+        :text-align right
+        form.button_to input
+          :float right
+    .section
+      :padding-left 24px
+      h3
+        :margin-left -12px
+    input.button-form
+      :margin 0
+    .meetings
+      .meeting, .general_meeting, .board_meeting, .annual_general_meeting
+        :border 1px solid $pull-border
+        :padding 0.5em
+        :margin-bottom 1em
+        .datetime
+          :float left
+          :background-color $pull-background
+          :padding 5px
+          :margin-right 1em
+          :text-align center
+          :font-size 0.8em
+    .proposals
+      ul.proposals
+        :margin 0
+        li
+          :list-style-type none
+          :margin 1em 0
+          :padding 0.5em
+          :border 1px solid $pull-border
+  .section.tasks
+    h3
+      :margin-bottom 12px
+
+/* Icon links */
+a
+  &.delete, &.up, &.down
+    :text-decoration none
+
+/* General meetings */
+div.participants
+  :width 300px
+  :float right
+  input
+    :width auto
+  input, label
+    :margin-left 0
+  a.delete img
+    :margin-left 10px
+    :vertical-align 0
+
+form.edit_general_meeting
+  .resolution
+    p
+      :clear left
+    input[type="checkbox"]
+      :float none
+    input[type="text"]
+      :width 5em
+
+/* Share withdrawals */
+#terminate_membership
+  :border 1px solid $border
+  :padding 1em
+  :margin 1em 20px

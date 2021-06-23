@@ -1,0 +1,25 @@
+---
+development: &defaults
+  adapter:  mysql2
+  database: one_click_development
+  encoding: utf8
+  username: root
+  password: 
+  host:     localhost
+ 
+test: &test
+  <<:       *defaults
+  database: one_click_test<%= ENV['TEST_ENV_NUMBER'] %>
+  encoding: utf8
+  username: 
+ 
+production:
+  adapter:  mysql2
+  database: one_click_production
+  encoding: utf8
+  username: oneclick
+  password: themis
+  host:     localhost  
+
+cucumber:
+  <<: *test

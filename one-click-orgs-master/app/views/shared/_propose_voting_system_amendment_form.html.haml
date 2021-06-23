@@ -1,0 +1,4 @@
+- VotingSystems.all do |vs|
+  %p.radio
+    = form.radio_button("#{type}_voting_system", vs.simple_name, :disabled => !@allow_editing)
+    = form.label("#{type}_voting_system_#{vs.simple_name.downcase}", vs.description)

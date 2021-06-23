@@ -1,0 +1,73 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+
+<% content_for :head do %>
+  <meta name="robots" content="noindex" />
+  <meta name="googlebot" content="noindex" />
+<% end %>
+
+<%
+  require Rails.root.join( 'lib', 'helpers', 'item_helper')
+
+  show_class_control = @item.class_item_id.nil?
+  if show_class_control %>
+    <h1>Make a new item</h1>
+  <% else %>
+    <h1>Enter a new <%= @item.class_item.name -%></h1>
+  <% end
+ %>
+
+
+<% options = @item.sti_type.nil? ? {} : { :url => items_path() }
+   form_for(@item, options) do |f|
+ %>
+  <%= f.error_messages %>
+  <%= render :partial => "class_select",
+        :locals => { :f => f, :show_class_control => show_class_control } %>
+  <%= render :partial => "type_select", :locals => { :f => f } %>
+  <%= render :partial => "form_fields", :locals => { :f => f } %>
+  <%= hidden_field_tag 'popup_flag', 'yes' %>
+
+  <p id="create_button_container" style="text-align: center">
+    <%= button_to_function "Create",
+          "if (okToSubmitItemForm()) itemCreatePopup_Submit(this)",
+          :id => "item_submit", :tabindex => "150" %>
+  </p>
+
+  <p style="text-align: center">
+    <%= link_to_function 'Cancel&nbsp;item&nbsp;creation',
+                         'itemCreatePopup_Cancel()' %>
+  </p>
+<% end %>  <!-- of form_for -->
+<%= ruby_hash_to_javascript 'class_to_type', @class_to_item_map %>
+
+
+<!-- forItemsForms.js should have already been loaded by page that
+     popped us up.  Call function to wire library functions to the form
+     elements we've just loaded. -->
+<script type="text/javascript">
+  <% if @item.sti_type.nil? %>
+    $('item_sti_type').focus();
+  <% else %>
+    $('item_title').focus();
+  <% end %>
+  genNameFromTitleOk = true;
+  plumbEventHandlersToItemCreationElements("submitViaModalbox");
+</script>

@@ -1,0 +1,91 @@
+%p#notice= notice
+
+.page-header
+  %h1 
+    = "#{@mentor_teacher.user.first_name} #{@mentor_teacher.user.last_name}"
+
+.pull-right
+
+  = link_to 'Edit', advisor_edit_user_path(@mentor_teacher.user.id), :class => 'btn'
+  = link_to 'Get Report', download_pdf_mentor_teacher_path(:id => @mentor_teacher.id), :class => 'btn' 
+
+%h2 Mentor Teacher Information
+
+%table.table
+  %tr
+    %td
+      %b First Name:
+    %td
+      = @mentor_teacher.user.first_name
+  %tr
+    %td
+      %b Last Name:
+    %td
+      = @mentor_teacher.user.last_name
+  %tr
+    %td
+      %b Phone Number:
+    %td
+      = @mentor_teacher.user.phone_number
+  %tr
+    %td
+      %b Email:
+    %td
+      = mail_to @mentor_teacher.user.email
+  %tr
+    %td
+      %b Created:
+    %td
+      = @mentor_teacher.user.created_at
+  %tr
+    %td
+      %b Updated:
+    %td
+      = @mentor_teacher.user.updated_at
+  %tr
+    %td
+      %b Address:
+    %td
+      = @mentor_teacher.user.street_address
+  %tr
+    %td
+      %b City:
+    %td
+      = @mentor_teacher.user.city
+  %tr
+    %td
+      %b State:
+    %td
+      = @mentor_teacher.user.state
+  %tr
+    %td
+      %b Zip Code:
+    %td
+      = @mentor_teacher.user.zipcode
+%h2 Timeslots
+%table.table
+  %tr
+    %th ID
+    %th Semester
+    %th Cal Course
+    %th School
+    %th Course
+    %th Students
+    %th Time
+  - @mentor_teacher.timeslots.reject{|entry| entry.cal_course == nil}.sort!{|a, b| a.semester <=> b.semester}.each do |timeslot|
+    %tr
+      %td= timeslot.id
+      %td= timeslot.semester.description if timeslot.semester
+      %td= link_to timeslot.cal_course.name, timeslot.cal_course if timeslot.cal_course
+      %td= timeslot.getSchoolName
+      - if timeslot.course
+        %td= link_to timeslot.course.name, timeslot.course
+      - else
+        %td= "No Course"
+      %td
+        - timeslot.students.each do |s|
+          - if s.user != nil
+            %ul.unstyled
+              %li= link_to "#{s.user.first_name} #{s.user.last_name}", s
+      %td= link_to timeslot.to_string, timeslot
+

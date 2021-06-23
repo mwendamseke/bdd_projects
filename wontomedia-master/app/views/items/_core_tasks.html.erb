@@ -1,0 +1,58 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+<hr />
+<style>
+  #add-class-instances-list ul {
+    font-size: 115%;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 3.5ex;
+  }
+  #add-class-instances-list li {
+    display: inline;
+    line-height: 3.5ex;
+    margin: 0 1em;
+  }
+  #add-class-instances-list span {
+    white-space: nowrap;
+  }
+</style>
+
+<div>
+  <div id="add-class-instances-list">
+    <ul><%
+      spo_item_id = Item.find_by_name('sub_property_of').id
+      @class_list.select do |class_item|
+            Connection.first( :conditions => [
+              "subject_id = ? AND predicate_id = ?",
+              class_item.id, spo_item_id
+            ] ).nil?
+          end.each do |item| %>
+        <li><span><%=
+          link_to "Add a new <b>#{h item.name}</b>",
+            new_item_path + "?class_item=" + item.id.to_s %>
+          <span style="font-size: 80%">(<%=
+            link_to "show current", item_by_name_path(item.name)
+          -%>)</span>
+        </span></li><%
+      end %>
+    </ul>
+  </div>
+</div>

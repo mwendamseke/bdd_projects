@@ -1,0 +1,15 @@
+- @section = :events
+- @page_title = "new jam for #{h(@event.name)}"
+
+- content_for :section_menu do
+  %ul.actions
+    %li= link_to @event.name, admin_event_path(@event)
+    %li= link_to "Jams", admin_event_jams_path(@event)
+    %li= link_to 'Original proposal', admin_event_proposal_path(@event,@jam.presentation_proposal)
+
+
+%h1= @page_title
+
+- form_for [:admin, @event, @jam] do |f|
+  = f.error_messages
+  = render :partial => 'form', :locals => {:f => f}

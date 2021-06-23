@@ -1,0 +1,2 @@
+module SubmissionsManagersHelper
+end

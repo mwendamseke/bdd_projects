@@ -1,0 +1,58 @@
+- @section = :events
+- @page_title = "#{@jam.title} : #{h(@event.name)}"
+
+- content_for :section_menu do
+  %ul.actions
+    %li= link_to @event.name, admin_event_path(@event)
+    %li= link_to 'Proposals', admin_event_proposals_path(@event)
+    %li= link_to "Jams", admin_event_jams_path(@event)
+    %li= link_to "Edit", edit_admin_event_jam_path(@event,@jam)
+    %li= button_to "Delete", admin_event_jam_path(@event,@jam), :method => :delete, :confirm => "Yo sure?"
+    %li= link_to 'Original proposal', admin_event_proposal_path(@event,@jam.presentation_proposal)
+
+  
+%h1
+  Jam:
+  =@jam.title
+  
+%ul
+  %li
+    %strong Number:
+    =@jam.number
+
+  %li
+    %strong Description:
+    =@jam.description
+
+  %li
+    %strong Proposing user:
+    - if @jam.proposing_user
+      =@jam.proposing_user.full_name
+    - else
+      nil
+
+  %li
+    %strong Published at:
+    =@jam.published_at
+
+%h2 Presenters
+
+%ul#presenters
+  - for presenter in @jam.presenters
+    %li
+      - if presenter.user
+        %strong User:
+        = link_to presenter.user, user_path(presenter.user)
+      - else
+        %strong Non-user:
+        =h presenter.name
+        =h presenter.url
+      %br/
+      = button_to "edit", edit_admin_event_jam_presenter_path(@event, @jam, presenter), :method => :get
+      = button_to "delete", admin_event_jam_presenter_path(@event, @jam, presenter), :method => :delete
+        
+%h3 Add a presenter
+
+- form_for [:admin, @event, @jam, @jam.presenters.build] do |f|
+  = render :partial => "admin/presenters/form", :locals => {:f => f}
+  = f.submit "Add"

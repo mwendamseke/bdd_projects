@@ -1,0 +1,15 @@
+= form_for @student do |f|
+  - if @student.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@student.errors.count, "error")} prohibited this student from being saved:"
+      %ul
+        - @student.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    %h3= f.label 'Enter New Timeslot id'
+    = f.text_field :placements
+  
+  .actions
+    = f.submit 'Update', :class => "btn"
+

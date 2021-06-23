@@ -1,0 +1,98 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require xeditable
+ *= require medium-editor
+ *= require medium-flat.min
+ *= require bootstrap
+ *= require bootstrapValidator.min
+ *= require ladda-themeless.min
+ *= require animate.min
+ *= require app
+ *= require_tree .
+ *= require_self
+
+ */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
+
+/*body {
+	background-image: none;
+}*/
+
+.log-out {
+	position: fixed;
+	top: 0;
+	right: 0;
+}
+
+
+
+.search {
+	position: fixed;
+	top: 0;
+	right: 15em;
+}
+
+.users {
+	background: #eee;
+}
+
+p {
+	font-family: 'Merriweather', serif;
+}
+
+
+.sign-in-facebook {
+	position: fixed;
+	top: 40px;
+	right: 60px;
+	font-size: 40px;
+	z-index: 100;
+	i {
+		color: white;
+	}
+}
+
+.sign-in-facebook:hover i {
+	color: black;
+}
+
+
+.sign-in-twitter {
+	position: fixed;
+	top: 40px;
+	right: 120px;
+	font-size: 40px;
+	z-index: 100;
+	i {
+		color: white;
+	}
+}
+
+.sign-in-twitter:hover i {
+	color: black;
+}
+
+
+.social-btn {
+	i {
+		color: white;
+	}
+}
+
+.social-btn:hover i {
+	color: black;
+}
+

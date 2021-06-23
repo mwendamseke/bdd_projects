@@ -1,0 +1,67 @@
+%h2 Meetings
+
+- if can?(:create, Meeting)
+  .section
+    = link_button("Convene a General Meeting", :url => new_general_meeting_path)
+    = link_button("Convene an Annual General Meeting", :url => new_annual_general_meeting_path)
+    .clear
+
+- if @upcoming_meetings.present?
+  .section
+    %h3 Upcoming meetings you can attend
+    %table.upcoming_meetings
+      - @upcoming_meetings.each do |meeting|
+        %tr
+          = content_tag_for(:td, meeting) do
+            %p
+              A
+              %strong= meeting.class.name.underscore.humanize.titlecase
+              on
+              = meeting.happened_on.strftime('%d %B %Y') + ','
+              starting at
+              = (meeting.start_time || '') + ','
+              at
+              = (meeting.venue || '') + '.'
+            %p
+              - case meeting
+                - when AnnualGeneralMeeting
+                  = link_to("View agenda and details", annual_general_meeting_path(meeting))
+                - else
+                  = link_to("View agenda and details", general_meeting_path(meeting))
+
+.section
+  %h3 Past meetings
+  - if @past_meetings.present?
+    %table.past_meetings
+      - @past_meetings.each do |meeting|
+        %tr
+          = content_tag_for(:td, meeting) do
+            %p
+              A
+              %strong= meeting.class.name.underscore.humanize.titlecase
+              on
+              = meeting.happened_on.strftime('%d %B %Y') + ','
+              at
+              = (meeting.venue || '') + '.'
+            - if meeting.minuted?
+              %p= link_to("View minutes", general_meeting_path(meeting))
+            - else
+              %p Minutes have not been entered for this meeting yet.
+              - if can?(:create, Meeting)
+                %p= link_to("Enter minutes for this meeting.", edit_general_meeting_path(meeting))
+  - else
+    %p No past meetings have been recorded yet.
+  - if can?(:create, Meeting)
+    %p
+      = link_to("Enter minutes for a meeting not shown here", new_minute_path)
+
+- unless can?(:create, Meeting)
+  %p
+    = link_to('Apply to convene a General Meeting', new_general_meeting_proposal_path)
+    by agreement with other members.
+
+- if can?(:read, BoardMeeting)
+  %p
+    Board Meetings can be found via the
+    = link_to("Board", board_path)
+    section.

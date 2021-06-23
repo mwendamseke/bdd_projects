@@ -1,0 +1,172 @@
+2015-06-23 One Click Orgs 1.3.12
+
+* FIX: Add a missing dependency on nokogiri, needed for security fix added in
+  1.3.11.
+
+2015-06-23 One Click Orgs 1.3.11
+
+* SECURITY FIX: Upgraded our dependencies to fix CVE-2015-1840 in jquery-rails.
+* SECURITY FIX: Applied a workaround for CVE-2015-3226 in ActiveSupport.
+* SECURITY FIX: Applied a workaround for CVE-2015-3227 in ActiveSupport.
+* Rails is upgraded to version 3.2.22.
+
+2015-02-17 One Click Orgs 1.3.10
+
+* Rails is upgraded to version 3.2.21.
+
+2014-07-02 One Click Orgs 1.3.9
+
+* Rails is upgraded to version 3.2.19.
+
+2014-05-12 One Click Orgs 1.3.8
+
+* Rails is upgraded to version 3.2.18.
+
+2014-02-19 One Click Orgs 1.3.7
+
+* FIX: When viewing the members list, the date of last login now includes
+  the year, rather than just showing the month and day.
+* FIX: A deleted Proposal no longer leaves orphaned Votes in the database
+  causing errors on various pages.
+* FIX: If a user had a session cookie from version 1.3.5 or earlier, the app
+  would raise an error when they tried to access it.
+* 'From' and 'Subject' headers on notification emails now make it clear that
+  the email is coming from One Click Orgs, not the organisation itself.
+* Rails is upgraded from version 3.2.16 to version 3.2.17.
+
+2013-12-17 One Click Orgs 1.3.6
+
+* Ruby 1.8.7 is no longer supported. You must use Ruby 1.9.3 or higher.
+* Rails is upgraded from version 3.0.20 to version 3.2.16.
+* i18n is upgraded from version 0.5.0 to version 0.6.9.
+
+2013-10-21 One Click Orgs 1.3.5
+
+* Rails is upgraded to version 3.0.20.
+
+2013-09-30 One Click Orgs 1.3.4
+
+* FIX Non-ASCII characters in user data would cause a runtime error under
+  Ruby >= 1.9.
+
+2013-08-08 One Click Orgs 1.3.3
+
+* FIX: When an association is successfully founded, the notifications are
+  supposed to include a list of the people who voted to join the association.
+  However, this list was, incorrectly, also including members who had
+  abstained or voted against the foundation.
+* FIX: The constitution text was missing a 'where'.
+* FIX: The header on downloaded PDFs displayed '[date]' instead of the
+  actual date.
+* SECURITY FIX: Rails is patched to fix CVE-2013-1857.
+* SECURITY FIX: Rails is patched to fix CVE-2013-1855.
+* SECURITY FIX: Rack is upgraded to 1.2.8 to fix CVE-2013-0263.
+* After successful founding of an association, the Founder Members no longer
+  have to go through the separate screen where they agree to follow the
+  constitution. (The fact that they agreed with the founding vote is enough.)
+
+2013-01-11 One Click Orgs 1.3.2
+
+* Rails is upgraded to version 3.0.19.
+
+2012-04-05 One Click Orgs 1.3.1
+
+* FIX: Following an invalid/expired invitation link would result in a hard
+  error page.
+* Autocomplete is now allowed again on the login form.
+
+2012-02-06 One Click Orgs 1.3.0
+
+* FEATURE: Members can now resign from their organisation.
+* FIX: 'Absolute majority' and 'Two thirds majority' votes would incorrectly
+  pass as soon as 1/2 or 2/3 of the members had voted in favour, when they
+  should have waited until more than the required fraction had voted in
+  favour.
+
+2011-11-17 One Click Orgs 1.2.3
+
+* FEATURE: Members can now specify what role they play in the organisation.
+* FIX: Proposal comments were not displayed in date order.
+* FIX: The notification that the founding vote failed would still display
+  repeatedly in certain situations.
+* SECURITY FIX: HTML was not properly escaped in proposal descriptions and
+  comments.
+* SECURITY FIX: Users could be redirected to an external site by abusing the
+  URL used for registering a vote.
+* SECURITY FIX: Members could set their email to that of an existing member,
+  and new members could be added with the same email as an existing member.
+* SECURITY FIX: Browsers were permitted to cache login credentials.
+* SECURITY FIX: The password reset system allowed a non-member to determine
+  whether or not an email address corresponded to a valid user or not.
+* SECURITY FIX: The organisation's name was not properly escaped for the
+  'From' field of emails.
+* SECURITY FIX: Some invalid characters were allowed in members' email
+  addresses.
+* SECURITY FIX: Users could be redirected to an external site by inserting
+  special characters into the organisation's subdomain.
+* A vote taking place under the 'veto' voting system now closes early if
+  all members vote in favour.
+* Rails is upgraded to version 3.0.10.
+
+2011-08-19 One Click Orgs 1.2.2
+
+* SECURITY FIX: HTML in comments was not fully escaped.
+* SECURITY FIX: HTML in Markdown in proposal descriptions was not fully
+  escaped.
+* SECURITY FIX: Organisation name was not properly escaped in email headers.
+* FIX: Notification when a founding vote failed for a second or subsequent
+  time was showing repeatedly.
+
+2011-08-08 One Click Orgs 1.2.1
+
+* FIX: Notifications that should only be shown once were showing repeatedly.
+
+2011-07-21 One Click Orgs 1.2.0
+
+* FEATURE: Members list can be downloaded in CSV format.
+* FIX: Attempting to create an organisation in single-organisation mode would
+  result in an error.
+* FIX: If an organisation failed its founding vote more than once, the
+  notification that the founding had failed would not display.
+* FIX: New members could not log out from the page where they confirm their
+  membership.
+* Use web fonts, and other typography improvements.
+* Clearer instructional copy for 'confirm membership' page.
+* Updated link to Open Software Service definition.
+* Add analytics for tracking flow through the organisation founding process.
+
+2011-05-29 One Click Orgs 1.1.1
+
+* FIX: Eject member proposal fails to save the description entered with the
+  proposal.
+* FIX: Form buttons on Voting & Proposals page allow more than one form to
+  appear at the same time.
+* FIX: Subdomain field allows names that are too long to work as subdomains.
+* FIX: Setup screens can still be visited after the app is set up.
+* FIX: Wrong web address shown in constitution when in single-organisation
+  mode
+* Cucumber acceptance tests added.
+* Add a script for developers to create a dummy organisation for testing.
+
+2011-05-19 One Click Orgs 1.1.0
+
+* FEATURE: When making a proposal, your supporting vote is automatically cast for you.
+* FEATURE: Constitution and members list can be downloaded as PDF documents.
+* FEATURE: Proposal descriptions now accept Markdown.
+* App now has a proper maintenance page.
+* Design and copy improvements.
+
+2011-04-30 One Click Orgs 1.0.1
+
+* FIX: Ejected members are listed as 'pending'
+* FIX: Notice and error messages sometimes display for an extra request after they're needed
+* FIX: When adding a new founding member, if there are validation problems, the user gets a 500 error.
+* Member details are validated when proposing a new member.
+* Email addresses are sanity-checked for validity.
+* Footer is redesigned.
+* Foreign keys in the database have indexes.
+* Rails is upgraded to version 3.0.6.
+
+2011-03-17 One Click Orgs 1.0.0
+
+* Support for UK Unincorporated Associations.

@@ -1,0 +1,13 @@
+- @page_title = "Past events"
+
+- unless @past_events.empty?
+  %ul.group
+    - for event in @past_events.sort.reverse
+      %li= render :partial => "shared/event_item", :locals => {:event => event}
+
+- unless @upcoming_events.empty?
+  %h2 Upcoming events
+  %ul.group
+    - for event in @upcoming_events.sort.reverse
+      %li= render :partial => "shared/event_item", :locals => {:event => event}
+

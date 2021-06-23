@@ -1,0 +1,2 @@
+class BoardResolution < Resolution
+end

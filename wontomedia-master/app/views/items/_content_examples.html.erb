@@ -1,0 +1,59 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+<% if @display_unimplemented %>
+  <p class="unimplemented">[The purpose of this area is to highlight
+    "samples" of the local installation's content.  For now, we're
+    displaying the complete set of non-Property items.]</p>
+<% end %>
+
+<h2 class="subheading">Recently Updated</h2>
+<style>
+  .item-title {
+    font-size: 120%;
+    font-weight: bold;
+    margin: 0;
+    white-space: nowrap;
+  }
+  .item-desc {
+    margin: 0;
+    margin-bottom: 2ex;
+  }
+</style>
+
+<%  # TODO: if the controller made another list just for this, then it
+    # could have the database apply the filter/sort/limit, but I don't
+    # know if doing this here is slower or faster, so here for now:
+  @nouns.reject {|item| (item.flags & Item::DATA_IS_UNALTERABLE) != 0}.
+      sort {|a,b|
+        (b.updated_at or b.created_at) <=> (a.updated_at or a.created_at) }.
+      first(20).each do |item| %>
+    <p class="item-title">
+      <%= link_to "#{h filter_parenthetical item.title}",
+            item_by_name_path(item.name) %>
+    </p>
+    <p class="item-desc">
+      <% desc = h item.description
+         if desc.length > 180
+           desc = desc[0,180] + '&hellip;'
+         end
+      %>
+      <%= desc %>
+    </p><%
+  end %>

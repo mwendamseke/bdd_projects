@@ -1,0 +1,31 @@
+!!! Strict
+%html
+  %head
+    %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-Type" }/
+    %title
+      Webjam Admin
+      = " - #{@page_title}" if @page_title
+    = stylesheet_link_tag 'reset', 'backjam', 'admin'
+  %body
+    #page
+      #wrapper
+        %p#pagetitle
+          %a{ :href => "/admin/" }
+            = image_tag 'webjam-logo.png', :size => '1033x152', :alt => "Webjam"
+            
+        #other-content
+          %ul#main-nav
+            %li{ :class => class_for_section(:home) }
+              = link_to "Admin Home", admin_path
+            %li{ :class => class_for_section(:events) }
+              = link_to "Events", admin_events_path
+            %li{ :class => class_for_section(:posts) }
+              = link_to "Blog Posts", admin_posts_path
+
+        #maincontent
+          #content
+            - if flash[:notice]
+              #notice
+                %strong= flash[:notice]
+            = yield :section_menu
+            = yield

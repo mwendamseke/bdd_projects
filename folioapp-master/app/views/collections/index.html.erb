@@ -1,0 +1,112 @@
+
+<div class="container" ng-controller="CollectionIndexCtrl">
+
+
+    <!-- NAVBAR -->
+    <header class="navbar navbar-static-top navbar-center col-xs-11 col-xs-offset-1" role="banner">
+      <div class="container">
+        <ul class="nav navbar-nav" role="navigation">
+          <!-- <li><a href="#">Profile</a></li> -->
+          <li><a href="#">Collections</a></li>
+          <!-- <li><a href="#">Random</a></li> -->
+          <!-- <li><a href="#">Popular</a></li> -->
+<!--           <li><a href="#">All</a></li>
+ -->        </ul>
+      </div>
+    </header>
+    <!-- END NAVBAR -->
+    <!-- MAIN CONTENT -->
+    <div ng-repeat="collection in user.collections" class="row collection-row {{collection.title}}" ng-controller="CollectionInstanceCtrl" data-collection-id="{{collection.id}}">
+
+      <div class="collection-">
+        <div class="col-xs-3 col-xs-offset-2">
+
+
+ 					<div class="file-field collection-image col-xs-12" ng-show="editable">
+        		<input type="file" accept="image/*" ng-file-select="onFileSelect($files)" id="collection_image" name="collection[image]" >
+
+
+	        	<img ng-show="editable" class="img-circle collection-preview editable-pic" ng-src="{{imageSrc || collection.image}}">
+  	       </div>
+
+
+
+          <img ng-hide="imageSrc || editable" ng-src="{{collection.image}}" class="collection-preview img-circle">
+
+          <img ng-hide="editable || !imageSrc" ng-class="{'waiting-for-image': editable}" class="collection-preview img-circle" ng-src="{{imageSrc || collection.image}}">
+
+
+        </div>
+        <div class="col-xs-5">
+
+					<a class="collection-title"
+					ng-show="editable"
+					editable-text="collection.title"
+					onaftersave="updateCollection('title', $data, collection.id)"
+					href="#">
+						<h2 class="collection-title">
+							{{collection.title}}
+						</h2>
+					</a>
+
+          <h2 class="collection-title" ng-hide="editable">
+            <a href="/users/{{userId}}/collections/{{collection.id}}">
+            {{collection.title}}</a></h2>
+
+
+
+  				<a href="#"
+						class="collection-description"
+						ng-show="editable"
+						editable-text="collection.description"
+						onaftersave="updateCollection('description', $data, collection.id)"
+						>
+						<p class="collection-description">
+							{{collection.description}}
+						</p>
+						</a>
+
+          <p class="collection-description" ng-hide="editable">{{collection.description}}</p>
+          <div class="collection-samples">
+            <img ng-repeat="work in collection.works" ng-src="{{work.image}}" class="img-circle thumb">
+          </div>
+          <!-- <a href="#" class="visit-collection">more</a> -->
+        </div>
+
+
+
+        <% if @user == current_user %>
+	        <div class="col-xs-2">
+	          <button class="add-details" type="button" class="btn btn-default" ng-click="upload = collection.title">
+
+	          	<p class="add-button">Add To {{collection.title}}</p>
+	            <span class="glyphicon glyphicon glyphicon-edit"><button></span>
+	          </button>
+						<div class="upload-options" ng-show="upload == collection.title">
+							<a href="/users/{{user.id}}/collections/{{collection.id}}/works/new?upload_type=art">Add Art</a>
+							<br>
+							<a href="/users/{{user.id}}/collections/{{collection.id}}/works/new?upload_type=writing">Add Writing</a>
+							<br>
+							<a href="#" ng-init="editable = false" ng-click="editable = !editable", class="toggle-edit-collection">Edit Collection</a>
+              <br>
+              <a href="#" ng-click="deleteCollection(collection.id)">Delete Collection</a>
+						</div>
+	        </div>
+	       <% end %>
+      </div>
+    </div>
+
+
+
+    <% if @user == current_user %>
+			<a href="#" class="new-collection-footer form-submit" ng-click="createCollection()">Add A New Collection</a>
+		<% end %>
+
+    <!-- END MAIN CONTENT -->
+
+
+
+  </div>
+
+
+

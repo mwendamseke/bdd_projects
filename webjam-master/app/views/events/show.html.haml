@@ -1,0 +1,145 @@
+- @section = :staticevent
+- @page_title =h @event.name
+- @body_class = "event"
+- @event_num = @event.number
+- @mobile_version_path = formatted_event_path(@event, :mobile)
+
+- content_for :other_content do
+  - if @published_jams.not.empty?
+    .item#summary
+      %p
+        = pluralize(@published_jams.map(&:number_of_presenters).sum, "presenter")
+        delivered
+        = pluralize(@published_jams.length, "amazing presentation") + "."
+        Check them out!
+
+      - place_getters, non_place_getters = @published_jams.partition {|j| j.place.not.nil?}
+
+      - if place_getters.not.empty?
+        %h2 Place-getters:
+        %ol
+          - for jam in place_getters.sort_by(&:place)
+            %li= render :partial => "jam", :locals => {:jam => jam}
+
+      - if non_place_getters.not.empty?
+        %h2 Presenters:
+        %ul
+          - for jam in non_place_getters.sort_by(&:number)
+            %li= render :partial => "jam", :locals => {:jam => jam}
+            
+  - else
+    = event_summary(@event)
+
+  - unless @latest_tweets.empty?
+    .item
+      %h2 Tweets
+      %ul.tweets
+        - for tweet in @latest_tweets
+          %li
+            = render :partial => 'shared/tweet', :locals => {:tweet => tweet}
+
+.item
+  = render :partial => "shared/event_title", :locals => {:event => @event}
+  - if @featured_videos.not.empty?
+    - for video in @featured_videos
+      %a.show-media{:href => "http://cdn-ll-static.viddler.com/flash/publisher.swf?key=#{video.identifier}"} Webjam 8 featured video
+  - elsif @featured_photos.not.empty?
+    .slideshow
+      %ul
+        - for photo in @featured_photos
+          %li
+            %a{:href => photo.url}
+              %img{ :title => "#{h photo.title} by #{h photo.realname}", :src => photo.img_url("l"), :alt => "#{h photo.title} by #{h photo.realname}" }
+            %br
+            Photo by
+            %a{:href => photo.profile_url}<
+              =h photo.realname
+
+  /
+    %p Wow! We had 18 presenters and over 190 attendees. Not to mention a whole lot of awesome geekery.
+  /
+    %p
+      Wow! 
+      = pluralize(@event.number_of_presenters, "presenter") + "."
+      = pluralize(@event.rsvps.count, "attendee") + "."
+      And a whole lot of awesome geekery.
+  = @event.hype
+
+= sponsor_content(@event)
+
+= winners_content(@event)
+
+- unless @event.posts.empty?
+  %div#related-posts{:class => @all_photos.empty? && @all_videos.empty? ? "item last" : "item"}
+    = render :partial => "related_posts"
+
+- unless @all_photos.empty?
+  %div.media#photos{:class => @all_videos.empty? ? "item last" : "item"}
+    .item-details
+      %h2 Photos
+      %p 
+        Add your photos. Tag them on
+        %a{:href => "http://flickr.com/"} Flickr
+        with &#8220;
+        %a{:href => "http://flickr.com/photos/tags/#{@event.tag}/", :rel => "tag"}= @event.tag
+        &#8221;
+    - if @featured_photos.not.empty? && @featured_videos.not.empty?
+      .slideshow
+        %ul
+          - for photo in @featured_photos
+            %li
+              %a{:href => photo.url}
+                %img{ :title => "#{h photo.title} by #{h photo.realname}", :src => photo.img_url("l"), :alt => "#{h photo.title} by #{h photo.realname}" }
+              %br
+              Photo by
+              %a{:href => photo.profile_url}<
+                =h photo.realname
+    - if @featured_photos.not.empty? && @featured_videos.not.empty?
+      %h3 More photos&hellip;
+    %ul
+      - for photo in @all_photos
+        %li
+          %a{:href => photo.url}
+            %img{:alt => "#{h photo.title} by #{h photo.realname}", :height => "75", :src => photo.img_url("s"), :title => "#{photo.title} by #{photo.realname}", :width => "75"}
+
+- unless @all_videos.empty?
+  .item.last.media#videos
+    .item-details
+      %h2 Videos
+      %p 
+        Add your videos. Tag them on 
+        %a{ :href => "http://viddler.com/"} Viddler
+        with &#8220;
+        %a{ :href => "http://viddler.com/explore/tags/global/#{@event.tag}/" }>= @event.tag
+        &#8221;
+    - if @all_videos.not.empty?
+      %ul
+        - for video in @all_videos
+          %li
+            %a{ :href => video.video_url }
+              %img{ :alt => h(video.title), :height => "105", :src => video.thumbnail_url, :title => h(video.title), :width => "140"}
+
+-#
+-#.item.media.last#words
+-#  .item-details
+-#    %h2 Words
+-#    %p 
+-#      Add your posts. Tag them with &#8220;
+-#      %a{ :href => "http://technorati/tag/webjam8/" } webjam8
+-#      &#8221;
+-#  %ul
+-#    %li
+-#      %a{ :href => "#" } This is a blog post.
+-#      By Janet Whoever. 23 June 2008
+-#    %li
+-#      %a{ :href => "#" } This is a blog post.
+-#      By Janet Whoever. 23 June 2008
+-#    %li
+-#      %a{ :href => "#" } This is a blog post.
+-#      By Janet Whoever. 23 June 2008
+-#    %li
+-#      %a{ :href => "#" } This is a blog post.
+-#      By Janet Whoever. 23 June 2008            
+-#    %li
+-#      %a{ :href => "#" } This is a blog post.
+-#      By Janet Whoever. 23 June 2008

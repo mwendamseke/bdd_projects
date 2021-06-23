@@ -1,0 +1,32 @@
+.page-header 
+  %h1 Field Placements
+- @placements.to_enum.with_index(1).each do |p, i|
+  %table.table.table-bordered
+    %tr
+      %td Day
+      %td= p.day.capitalize
+    %tr
+      %td Time
+      %td
+        ="#{p.start_time.strftime("%l:%M %p")} to #{p.end_time.strftime("%l:%M %p")}"
+    %tr 
+      %td Course
+      %td= p.course.name
+    %tr 
+      %td Grade
+      %td= p.course.grade
+    %tr 
+      %td School Name
+      %td= "#{p.mentor_teacher.school.name}" if p.mentor_teacher.school
+    %tr 
+      %td School Level
+      %td= "#{p.mentor_teacher.school.level}" if p.mentor_teacher.school
+    %tr
+      %td Mentor Teacher Name
+      %td= "#{p.mentor_teacher.user.first_name} #{p.mentor_teacher.user.last_name}"
+    %tr
+      %td Mentor Teacher Phone #
+      %td= p.mentor_teacher.user.phone_number
+    %tr
+      %td Mentor Teacher Email 
+      %td= p.mentor_teacher.user.email

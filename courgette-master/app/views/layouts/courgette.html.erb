@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+  <title>Features</title>
+
+  <!-- treeview -->
+  <style type="text/css">
+      .features_treeview {
+          background-color: #FFFFFF;
+          border-color: #BBBBBB #FFFFFF #FFFFFF #BBBBBB;
+          border-style: solid;
+          border-width: 1px;
+          height: 400px;
+          overflow: scroll;
+          padding: 5px;
+          width: 250px;
+      }
+  </style>
+
+  <%= stylesheet_link_tag '/courgette/stylesheets/courgette', '/courgette/stylesheets/shCore', '/courgette/stylesheets/shThemeDefault', '/courgette/stylesheets/jqueryFileTree' %>
+
+
+  <%= javascript_include_tag '/courgette/javascripts/shCore', '/courgette/javascripts/shCucumber', '/courgette/javascripts/jquery', '/courgette/javascripts/jqueryFileTree', '/courgette/javascripts/jquery_easing' %>
+
+  <script type="text/javascript">
+      SyntaxHighlighter.defaults['gutter'] = false;
+      SyntaxHighlighter.defaults['toolbar'] = false;
+      SyntaxHighlighter.defaults['wrap-lines'] = false;
+      SyntaxHighlighter.all();
+  </script>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+          $('#fileTree').fileTree({ root: '', script: '/features/treeview' }, function(feature_basename) {
+              ajaxRequestUrl = "/features/source?path=" + feature_basename;
+              $.ajax({
+                  url: ajaxRequestUrl,
+                  type: "get",
+                  success: function(html) {
+                      $("#feature-source").replaceWith(html);
+                      SyntaxHighlighter.highlight();
+                  }
+              });
+          });
+      });
+  </script>
+</head>
+
+<body>
+<div id="menu">
+  <div id="fileTree" class="features_treeview"></div>
+</div>
+<div id="page">
+  <%= yield %>
+</div>
+<div id="footer">
+  Powered by <%= link_to 'Courgette', 'http://21croissants.github.com/courgette' %>,
+  an open source viewer for <%= link_to 'Cucumber', 'http://cukes.info' %> features.
+</div>
+</body>
+</html>

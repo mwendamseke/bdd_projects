@@ -1,0 +1,75 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+
+<% content_for :head do %>
+  <meta name="robots" content="noindex" />
+  <meta name="googlebot" content="noindex" />
+<% end %>
+
+<h1>Administration Options</h1>
+
+<h2>Data Backup and Restore</h2>
+
+<p><%=
+  link_to "Download all items in YAML",
+    :controller => 'items', :action => 'index', :format => 'yaml',
+    :rel => 'nofollow'
+  %>
+
+  to backup item data for future restore.
+</p>
+
+<p><%=
+  link_to "Download all connections in 'Notation 3' (aka N3) format",
+    :controller => 'connections', :action => 'index', :format => 'n3',
+    :rel => 'nofollow'
+  %>
+
+  to backup connection data for future restore.
+</p>
+
+<% form_tag( { :action => 'item_up' }, :multipart => true ) do %>
+  <p><label for="item_upload">Upload a YAML file containing definitions
+    for new items</lable><br/>
+
+    <%= file_field 'item_upload', 'itemfile' %>
+    <%= submit_tag "Upload" %>
+    <br/>
+
+    Note: all items must be loaded into the system before uploading any
+    connection data that references them.
+  </p>
+<% end %>
+
+
+<% form_tag( { :action => 'connection_up' }, :multipart => true ) do %>
+  <p><label for="connection_upload">Upload an N3 file containing definitions
+    for new connections.  (Connections are defined by creating URIs that
+    are bare anchors using the related item's "name" fields.) </lable><br/>
+
+    <%= file_field 'connection_upload', 'connectionfile' %>
+    <%= submit_tag 'Upload' %>
+  </p>
+<% end %>
+
+<hr>
+<pre>
+<%= `top -b -n 1` %>
+</pre>

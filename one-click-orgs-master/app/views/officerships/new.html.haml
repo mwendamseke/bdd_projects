@@ -1,0 +1,22 @@
+%h2 Appointment of a new officer
+
+.section
+  = form_for(@officership) do |officership_form|
+    %p
+      = officership_form.label(:officer_id, "Who are you appointing to this office?")
+    %p
+      = officership_form.select(:officer_id, co.directors.map{|d| [d.name, d.id]})
+    %p
+      = officership_form.label(:office_id, "Choose an office to appoint them to:")
+    %p
+      = officership_form.select(:office_id, co.offices.map{|o| [o.title, o.id]})
+    - if co.active?
+      %p
+        = officership_form.check_box(:certification)
+        = officership_form.label(:certification, "I certify that the above named person was elected to this office", :class => 'inline')
+        on
+        = officership_form.date_select(:elected_on, {}, :class => 'inline')
+    - else
+      = officership_form.hidden_field(:elected_on)
+    %p
+      = officership_form.submit("Record this appointment")

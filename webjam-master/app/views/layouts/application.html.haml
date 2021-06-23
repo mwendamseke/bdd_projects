@@ -1,0 +1,131 @@
+!!! Strict
+%html{"xml:lang" => "en-au", :lang => "en-au", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head{:profile => "http://www.w3.org/2005/10/profile"}
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}
+    %meta{:content => "IE=EmulateIE7", "http-equiv" => "X-UA-Compatible"}
+    // Google verify
+    %meta{:content => "T6CuJO7kIpjmny/11NPrF8b31y/tlU3RX02iDh9zN5A=", :name => "verify-v1"}
+
+    %title
+      = @page_title || (raise "No page title")
+    = stylesheet_link_tag 'reset', 'backjam'
+    = javascript_include_tag 'jquery-1.2.6-min', 'swfobject', 'jquery.media', 'autoshow', 'webjam', :cache => true
+    %link{:href => "/favicon.ico", :rel => "icon", :type => "image/x-icon"}
+    = auto_discovery_link_tag :atom, APPLICATION_CONFIG.feed_url, :title => "Webjam"
+    = stylesheet_link_tag "backjam_mobile", :media => "only screen and (max-device-width: 480px)"
+    = yield :head
+    
+    / Oh hai. Secrets.
+
+  %body#webjam-com-au{:class => @body_class, :onload => @onload}
+    - if mobile_request?
+      #mobile
+        %p
+          %a{:href => @mobile_version_path || formatted_home_path(:mobile)}
+            Shiny new mobile?
+            %span.explanation
+              View the mobile version of
+              - if @mobile_version_path
+                this page
+              - else
+                the site
+    #page
+      %ul.primary-nav
+        %li.home
+          %a{:href => '/', :rel => 'home'} Home
+        %li
+          %a{:href => '/people/'} People
+        - if current_user
+          %li
+            %a{:href => user_path(current_user)} Your profile
+      %ul#account-tools
+        - if current_user
+          %li.account
+            %a{:href => edit_current_user_path} Your Account
+          %li.logout
+            = button_to 'Logout', session_path, :method => :delete 
+        - else 
+          %li
+            = link_to "Register", new_user_path, :title => 'Register'
+          %li
+            = link_to "Login", new_session_path, :title => 'Log in'
+
+      #wrapper
+        - if top = yield(:top) 
+          = top 
+        - else 
+          %p#pagetitle
+            %a{ :href => "/", :rel => 'home' }
+              = image_tag 'webjam-logo.png', :size => '1033x152', :alt => "Webjam"
+          %span#phat-digits
+            = @event_num
+        - if full_title = yield(:full_title)
+          #full-title
+            = full_title
+        #maincontent
+          - if other_content = yield(:other_content)
+            #other-content
+              = other_content
+            #content
+              = yield :layout
+          - else
+            #content.full
+              = yield :layout
+        #footer
+          .column.first
+            #news.item
+              %h2
+                News
+                %a.feed{ :href => APPLICATION_CONFIG.feed_url, :title => "Subscribe!" }
+                  Subscribe!
+              - if @footer_latest_news.any?
+                %ul.posts
+                  - @footer_latest_news.each do |post|
+                    %li
+                      %a{ :href => post_path(post.year, post.permalink) }= post.title
+                      - unless post.comments.size == 0
+                        %a.comments{ :href => "#{post_path(post.year, post.permalink)}#comments" }= "(#{post.comments.size})"
+                  %li.more
+                    %a{ :href => posts_path }
+                      More news
+
+          .column
+            #previous.item
+              %h2
+                The Jams
+              %ul
+                - for event in @footer_events.sort.reverse
+                  %li
+                    %a{ :href => event_path(event) }
+                      = event.name
+
+          .column
+            #about.item
+              %h2
+                About
+              %p
+                18 presenters with 3 minutes each to show off their hot web work.
+              %p
+                You vote for the big winner via SMS and they get to take home cool booty.
+              %p
+                Big props to
+                %a{:href => contributors_path} all the contributors
+                who&rsquo;ve pitched in to help make Webjam what it is.
+              %p
+                Feedback? Want to help? Want to sponsor an event? Shoot an email to
+                %a{ :href => "mailto:contact@webjam.com.au" } contact@webjam.com.au
+    
+    :plain            
+      <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+      </script>
+      <script type="text/javascript">
+        var pageTracker = _gat._getTracker("UA-196032-4");
+        pageTracker._trackPageview();
+      </script>
+              
+      <script type="text/javascript" src="http://include.reinvigorate.net/re_.js"></script>
+      <script type="text/javascript">
+        re_("30dj7-99r60084yw");
+      </script>

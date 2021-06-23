@@ -1,0 +1,94 @@
+<div class="container collection-display" ng-controller="CollectionShowCtrl" ng-keydown="togglePortfolio($event)" tabindex="0">
+	<div class="portfolio-nav nav">
+		<ul class="work-selector">
+			<li 
+				ng-repeat="work in collection.works">
+
+				<img ng-src="{{work.image}}" 
+				ng-click="displayFull(work)"
+				class="img-circle thumb" 
+				ng-class="{'active' : portfolioSelection == $index}">
+			</li>
+
+		</ul>
+	</div>
+
+
+
+
+	<div class="work-container row">
+		<div class="col-md-2"></div>
+		<div class="magnify col-md-8" ng-show="currentWork().format == 'image' ">
+			<div class="large" style="background:url({{currentWork().image}}) no-repeat"></div>
+			<img class="small select uploaded-image" ng-src="{{currentWork().image}}">
+		</div>
+		<div class="col-md-2"></div>
+		<div class="text-work" ng-show="currentWork().format == 'text'">
+			<div class="col-md-2" ng-hide="details"></div>
+			<div class="col-md-8 text-proper" ng-bind-html="currentWork().text">
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+	</div>
+
+		<div class="submit-details show-work-information col-md-3">
+
+
+			<div class="submit-ready pull-right col-md-2" ng-init="details = false" ng-click="details = !details">
+				<a href="#" class="add-details show-details"><p>Add Details</p></a>
+			</div>
+
+
+			<div ng-show="details" class="form-wrapper collection-work-information col-md-12">
+
+				<div class="row">
+					<div class="col-md-12 title-field co-wo-title">
+						{{currentWork().title}}
+					</div>
+				</div>
+				
+				<br>
+
+				<div class="row">
+					<div class="col-md-12 description-field work-caption">
+						{{currentWork().caption}}
+					
+					</div>
+				</div>
+
+
+
+				<div class="row">
+					<div class="col-md-12 genre-field wo-co-info">
+
+						<li>Genres: <p ng-repeat="genre in currentWork().genres">{{genre + ', '}}</p></li>
+					</div>
+				</div>
+				<br>
+				<div class="row" ng-show="currentWork().media">
+					<div class="col-md-12 genre-field wo-co-info">
+
+						<li>Media: <p ng-repeat="medium in currentWork().media">{{medium + ', '}}</p></li>
+					</div>
+				</div>
+				
+
+
+			<% if @user == current_user %>
+			<div class="row">
+				<div class="select-work-container">
+					Show on profile cover?
+				<input id="select-work" type="checkbox" name="selected" ng-click="sendSelection(currentWork().id)" ng-model="selected" ng-true-value="{{currentWork().id}}">
+				<% end %>
+				</div>
+			</div>
+		</div>
+
+		</div>		
+
+
+
+
+
+
+ </div>

@@ -1,0 +1,50 @@
+%html
+  %head
+    = yield(:javascripts)
+
+= form_for @cal_course do |f|
+  .pull-right
+    = f.submit 'Save', :class => "btn btn-primary"
+  .field
+    = f.label :name
+    = f.text_field :name
+
+  = f.label "Select Cal Faculties"
+  %table.table.table-hover#cal_faculty_table
+    %tr
+      %th Add?
+      %th Name
+      %th Email
+    - CalFaculty.all.each do |cal_faculty|
+      %tr
+        %td= check_box_tag "cal_faculty[#{cal_faculty.id}]", 1, @cal_course.cal_faculties.include?(cal_faculty), :id => "cal_faculty[#{cal_faculty.id}]"
+        %td= cal_faculty.user.name
+        %td= cal_faculty.user.email
+
+  = f.hidden_field :semester_id, :value => @semester.id
+
+
+  = f.label "Select Timeslots"
+  - if @entries and @entries.size == 0
+    = f.label "No Timeslots are Available to Select"
+  - else
+    %table.table.table-hover#entries_table
+      %tr
+        %th Add?
+        %th ID
+        %th School Type
+        %th School
+        %th Course
+        %th Teacher
+        %th Time Slot
+      - @entries.each do |entry|
+        %tr
+          %td= check_box_tag "timeslots[#{entry["time_id"]}]", 1, entry["checked"], :id => "timeslots[#{entry["time_id"]}]"
+          %td= entry["time_id"]
+          %td= entry["school_level"]
+          %td= entry["school_name"]
+          %td= entry["course"].name if entry["course"]
+          %td= entry["teacher"]
+          %td= entry["time"]
+  .pull-right
+    = f.submit 'Save', :class => "btn btn-primary"

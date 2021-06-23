@@ -1,0 +1,21 @@
+- @section = :events
+- @page_title = "proposals for #{h(@event.name)}"
+
+- content_for :section_menu do
+  %ul.actions
+    %li= link_to @event.name, admin_event_path(@event)
+
+%h1
+  = @page_title
+  
+%ul#proposals
+  -@event.presentation_proposals.each do |proposal|
+    %li
+      .title
+        = link_to proposal.title, admin_event_proposal_path(@event,proposal)
+      .user
+        proposed by
+        %a{:href => user_path(proposal.user)}= proposal.user.full_name
+        %em
+          %a{:href => "mailto:#{proposal.user.email}"}= proposal.user.email
+      

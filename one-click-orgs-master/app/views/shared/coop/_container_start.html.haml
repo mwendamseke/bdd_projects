@@ -1,0 +1,17 @@
+- if current_user
+  - if current_organisation.pending?
+    %div#overlay.pending
+      %p
+        This is a draft Co-op. You can edit any of the settings, and invite
+        others to found the Co-op with you. When you are ready, you can
+        submit your Co-op for registration.
+      - if co.can_propose?
+        = form_tag(propose_coop_path(co), :id => 'submit_registration_form', :method => :put) do
+          = submit_tag "Submit Co-op registration", :id => 'submit', :confirm => "Are you sure you wish to proceed with registration?"
+        = link_button("Download registration documents", :url => documents_path)
+      %br.clear
+  - elsif current_organisation.proposed?
+    %div#overlay.proposed
+      %p
+        The Co-op has been submitted for registration. You will receive an email
+        when your registration has been approved.

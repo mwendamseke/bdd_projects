@@ -1,0 +1,8 @@
+
+= form_tag(matching_path) do
+  .pull-right
+    = submit_tag "Match all courses", :id => 'match_all', :class => 'btn btn-success'
+  .page-header
+    %h1 
+      = "#{semester.name} #{semester.year} | "
+      Match Students

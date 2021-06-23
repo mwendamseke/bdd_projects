@@ -1,0 +1,15 @@
+= render :partial => "shared/event_title", :locals => {:event => event}
+%a.details{ :href => event_path(event) } Rewind
+
+.slideshow
+  %ul
+    - event.flickr_photos.featured.each do |fp|
+      %li
+        %a{:href => fp.url}
+          %img{:alt => "#{fp.title} by #{fp.realname}", :src => fp.img_url("l"), :alt => fp.title, :title => "#{fp.title} by #{fp.realname}" }
+        %br
+        Photo by
+        %a{:href => fp.profile_url}<
+          =fp.realname
+
+= event.hype

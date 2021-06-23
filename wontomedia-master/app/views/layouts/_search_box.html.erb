@@ -1,0 +1,50 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+
+<% unless RAILS_ENV == 'test'
+    if WontoMedia.search.google_site_search  and
+          WontoMedia.search.publisher_id        and
+          WontoMedia.search.search_engine           %>
+      <div id="block-search"></div>
+      <script>
+        addToDivsToMove('block-search');
+      </script>
+
+      <% content_for :last_bottom_page_js do %>
+        <div id="block-search-content" style="display: none;">
+          <form action="/w/search" id="cse-search-box">
+            <div>
+              <input type="hidden" name="cx"
+                value="<%=
+                  WontoMedia.search.publisher_id + ':' +
+                  WontoMedia.search.search_engine -%>" />
+              <input type="hidden" name="cof" value="FORID:10" />
+              <input type="hidden" name="ie" value="ISO-8859-1" />
+              <input type="text" name="q" size="20" />
+              <input type="submit" name="sa" value="Search" />
+            </div>
+          </form>
+          <script type="text/javascript"
+            src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"
+          ></script>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

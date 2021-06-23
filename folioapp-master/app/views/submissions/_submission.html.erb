@@ -1,0 +1,46 @@
+<div class="col-sm-4">
+	<div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+				<%= link_to "#{submission.work.title}", "/users/#{submission.user.id}/collections/#{submission.work.collection.id}/#/#{submission.work.collection.works.index(submission.work)}/" %>
+      </h3>
+    </div>
+    <div class="panel-body text-center">
+    	<div class="image">
+				<%= image_tag submission.work.image.url, class: 'img-circle'%>
+			</div>
+			<div class="post-info">
+				<blockquote><%= submission.message %></blockquote>
+				<%= submission.work.work_format %>
+				<br>
+				<%= submission.work.caption %>
+				<br>
+				<% if submission.work.media.any? %>
+				Media: <% submission.work.media.each do |medium| %>
+					<%= medium.name %>
+				<% end %>
+				<% end %>
+				<br>
+				<% if submission.work.genres.any? %>
+				Genres: <% submission.work.genres.each do |genre| %>
+					<%= genre.name %>
+				<% end %>
+				<% end %>
+				<br>
+				<em>By <%= submission.work.user.name %></em>
+				<br>
+				<div class="btn-group">
+				  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+				    Respond <span class="caret"></span>
+				  </button>
+				  <ul class="dropdown-menu" role="menu">
+				    <li><a href="#">Accept</a></li>
+				    <li class="divider"></li>
+				    <li><a href="#">Reject</a></li>
+				  </ul>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

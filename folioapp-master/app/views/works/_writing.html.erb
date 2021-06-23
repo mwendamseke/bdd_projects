@@ -1,0 +1,77 @@
+<div class="container">
+	
+	<div class="row">
+	
+		<div class="col-md-2" ng-hide="details"></div>
+			<div class="input-wrapper col-md-8">
+			 	<form name="demo" class="work-form col-md-12">
+					<div class="texteditor col-md-12" ng-model="text" medium-editor options="{'placeholder': ''}"></div>
+				</form>
+			</div>
+		<div class="col-md-2"></div>
+
+		</div>
+	</div>
+	
+	<div class="submit-details col-md-4">
+		<%= form_for @new_work, html: {multipart: true}, url: user_collection_works_path do |f| %>
+
+			<div id="test" style="visibility: hidden; text-indent: -9999px;">
+
+			<%= f.label :text %>
+			<%= f.text_field :text, id: 'texteditor', data: { :'ng-model' => 'text'} %>
+			</div>
+
+			<div class="submit-ready pull-right col-md-2" ng-init="details = false" ng-click="details = !details">
+				<a href="#" class="add-details"><p>Add Details</p></a>
+			</div>
+
+
+			<div ng-show="details" class="form-wrapper col-md-12">
+
+				<div class="row">
+					<div class="col-md-12 title-field">
+						<%= f.text_area :title, required: true, placeholder: 'Title', class: 'col-md-12' %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="field-wrapper col-md-12">
+						<div class="file-field writing-thumb">
+								<%= f.label :image, 'Drag Thumbnail Here', class: 'thumbnail-label' %>
+								<%= f.file_field :image, required: true, data: {:"ng-file-select" => "onFileSelect($files)"}%>
+									<img ng-show="imageSrc" class="img-circle collection-preview" ng-src="{{imageSrc}}" />
+						</div>
+					</div>
+				</div>
+
+
+
+
+				<div class="row">
+					<div class="col-md-12 genre-field">
+
+						<%= f.text_area :genre_names, value: '', placeholder: 'Genre', class: 'col-md-12' %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12 description-field">
+
+						<%= f.text_area :caption, placeholder: 'Short Description', class: 'col-md-12' %>
+					</div>
+				</div>
+
+				<div class="button-row row">
+					<div class="col-md-12 submit-button">
+						<%= f.submit 'Publish', class: 'form-submit' %>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+<% end %>

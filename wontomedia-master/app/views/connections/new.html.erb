@@ -1,0 +1,61 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+
+<% content_for :head do %>
+  <meta name="robots" content="noindex" />
+  <meta name="googlebot" content="noindex" />
+<% end %>
+
+<%
+  @title_text = 'Make a new connection'
+
+  # initialize array to define "Glossary Help" box of links:
+  @glossary_help_entries = [
+    [ 'Item', 'Help:GlossaryAtoO#anchor_Item' ],
+    [ 'Connection', 'Help:GlossaryAtoO#anchor_Connection' ]
+  ]
+ %>
+
+
+<% form_for(@connection) do |f| %>
+  <%= f.error_messages %>
+  <%= render :partial => "spo_select_controls",
+               :locals => {
+                 :f => f, :connection => @connection,
+                 :items => @items, :verbs => @verbs
+               } %>
+  <p><%= f.submit 'Create', :tabindex=>'40' %></p>
+<% end %>
+
+<div class="horizontal-link-list"><ul>
+  <li><%= link_to 'Cancel,&nbsp;show&nbsp;connection&nbsp;list',
+                  connections_path, :rel => 'nofollow' -%></li>
+  <li><%= link_to 'Cancel,&nbsp;show&nbsp;item&nbsp;list', items_path,
+                  :rel => 'nofollow' -%></li>
+</ul></div>
+
+
+<% content_for :first_bottom_page_js do %>
+  <script type="text/javascript">
+    inAConnectionsForm = true;
+    creatingNewConnection = true;
+    creatingNewItem = true;
+  </script>
+<% end %>

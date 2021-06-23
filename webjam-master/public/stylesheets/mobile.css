@@ -1,0 +1,529 @@
+html {
+  font-size: 100%
+}
+body {
+  font: 62.5% Helvetica, "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+  background-color: #222;
+  color: #fff;
+  font-weight: bold;
+  padding: 0 15px;
+  -webkit-text-size-adjust: none;
+  height: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Main content stylings */
+.content p, dt, dd {
+  font-size: 1.6em;
+  font-weight: normal;
+}
+.content p {
+  margin: 0.5em 0;
+  line-height: 1.25em;
+}
+.content ul {
+  margin: 1.8em 0;
+}
+.content a {
+  color: #BB0E00;
+}
+
+.content h2 {
+  color: #666;
+  font-size: 1.4em;
+  margin: 1em 0 1em 0;
+}
+
+.content .more {
+  font-size: 1.2em;
+  text-align: right;
+  margin-bottom: 1em;
+}
+.content .more + ul.group {
+  margin-top: 3em;
+}
+
+/* Generic group styles */
+a.button {
+  border: 1px solid;
+  border-color: #fB3E30 #6B0E00 #6B0E00 #fB3E30;
+  background-color: #BB0E00;
+  color: #fdd;
+  padding: 0.5em 0.6em;
+  text-shadow: #3B0E00 1px 1px 2px;
+  -webkit-border-radius: 5px;
+  text-decoration: none;
+}
+
+.content h2 + ul.group, .content h2 + ul#comments {
+  margin-top: -0.8em;
+}
+ul.group li a.item {
+  font-size: 1.6em;
+  display: block;
+  width: auto;
+  text-decoration: none;
+  -webkit-border-radius: 0px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #FB0E00 #6B0E00 #6B0E00 #FB0E00;
+  text-shadow: #4B0E00 1px 1px 2px;
+}
+ul.group li:first-of-type a.item {
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+}
+ul.group li:last-of-type a.item {
+  -webkit-border-bottom-left-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+}
+
+ul.group li a.event, ul.group li a.post {
+  position: relative;
+}
+ul.group li a.event span.date, ul.group li a.post span.comment-count {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  font-weight: normal;
+  color: #f99;
+}
+/* If theres a comment count then we need some margin-right */
+ul.group li a.post span.title.with-comments {
+  margin-right: 6em;
+}
+
+.spinner {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  height: 32px;
+  width: 32px;
+  background: transparent url(/images/ajax-loader.gif) no-repeat top left;
+  -webkit-border-radius: 5px;
+  opacity: 0.8;
+}
+
+/* Header */
+#header {
+  position: relative;
+  margin: 0 -15px 15px -15px;
+  text-align: center;
+  background: transparent url(../images/mobile-webjam-logo-small.png) no-repeat 15px left;
+  height: 56px;
+}
+#header .back {
+  display: none;
+  margin-left: 13px;
+  float: left;
+}
+#header .back a {
+  background-color: #333;
+  color: #999;
+  text-decoration: none;
+  padding: 2px 5px;
+  text-transform: uppercase;
+}
+#header h1 {
+  color: #fff;
+  font-size: 1.6em;
+  text-align: right;
+  font-weight: normal;
+  margin-left: 125px;
+  margin-right: 15px;
+  padding-top: 23px;
+}
+#header a.home {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 120px;
+  height: 40px;
+}
+
+/* Home page */
+#home-header {
+  margin: 30px -15px 0 -15px;
+  text-align: center;
+}
+#home-header h1 {
+  background: transparent url(../images/webjam-logo-iphone.png) no-repeat top center;
+  height: 100px;
+  width: auto;
+}
+#home-header h1 span {
+  display: none;
+}
+
+/* Event page */
+dl.when, dl.where {
+  font-size: 0.75em;
+  color: #fff;
+}
+dl.when dt, dl.where dt {
+  height: 40px;
+  width: 40px;
+}
+dl.when dd, dl.where dd {
+  margin-left: 50px;
+  margin-top: -40px;
+  line-height: 1.5em;
+}
+dl.when dd {
+  margin-bottom: 30px;
+}
+dl.when dt {
+  text-align: center;
+  font-family: "American Typewriter";
+}
+dl.where dd {
+  margin-bottom: 20px;
+}
+dl.where dd a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+}
+dl.when dt .month, dl.when dt .day {
+  display: block;
+  text-transform: uppercase;
+}
+dl.when dt .day .ord {
+  font-size: 8px;
+  padding-bottom: 6px;
+}
+dl.when dt .day {
+  border-color: #fff;
+  background-color: #fff;
+  color: #000;
+  line-height: 18px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+}
+dl.when dt .month {
+  margin-top: -1px;
+  border-color: #900;
+  -webkit-border-bottom-left-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  background-color: #900;
+  color: #fff;
+  line-height: 22px;
+}
+
+p.where a.map {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.sponsors {
+  margin: 10px 0;
+  padding: 8px 10px;
+  border: 1px solid #353535;
+  -webkit-border-radius: 5px;
+}
+.sponsors li {
+  display: inline;
+}
+.sponsors h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #666;
+}
+.sponsors a {
+  margin: 0 7px;
+  padding: 3px 0;
+}
+#sponsors .item-details {
+  position: relative;
+}
+#sponsors .details {
+  position: absolute;
+  top: 5px;
+  right: 0;
+}
+.photos {
+  margin: 1.8em 0;
+}
+.photos .photo {
+  min-height: 200px;
+}
+.photos .photo img {
+  width: 100%;
+}
+.photos .photo {
+  position: relative;
+  z-index: 2;
+}
+.photos .photo .info {
+  z-index: 3;
+  padding: 5px 7px;
+  font-size: 1.2em;
+  position: absolute;
+  margin-left: 10px;
+  bottom: 10px;
+  right: 10px;
+  text-align: right;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
+  opacity: 0.6;
+} 
+ul.tweets li, ul.photo-list li a, ul#comments li {
+  color: #ccc;
+  background-color: #333;
+  padding: 7px 8px;
+  -webkit-border-radius: 5px;
+  font-size: 1.2em;
+  margin: 10px 0;
+  font-weight: normal;
+  line-height: 1.2em;
+  text-decoration: none;
+}
+ul.tweets li .body a, ul#comments li .body a {
+  color: #ddd;
+  text-decoration: none;
+  background-color: #555;
+  padding: 0 0.2em;
+  -webkit-border-radius: 3px;
+}
+ul.tweets li .user {
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+ul.photo-list li a .info, ul.tweets li a.timestamp {
+  margin-top: 0.5em;
+  font-size: 0.9em;
+  display: block;
+  color: #666;
+  font-weight: bold;
+  text-align: right;
+}
+ul.tweets li a.timestamp {
+  text-decoration: none;
+}
+
+ul.photo-list li {
+  position: relative;
+}
+ul.photo-list li a {
+  background: #333 url(../images/mobile-webjam-photo-zoom.png) no-repeat top right;
+  min-height: 80px;
+  display: block;
+}
+ul.photo-list li img {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+ul.photo-list li a .details {
+  position: absolute;
+  top: 10px;
+  left: 95px;
+}
+ul.photo-list li a span {
+  display: block;
+}
+ul.photo-list li a .title {
+  padding-right: 30px;
+  font-weight: bold;
+}
+ul.photo-list li a .by {
+  margin-top: 0.5em;
+}
+ul.photo-list li a .info {
+  position: absolute;
+  bottom: 7px;
+  right: 10px;
+  font-weight: normal;
+} 
+ul.photo-list li a .permalink {
+  display: none;
+}
+ul.photo-list li a .spinner {
+  top: 30px;
+  opacity: 0.5;
+}
+
+/* Blog posts */
+.post-body {
+  width: 100%;
+  text-overflow: ellipsis;
+}
+.post-body p, .post-body ul, .post-body ol, .post-body dl {
+  font-weight: normal;
+  font-size: 1.4em;
+  margin: 1em 0;
+}
+p.post-timestamp {
+  text-align: right;
+  font-size: 1.4em;
+  margin-bottom: 0.5em;
+  color: #666;
+  font-weight: bold;
+}
+.post-body ul, .post-body ol {
+  margin-left: 2em;
+}
+.post-body ul {
+  list-style: circle;
+}
+.post-body ol {
+  list-style: decimal;
+}
+.post-body ul li, .post-body ol li {
+  margin: 0.5em 0;
+}
+.post-body a {
+  color: #ddd;
+  text-decoration: none;
+  background-color: #444;
+  padding: 0 0.2em;
+  -webkit-border-radius: 3px;
+}
+.post-body h3 {
+  font-size: ;
+}
+ul#comments li .body p {
+  margin-top: 0;
+  margin-bottom: 0.75em;
+  font-size: 1.2em;
+}
+ul#comments li .info {
+  color: #666;
+}
+
+/* Pagination */
+.pagination {
+  margin: 2em 0;
+}
+.pagination .disabled {
+  color: #666;
+  border: none;
+  background-color: #333;
+  text-shadow: none; 
+}
+.pagination span, .pagination a {
+  font-size: 1.6em;
+  font-weight: bold;
+  border: 1px solid;
+  border-color: #fB3E30 #6B0E00 #6B0E00 #fB3E30;
+  background-color: #BB0E00;
+  color: #fdd;
+  padding: 0.4em 0.6em;
+  text-shadow: #3B0E00 1px 1px 2px;
+  -webkit-border-radius: 5px;
+  text-decoration: none;
+}
+
+p.pagination-info {
+  text-align: right;
+  font-size: 1.4em;
+  margin-bottom: -0.5em;
+  color: #666;
+  font-weight: normal;
+}
+
+/* Footer */
+#footer {
+  margin-top: 35px;
+  padding-bottom: 30px;
+}
+a.regular-site {
+  font-size: 1.2em;
+  background-color: #181818;
+  color: #666;
+  -webkit-border-radius: 5px;
+  text-decoration: none;
+  padding: 0.5em 0.75em; 
+  height: 100%;
+}
+
+/* Photo navigator */
+.photoNavigator {
+  position: relative;
+  width: 100%;
+}
+.photoNavigator .loadingOverlay {
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+}
+.photoNavigator .photo {
+  z-index: 1;
+  min-height: 180px;
+}
+.photoNavigator .control {
+  z-index: 2;
+  display: block;
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 1;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+.photoNavigator .next {
+  background-image: url(images/bg-navigator-next-control.png);
+  background-position-x: 85%;
+  right: 0;
+}
+.photoNavigator .previous {
+  background-image: url(images/bg-navigator-prev-control.png);
+  background-position-x: 15%;
+  left: 0;
+}
+
+div.zoomedImage {
+  position: absolute;
+  top: 0; /* Set by the JS */
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+div.zoomedImage .inner {
+  margin: 0 auto;
+  position: relative;
+}
+div.zoomedImage .inner img {
+  width: 100%;
+  z-index: 1;
+  -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+  border: 1px solid #111;
+}
+div.zoomedImage .inner div.close {
+  z-index: 2;
+  position: absolute;
+  top: 7px;
+  right: 6px;
+  height: 20px;
+  width: 20px;
+  background: transparent url(../images/mobile-webjam-photo-close.png) no-repeat top right;
+  opacity: 0.6;
+}
+div.zoomedImage .externalLink {
+  font-size: 1.1em;
+  width: 100%;
+  text-align: center;
+  font-weight: normal;
+}
+div.zoomedImage .externalLink a.button {
+  display: block;
+  width: 90%;
+  margin: 10px auto 0 auto;
+  border-color: #444 #000 #000 #444;
+  background-color: #111;
+  -webkit-box-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+  text-shadow: #252525 1px 1px 2px;
+  color: #aaa;
+  padding: 0.5em 5%;
+}

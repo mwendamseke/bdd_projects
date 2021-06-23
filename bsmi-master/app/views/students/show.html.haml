@@ -1,0 +1,85 @@
+.page-header
+  %h1 
+    = "#{@student.user.first_name} #{@student.user.last_name}"
+
+.pull-right
+  = link_to 'Edit', advisor_edit_user_path(@student.user.id), :class => 'btn'
+  = link_to 'Get Report', download_pdf_student_path(:id => @student.id), :class => 'btn' 
+
+%h2 Student Information
+
+%table.table
+  %tr
+    %td
+      %b First Name:
+    %td
+      = @student.user.first_name
+  %tr
+    %td
+      %b Last Name:
+    %td
+      = @student.user.last_name
+  %tr
+    %td
+      %b Phone NUmber:
+    %td
+      = @student.user.phone_number
+  %tr
+    %td
+      %b Email:
+    %td
+      = mail_to @student.user.email
+  %tr
+    %td
+      %b Created:
+    %td
+      = @student.user.created_at
+  %tr
+    %td
+      %b Updated:
+    %td
+      = @student.user.updated_at
+  %tr
+    %td
+      %b Address:
+    %td
+      = @student.user.street_address
+  %tr
+    %td
+      %b City:
+    %td
+      = @student.user.city
+  %tr
+    %td
+      %b State:
+    %td
+      = @student.user.state
+  %tr
+    %td
+      %b Zip Code:
+    %td
+      = @student.user.zipcode
+
+%h2 Enrollment
+%table.table
+  %tr
+    %th Semseter:
+    %th CalCourse:
+    %th School:
+    %th Course:
+    %th Teacher:
+    %th Time:
+  - @student.placements.reject{|entry| entry.cal_course == nil}.sort!{|a, b| a.semester <=> b.semester}.each do |timeslot|
+    %tr
+      %td= timeslot.semester.description if timeslot.semester
+      %td= timeslot.cal_course.name if timeslot.cal_course
+      %td= timeslot.getSchoolName
+      - if timeslot.course
+        %td= link_to timeslot.course.name, timeslot.course
+      - else
+        %td= "No Course"
+      - if timeslot.mentor_teacher
+        %td= link_to timeslot.mentor_teacher.user.name, timeslot.mentor_teacher
+      - else
+        %td= "No Mentor Teacher"
+      %td= timeslot.to_string

@@ -1,0 +1,8 @@
+- @section = :locations
+- @page_title = "Locations"
+
+%h1 Locations
+
+- for location in @locations
+  %li
+    = link_to h(location), [:admin, location] %>

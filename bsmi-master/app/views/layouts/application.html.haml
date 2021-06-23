@@ -1,0 +1,37 @@
+= render :partial => "header"
+%div.container-fluid#main
+  - if current_user
+    - if current_user.owner_type == "Student"
+      = render :partial => "student_view", :locals => { :current_user => current_user, :semester => semester }
+    - elsif current_user.owner_type == "MentorTeacher"
+      = render :partial => "mentor_teacher_view", :locals => { :current_user => current_user, :semester => semester }
+    - elsif current_user.owner_type == "CalFaculty"
+      = render :partial => "cal_faculty_view", :locals => { :current_user => current_user, :semester => semester }
+    - elsif current_user.owner_type == "Advisor"
+      = render :partial => "advisor_view", :locals => { :current_user => current_user, :semester => semester }
+    - else
+      = render :partial => "guest_view"
+
+
+  .row-fluid
+    #inner-container
+      .span12
+        - [:notice, :error, :error_list, :alert].each do |level| 
+          - unless flash[level].blank?
+            - if level == :notice
+              .alert.alert-info 
+                = flash[level]
+            - elsif level == :error
+              .alert.alert-error 
+                = flash[level]
+            - elsif level == :error_list
+              .alert.alert-error
+                %ul
+                  - flash[level].each do |error|
+                    %li
+                      = error
+            - else
+              .alert.alert-block 
+                = flash[level]
+        = yield
+

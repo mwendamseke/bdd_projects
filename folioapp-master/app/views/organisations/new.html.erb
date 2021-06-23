@@ -1,0 +1,65 @@
+
+
+
+<div class="new-organisation container" ng-controller="OrganisationNewCtrl">
+
+	<div class="row">
+		<div class="col-md-3"></div>
+		<div class="org-form-wrapper col-md-6">
+		<%= form_for @organisation, html: {multipart: true} do |f| %>
+
+			<div class="field-wrapper col-md-12">
+				<div class="file-field profile-image org-image">
+					<%= f.label :image, 'Drag Thumbnail Here', class: 'organisation-thumb-label' %>
+					<%= f.file_field :image, required: true, data: {:"ng-file-select" => "onFileSelect($files)"}, class: 'organisation-file-field'%>
+					<img ng-show="imageSrc" ng-src="{{imageSrc}}" class="img-circle collection-preview" id="profile-pic" />
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12 title-field">
+				<%= f.text_area :name, placeholder: 'Name' %>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-12 network-field">
+			<%= f.text_area :network, placeholder: 'Network' %>
+				</div>	
+			</div>
+
+			<div class="row">
+				<div class="col-md-12 description-field org-desc-field">
+			<%= f.text_area :description, placeholder: 'Describe your organisation' %>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-12 genre-field org-type-field">
+			<%= f.text_area :organisation_type, placeholder: 'Type of Organisation' %>
+				</div>
+			</div>
+
+
+
+			<div class="row">
+				<div class="col-md-12 genre-field role-field">
+			<%= f.text_area :creator_role, placeholder: 'What is your role?' %>
+				</div>
+			</div>
+
+
+			<div class="row org-wrap-sub">
+				<div class="col-md-12">
+			<%= f.submit 'Submit', class: 'form-submit org-submit' %>
+				</div>
+			</div>
+
+		<% end %>
+
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+</div>

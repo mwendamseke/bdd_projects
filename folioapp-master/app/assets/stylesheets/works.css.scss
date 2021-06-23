@@ -1,0 +1,295 @@
+// Place all the styles related to the works controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+/*---TEXT EDITOR ITSELF---*/
+
+div#test {
+	position: fixed;
+	left: -999999px;
+}
+
+
+form.work-form {
+	margin-top: 30%;
+
+}
+
+div.texteditor {
+	margin: 0 auto;
+	min-height: 100vh;
+	outline: none;
+}
+
+div.input-wrapper {
+	/*text-align: center;*/
+	margin: 0 auto;
+}
+
+div.texteditor {
+	font-family: 'Merriweather', serif !important ;
+	font-size: 22px;
+	color: black;
+	font-weight: 300;
+	letter-spacing: 0.01rem;
+	font-style: normal;
+	font-size: 20px;
+	line-height: 1.8em;
+	text-align: justify;
+	/*margin-right: -20%;*/
+}
+
+
+/*READY BUTTON*/
+
+a.add-details::before {
+	content: '\2712';
+	font-family: 'Entypo';
+	font-size: 50px;
+	color: black;
+}
+
+a.add-details.art-submit::before {
+	content: '\1F3A8';
+}
+
+a.add-details.show-details::before {
+	content: '\1F4D5';
+}
+
+div.submit-ready {
+	height: 50px;
+	width: 50px;
+	text-align: center;
+	vertical-align: middle;
+	outline: none;
+	margin-bottom: 3em;
+}
+
+a.add-details {
+	text-decoration: none;
+	color: black;
+}
+
+
+
+/*SUBMIT FORM*/
+
+
+
+
+
+div.form-wrapper {
+	margin: 0 auto;
+
+}
+
+
+div.form-wrapper {
+	font-family: Merriweather, serif;
+	/*border-left: 1px solid black;*/
+}
+
+div.submit-details {
+	position: fixed;
+	right: -0.5em;
+	top: 3em;
+	max-height: 100vh;
+	/*width: 100%;*/
+}
+
+.field-wrapper {
+	/*position: relative;*/
+	float: none;
+	margin: 0 auto;
+		/*background-color: black;*/
+}
+
+.file-field{
+	float: none;
+	margin: 0 auto;
+	margin: 0 auto;
+  position:relative;
+	border-radius: 100%;
+  border:#ebebeb solid 1px;
+  width:200px; 
+  height: 200px;
+  /*padding: 4px 6px 4px 8px;*/
+  font: normal 14px 'Lato' sans-serif;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  margin-top: 2px;
+	/*background: transparent;*/
+	background-color: black;
+}
+
+.file-field input[type="file"]{
+
+  -webkit-appearance:none;
+  position:absolute;
+  top:0; left:0;
+  opacity:0;
+  border-radius: 100%;
+  border:#ebebeb solid 1px;
+  width:200px;
+  height: 200px;
+  z-index: 1;
+}
+
+div.file-field.writing-thumb {
+	margin-bottom: 3em;
+}
+
+label.thumbnail-label {
+	padding-top: 88px;
+	font-weight: 300px !important;
+	text-transform: uppercase;
+}
+
+div.file-field img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+}
+
+
+img{
+	border: none;
+}
+
+a.add-details p {
+	text-indent: -99999999px;
+}
+
+div.title-field textarea {
+	/*min-height: 2em;*/
+	resize: none;
+	border: none;
+}
+
+div.title-field textarea::-webkit-input-placeholder, div.title-field textarea {
+	font-family: 'Lato', serif;
+	color: black;
+	font-size: 18px;
+	font-weight: 700;
+}
+
+
+div.genre-field textarea::-webkit-input-placeholder, div.description-field textarea::-webkit-input-placeholder, div.genre-field textarea, div.description-field textarea {
+	font-family: Merriweather, serif;
+	color: black;
+	opacity: 1;
+}
+
+div.description-field textarea {
+	overflow: hidden;
+}
+
+div.form-wrapper div.row {
+	margin: 0 auto;
+	/*margin-bottom: 2em;*/
+}
+
+div.form-wrapper p {
+	color: black;
+}
+
+div.form-wrapper input {
+	outline: none;
+	border: none;
+	font-family: 'Lato', sans-serif;
+}
+
+div.form-wrapper textarea {
+	resize: none;
+	border: none;
+	/*height: 8em;*/
+}
+
+div.form-wrapper textarea:focus {
+	outline: none;
+	resize: none;
+	border: none;
+}
+
+div.button-row {
+	position: fixed;
+	bottom: 2em;
+	right: 17em;
+}
+
+div.form-wrapper input.form-submit {
+	margin: 0 auto;
+	background: none;
+	border: 1px solid rgba(0,0,0,0.4);
+	border-radius: 50px;
+	font-size: 15px;
+	color: rgba(0,0,0,0.4);
+	width: 60px;
+	height: 25px;
+	vertical-align: center;
+	cursor: pointer;
+	outline: none;
+}
+
+div.form-wrapper input.form-submit:hover {
+	color: black;
+	border: 1px solid black;
+
+}
+
+/*div.form-wrapper input.form-submit::hover, input.form-submit.btn.btn-default {
+	background-color: white !important;
+	border-color: black;
+}*/
+
+
+
+
+
+/*----UPLOADING IMAGES -----*/
+
+.image-field.file-field{
+	display: inline-block;
+	float: none;
+	margin: 0 auto;
+  position:relative;
+	border-radius: 0;
+  font: normal 14px 'Lato' sans-serif;
+  text-align: center;
+  vertical-align: middle;
+  color: #7f7f7f;
+  margin-top: 2px;
+	background: transparent;
+	width: 85%;
+	height: 50vh;
+	margin-top: 20%;
+	border: none !important;
+}
+
+label.call-to-drag {
+	margin-top: 35%;
+	font-size: 50px;
+	color: black;
+}
+
+.image-field.file-field input[type="file"]{
+  -webkit-appearance:none;
+  position:absolute;
+  top:0;
+  left:0;
+  opacity:0;
+	width: 85%;
+	height: 50vh;
+  z-index: 1;
+}
+
+img.upload-preview {
+	width: 100%;
+	box-shadow: 0px 0px 5px #888888;
+}
+
+
+

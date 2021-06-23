@@ -1,0 +1,12 @@
+= courgette
+
+See http://21croissants.github.com/courgette/ for documentation
+
+TODO:
+
+* update screenshot in documentation
+* explain the new link to send by email
+* export courgette features to html ?  => run courgette on courgette on heroku : create rails app dummy and copy courgette features
+* http://nepalonrails.com/blog/2010/09/Creating-a-Rails-engine-with-tests-and-a-dummy-rails-application-embedded-in-it/
+
+

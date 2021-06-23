@@ -1,0 +1,62 @@
+body {
+    background: #f0f0f0;
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    font-size: 13px;
+    line-height: 1.5em;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a:link, a:visited {
+    border-bottom: 1px solid #98c4d1;
+    color: #359abe;
+    text-decoration: none;
+}
+
+a:hover {
+    border-bottom: 1px solid #c63;
+    color: #c63;
+}
+
+#menu {
+    font-size: 12px;
+    width: 300px;
+    margin-right: -300px;
+    float: left;
+    margin: 0px 0 10px 10px;
+    list-style: none;
+    padding: 1px 0 60px;
+    border-right: 1px solid #eee;
+}
+
+#footer {
+    margin: 10px 50px 100px 300px;
+    color: #888;
+}
+
+#page {
+    margin: 30px 50px 10px 300px;
+    background: white;
+    border-bottom: 3px solid #ccc;
+    border-right: 3px solid #ddd;
+    padding: 30px 50px 60px; /*min-height: 600px;*/
+}
+
+#page h1, #page h2, #page h3 {
+    font-weight: normal;
+    font-size: 1em;
+}
+
+#page h2 {
+    background: #F4FDFF;
+    font-family: "Museo700", "Helvetica Neue", Arial, sans-serif;
+    font-size: 26px;
+    color: #4B96AE;
+    margin: -30px -50px 40px;
+    padding: 20px 50px 0;
+    height: 39px;
+    border-bottom: 1px solid #E3EDEF;
+}

@@ -1,0 +1,63 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+<div class="noncontent vertical-link-list"
+  style="width: 19.5%; float:right; display: inline; position: relative; top: -1.5ex;">
+  <div class="upper-right-popup-help">
+    <%= popup_help_icon "Help item actions", "Help:Popup/ItemActions" -%>
+  </div>
+  <ul>
+    <% if (@item.flags & Item::DATA_IS_UNALTERABLE) == 0 %>
+      <li>
+        <%= link_to 'Edit this item', edit_item_by_name_path(@item.name),
+              :rel => 'nofollow' -%>
+      </li>
+
+      <li>
+        <% if @connection_list.empty? %>
+          <%= link_to 'Delete this item', item_path(@item),
+                :rel => 'nofollow', :confirm => 'Are you sure?',
+                :method => :delete -%>
+        <% else %>
+          <span class="inactiveLink">
+            <%= link_to_function "Can't delete this item",
+                  "cantDeleteItem_Popup()" -%>
+          </span>
+        <% end %>
+      </li>
+    <% end %>
+
+    <li>
+      <%= link_to 'Show item list', items_path -%>
+    </li>
+
+    <li>
+      <%= link_to 'Add a new item', new_item_path, :rel => 'nofollow' -%>
+    </li>
+
+    <li>
+      <%= link_to 'Show connection list', connections_path -%>
+    </li>
+
+    <li>
+      <%= link_to 'Add a new connection', new_connection_path,
+            :rel => 'nofollow' -%>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,48 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+
+<% unless @this_is_non_information_page or RAILS_ENV == 'test' %>
+  <% if WontoMedia.ads.google and
+        WontoMedia.ads.google.publisher_id and
+        WontoMedia.ads.google.data_page_slot %>
+
+    <!-- specifying the height for this div prevents re-layout when content
+         is added later in page load.  Must update if ad unit changes -->
+    <div id="block-google-ad" class="box"
+        style="width: 98%; height: 600px; text-align: center;"></div>
+    <script>
+      addToDivsToMove('block-google-ad');
+    </script>
+
+    <% content_for :last_bottom_page_js do %>
+      <div id="block-google-ad-content" style="display: none;">
+        <script type="text/javascript"><!--
+          google_ad_client = "<%= WontoMedia.ads.google.publisher_id -%>";
+          google_ad_slot = "<%= WontoMedia.ads.google.data_page_slot -%>";
+          google_ad_width = 160;
+          google_ad_height = 600;
+          //--></script>
+        <script type="text/javascript"
+                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+        </script>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

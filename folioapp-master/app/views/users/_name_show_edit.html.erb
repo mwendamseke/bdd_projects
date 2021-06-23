@@ -1,0 +1,19 @@
+<div ng-repeat="attribute in attributes">
+
+	<div class="{{attribute}}-show-edit edit-field">
+
+		<a href="#" 
+		class="{{attribute}}"
+		ng-show="editable"
+		editable-text="user[attribute]"
+		onaftersave="updateProfile(attribute, $data)">
+		<h1 class="{{attribute}}">
+			{{user[attribute] || {{attribute}}
+		</h1>
+	</a>
+	<h1 class="{{attribute}}" ng-hide="editable">
+		{{user[attribute] || {{attribute}}
+	</h1>
+	</div>
+
+</div>

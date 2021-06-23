@@ -1,0 +1,34 @@
+body {
+  padding-top:60px;
+}
+
+.sidebar-nav .well {
+  padding: 9px 0;
+}
+
+
+.left {
+    float:left;
+}
+
+.right {
+    float:right;
+}
+
+.spacer {
+  margin-top: 10px;
+}
+
+
+#main > .row-fluid { 
+  float: left; 
+}
+#inner-container { 
+  padding-left: 250px; 
+}
+#sidebar { 
+  position:fixed;
+ width: 230px; 
+ margin-right: 20px; 
+ float: left;
+}

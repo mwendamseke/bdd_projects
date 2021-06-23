@@ -1,0 +1,31 @@
+
+= render :partial => "semester_header"
+.pull-right
+  = link_to 'Edit', edit_cal_course_path(@cal_course, :semester_id => @semester.id), :class => 'btn'
+.page-header
+  %h1= "#{@cal_course.name}"
+
+
+%h2 Course Teachers
+%table.table
+  %tr
+    %th Name
+    %th Email
+  - @cal_course.cal_faculties.each do |cal_faculty|
+    %tr
+      %td= link_to cal_faculty.user.name, cal_faculty
+      %td= cal_faculty.user.email
+    
+%h2 Timeslots:
+%table.table
+  %tr
+    %th ID
+    %th Subject
+    %th Teacher
+    %th Timeslot
+  - @times.each do |time|
+    %tr
+      %td= time.id
+      %td= link_to time.course.name, time.course if time.course
+      %td= link_to time.mentor_teacher.user.name, time.mentor_teacher
+      %td= link_to time.to_string, timeslot_path(time, :semester_id => @semester.id)

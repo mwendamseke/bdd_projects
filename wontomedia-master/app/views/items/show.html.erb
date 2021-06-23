@@ -1,0 +1,311 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+
+<%
+  require Rails.root.join( 'lib', 'helpers', 'item_helper')
+  @title_text = h( filter_parenthetical( @item.title ) )
+
+  # initialize array to define "Glossary Help" box of links:
+  @glossary_help_entries = [
+    [ 'Name', 'Help:GlossaryAtoO#anchor_Name' ],
+    [ 'Title', 'Help:GlossaryPtoZ#anchor_Title' ],
+    [ 'Description', 'Help:GlossaryAtoO#anchor_Description' ],
+    [ 'Item', 'Help:GlossaryAtoO#anchor_Item' ]
+  ]
+ %>
+
+
+<% # populate top (title/name/desc) section of page
+ %>
+<p style="margin-bottom: 0; font-weight: bold;">
+  <%= text_with_tooltip h( @item.title ),
+        '&nbsp;<b>Title</b> of this <b>Item</b>&nbsp;', 'item_title' %>
+  <% # question-icon for title/name/desc pop-up help
+     unless @popup_flag %>
+       <%= popup_help_icon "Help, item content", "Help:Popup/HeaderItem" %>
+  <% end %>
+  <span id="container-for-type-class" class="title-annotation"></span>
+</p>
+
+
+<p id="item_name_para">
+  <%= text_with_tooltip h( @item.name ),
+        '&nbsp;<b>Name</b> of this <b>Item</b>&nbsp;', 'item_name' %>
+</p>
+
+<p>
+  <%= text_with_tooltip h( @item.description ),
+        '&nbsp;<b>Description</b> of this <b>Item</b>&nbsp;',
+        'item_description' %>
+</p>
+
+<%    # embed this for testability and future JavaScript
+ %>
+<div id="item_id" style="display: none"><%= h @item.id -%></div>
+
+
+
+<% if @item.is_class? %>
+  <div style="text-align: center;">
+    <%= link_to "Add a new <b>#{h @item.name}</b>",
+          new_item_path + "?class_item=" + @item.id.to_s %>
+  </div>
+<% end %>
+
+
+<% # links to global pages/actions
+ %>
+<p style="clear: right">
+  <% unless @popup_flag %>
+    <%= render :partial => "show_outbound_links" -%>
+  <% end %>
+</p>
+
+
+<style>
+.instance-list {
+  padding-left: 0;
+}
+.instance-list li {
+  color: #f4f420;
+  margin-right: 1.5em;
+  display: inline;
+}
+.instance-list li:before {
+  display: marker;
+  content: ">>";
+}
+.instance-list li span {
+  color: black;
+  white-space: nowrap;
+}
+</style>
+
+<% if @item.is_class? %>
+<div style='margin-bottom: 5ex;'>
+  <h2 class="subheading"><%= h filter_parenthetical @item.title -%></h2>
+  <ul class='instance-list' style='font-size: 115%;'>
+    <%
+      # we know that all the connections where this item is the object are
+      # located in the last array within @connection_list.  Search through
+      # it for all of the connections where 'is_instance_of' is the predicate
+
+      iio_item_id = nil
+      @connection_list[-1].select do |maybe_iio_connection|
+          unless iio_item_id
+            if @item_hash[maybe_iio_connection.predicate_id].
+                name == 'is_instance_of'
+              iio_item_id = maybe_iio_connection.predicate_id
+            end
+          end
+
+          iio_item_id == maybe_iio_connection.predicate_id
+        end.
+        map{|connection| @item_hash[connection.subject_id] }.
+        sort{|a,b| last_word(filter_parenthetical(a.title)) <=>
+                   last_word(filter_parenthetical(b.title))      }.
+        each do |item| %>
+          <li><span>
+            <%= link_to (h filter_parenthetical item.title), item_by_name_path(item.name) %>
+          </span></li>
+     <% end %>
+  </ul>
+</div><% end %>
+
+
+<h3 class="subheading">This Item's Relationships</h3>
+
+<% # populate bottom (connections referencing this item) section of page
+   unless @connection_list.empty? %>
+
+  <% # track things to do only once:
+     list_open_output = false
+     last_predicate_id = nil
+     last_obj_id = nil
+     table_open_output = false
+     @show_help_icon_used = false
+     @edit_help_icon_used = false
+     @delete_help_icon_used = false
+     @add_scalar_help_icon_used = false
+     @add_item_help_icon_used = false
+     item_counter = 0
+
+
+     array_of_arrays_of_connections = @connection_list.to_enum
+
+
+     # first, put all connections w/ current item-is-subject into indented list
+     begin
+       while true do               # exit via break or exception
+
+         connection_array = array_of_arrays_of_connections.next
+
+         # check ID of first connection's subject item against "this" item's ID
+         break if connection_array[0].subject_id != @item.id
+
+         connection_array.each do |connection|
+           unless list_open_output
+             list_open_output = true
+ %>
+             <ul style="padding-left: 0;">
+               <%= text_with_tooltip (h filter_parenthetical @item.title),
+                     (h @item.name) %>
+               <% # question-icon for connections-list pop-up help
+                  unless @popup_flag  %>
+                    <%= popup_help_icon "Help, connections referencing a item",
+                        "Help:Popup/HeaderItemConnectionList" %>
+               <% end %>
+               <ul style="list-style-type: none;">
+<%         end
+
+           if last_predicate_id != connection.predicate_id
+             if last_predicate_id %>
+                 </ul>
+               </li>
+<%           end %>
+             <li>
+               <%= item = @item_hash[connection.predicate_id]
+                   link_with_tooltip (h filter_parenthetical item.title ),
+                     h( item.name ), item_by_name_path(item.name) %>
+               <ul style="list-style-type: circle;">
+<%         end
+
+
+           item_counter += 1
+ %>        <li id='object-item-<%= item_counter -%>' >
+             <% if connection.kind_of_obj == Connection::OBJECT_KIND_SCALAR &&
+                    connection.scalar_obj.nil? %>
+               <%= render :partial => "inline_scalar_add_form",
+                     :layout => "inline_add_popopen",
+                     :locals => { :con => connection, :id => item_counter } %>
+
+             <% elsif connection.kind_of_obj == Connection::OBJECT_KIND_ITEM &&
+                    connection.obj_id.nil? %>
+               <%= items = @intances_of_type_item_classes[connection.type_item]
+                   items = Item.all unless !items.nil?
+                   render :partial => "inline_item_add_form",
+                     :layout => "inline_add_popopen",
+                     :locals => { :con => connection, :items => items,
+                       :id => item_counter } %>
+
+             <% elsif connection.kind_of_obj == Connection::OBJECT_KIND_ITEM %>
+               <%= item = @item_hash[connection.obj_id]
+                   link_with_tooltip (h filter_parenthetical item.title ),
+                     h( item.name ), item_by_name_path(item.name) %>
+
+             <% else %>
+               <%= @properties_of_url_type[connection.predicate_id]          ?
+                   link_to( h(connection.scalar_obj), connection.scalar_obj)   :
+                   h(connection.scalar_obj)
+                %>
+             <% end %>
+
+             <span class="link-set">
+               <% if connection.id
+                    generate_connection_links(connection,
+                      item_by_name_path(@item.name) )
+                  elsif connection.obj_id
+                    generate_inverse_link(@inverses_map[connection])
+                  end %>
+             </span>
+           </li>
+
+<%         last_predicate_id = connection.predicate_id
+
+         end                       # .each over connection_array
+       end                         # while over array-of-connection_array's
+     rescue StopIteration          # out of connections
+       connection_array = nil      #   none for table
+     end
+
+
+     if list_open_output %>
+             </ul>
+           </li>
+         </ul>
+       </ul>
+       <p style="line-height: 50%; font-size: 50%;">&nbsp;</p>
+<%   end
+
+     # now put any remaining connections into a table
+     if connection_array
+       loop do                     # until exception on .next at loop's end
+         unless table_open_output
+           table_open_output = true
+           output_table_open
+         end
+ %>
+
+         <tbody>
+           <% connection_array.each do |connection| %>
+             <tr>
+               <td>
+                 <%= self_string_or_other_link(connection.subject_id) %>
+                 <br />
+		 <span class="link-set">
+		   <% if connection.id
+			generate_connection_links(connection,
+			  item_by_name_path(@item.name) )
+		      elsif connection.obj_id
+			generate_inverse_link(@inverses_map[connection])
+		      end %>
+		 </span>
+               </td><td class="connectioncolumn">
+                 <%= self_string_or_other_link(connection.predicate_id) %>
+               </td><td>
+                 <% if connection.kind_of_obj == Connection::OBJECT_KIND_ITEM %>
+                   <%= self_string_or_other_link(connection.obj_id) %>
+                 <% else %>
+                   <%= h connection.scalar_obj %>
+                 <% end %>
+               </td>
+             </tr>
+           <% end %>
+         </tbody>
+    <%
+         connection_array = array_of_arrays_of_connections.next
+
+       end                      # loop over ..._connections iterator
+     end                        # if any connections to put in table
+
+     if table_open_output
+       output_table_close
+     end
+   end                          # unless @connection_list.empty?
+ %>
+
+<script type="text/javascript">
+  content = "<%= ItemHelper::ITEM_SUBTYPES_TO_HUMAN[@item.sti_type] -%>";
+  <% if @item.class_item %>
+    content += "<br /><%=h @item.class_item.name %>";
+  <% elsif superclass_item = @item.superclass_of %>
+    content += "<br />(<%=h superclass_item.name %>)";
+  <% elsif @item.is_class? %>
+    content += "<br />(is a class)";
+  <% end %>
+  $('container-for-type-class').innerHTML = content;
+</script>
+
+<% content_for :first_bottom_page_js do %>
+  <script type="text/javascript">
+    inAnItemsForm = false;        // meant to indicate items/new or items/edit
+    creatingNewItem = true;
+  </script>
+<% end %>

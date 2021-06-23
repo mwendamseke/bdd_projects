@@ -1,0 +1,656 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import url('http://reset5.googlecode.com/hg/reset.min.css');
+@import url('http://fonts.googleapis.com/css?family=Source+Sans+Pro');
+@import url('http://fonts.googleapis.com/css?family=Merriweather:400,300,700');
+@import url('http://fonts.googleapis.com/css?family=Lato:300,400,900');
+@import url('http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700');
+@import url('http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic');
+@import url('http://fonts.googleapis.com/css?family=Droid+Sans');
+@import url('http://fonts.googleapis.com/css?family=Cardo:400,400italic');
+
+@font-face {
+	font-family: 'Entypo';
+	src: url('/assets/fonts/entypo/entypo.ttf') format('truetype');
+}
+
+
+body {
+	margin: 0px;
+	font-family: "Lato", sans-serif;
+/*	margin-top: 10%;*/
+}
+
+h1 {
+	font-family: 'Lato', sans-serif;
+	font-weight: 900;
+}
+
+img.editable-pic {
+	opacity: 0.4;
+}
+
+img.profile-pic {
+	z-index: 1;
+	border-radius: 100%;
+}
+
+
+.file-field.profile-image {
+	width: 150px;
+	height: 150px;
+	background-color: white;
+}
+
+input#user_avatar {
+	width: 150px;
+	height: 150px;
+}
+
+button:focus {
+	outline: none;
+}
+
+button.toggle-edit {
+	position: absolute;
+	top: 50px;
+	right: 0;
+	width: 40px;
+	height: 40px;
+	border-radius: 0px;
+	overflow: hidden;
+}
+
+button.toggle-edit::before {
+	padding-top: 0px;
+	font-family: 'Entypo';
+	content: '\270E';
+	font-size: 40px;
+	vertical-align: middle;
+	color: black;
+}
+
+button.toggle-edit p {
+	text-indent: -9999px;
+}
+
+/*FIXED LOGO-MENU*/
+
+
+
+/*------ LAYOUT  -------*/
+
+div.summary {
+	height: 100vh;
+}
+
+.profile-info {
+	height: 100%;
+	margin: 0 auto;
+}
+
+.profile-options {
+	height: 100%;
+
+	/*background-color: blue;*/
+	padding-top: 10px;
+	margin-right: 5%
+}
+
+.profile-preview {
+	height: 100%;
+	margin: 0 auto;
+}
+
+div.left-hand-side {
+	margin-top: 14%;
+}
+
+div.right-hand-side {
+	margin-top: 8%;
+}
+
+
+/*------PROFILE INFO SUMMARY----*/
+
+
+div.info-wrapper {
+	height: 325px;
+	/*margin-top: -4.5%;*/
+}
+
+div.preview-wrapper {
+	height: 100%;
+	/*border: 1px solid black;*/
+}
+
+/*PROFILE PIC*/
+
+div.pic-wrapper {
+	margin: 0 auto;
+	border-radius: 50%;
+	width: 150px;
+	height: 0;
+	padding-bottom: 150px;
+	border: solid;
+	border-width: thin;
+	border-color: rgba(0,0,0,0.2);
+	overflow: hidden;
+	position: relative;
+}
+
+img#profile-pic {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+div.picture-options{
+	margin: 0 auto 15px auto;
+}
+
+/*PROFILE SUMMARY TEXT*/
+
+div.info-wrapper p {
+/*	opacity: 0.4;*/
+	color: #888;
+	width: 100%;
+	text-align: center;
+}
+
+h1.name {
+	font-size: 25px;
+	font-family: 'Lato', sans-serif;
+	font-weight: 900;
+	margin: 8px 0;
+}
+
+p.profession {
+	margin-top: 5px;
+	margin-bottom: 12px;
+	font-size: 12px;
+	letter-spacing: 0.2em;
+	font-family: 'Vollkorn', serif;
+	font-style: italic;
+}
+
+p.short-bio, p.network, p.organisations, p.featured-in {
+	font-size: 10px;
+
+	line-height: 15px;
+	font-family: 'Merriweather', serif;
+	font-weight: 300;
+}
+
+p.short-bio {
+	margin-bottom: 10px;
+}
+
+p.network, p.organisations {
+	margin-top: 5px;
+	margin-bottom: 0;
+}
+
+p.organisations {
+	margin-bottom: 12px;
+}
+
+hr {
+	color: black;
+	padding: 0;
+	width: 50px;
+/*	margin-left: auto;
+	margin-right: auto;*/
+	margin: 0 auto;
+
+}
+
+div.info-wrapper button {
+	background: none;
+	border: 1px solid #b3b2b5;
+	border-radius: 50px;
+	font-family: inherit;
+	font-size: 15px;
+	color: #b3b2b5;
+	width: 50px;
+	height: 25px;
+	text-align: center;
+	vertical-align: center;
+	cursor: pointer;
+	outline: none;
+}
+
+div.info-wrapper button:hover {
+	color: #657383;
+	border: 1px solid #657383;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	font-weight: 900;
+}
+
+button#follow::before, button#message::before {
+	font-family: 'Entypo';
+	content: '\e700';
+	font-size: 25px;
+}
+
+button#message::before {
+	content: '\1F53F';
+}
+
+/*-------WORK PREVIEW---------*/
+
+/*LAYOUT*/
+
+div.info-wrapper.preview-wrapper, div.work-preview {
+
+}
+
+div.work-preview {
+
+	margin-bottom: 0;
+}
+
+/*HEADER*/
+
+div.work-preview div.work-preview-header {
+	height: 10%;
+	margin-bottom: 20px;
+}
+
+div.work-preview-header {
+	padding-right: 80px;
+}
+
+h1.preview-title {
+	font-family: Lato;
+}
+
+h3#selections {
+	font-family: 'Lato', 'sans-serif';
+	font-size: 11px;
+	text-align: center;
+	vertical-align: center;
+	color: rgba(0,0,0,0.4);
+	text-transform: uppercase;
+	font-weight: 600;
+	letter-spacing: 0.9px;
+}
+
+/*WORK LAYOUT*/
+
+div.work-wrapper {
+	margin-top: 10px;
+	margin-bottom: 40px;
+}
+
+
+
+div.work {
+
+	height: 30%;
+
+}
+
+/*PICTURES*/
+
+div.preview-pic.pic-wrapper{
+	border-radius: 50%;
+	width: 100px;
+	height: 0;
+	padding-bottom: 100px;
+	border: solid;
+	border-width: thin;
+	border-color: rgba(0,0,0,0.2);
+	overflow: hidden;
+	margin-right: 12px;
+	margin-left: 10px;
+}
+
+/*PREVIEW TEXT LAYOUT*/
+
+div.work-preview-info {
+
+	font-size: 10px;
+	line-height: 15px;
+	font-family: 'Merriweather', serif;
+	font-weight: 300;
+}
+
+div.work-preview-info#info {
+
+}
+
+div.work-preview-info.story {
+
+}
+
+div#info p {
+	text-align: left;
+}
+
+/*TEXT TITLE*/
+
+h1.preview-title {
+	text-transform: uppercase;
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+
+/*TEXT SHORT DESCRIPTION*/
+
+p.short-description {
+	/*background-color: orange;*/
+	height: 50%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+
+/*ADDITIONAL WORK INFORMATION*/
+
+p.recommendation-number {
+	vertical-align: center;
+}
+
+p.recommendation-number::before, p.cool-information::before, p.anthology::before, p.single-author::before {
+	font-family: 'Entypo';
+	content: '\2665';
+	font-size: 25px;
+	color: red;
+	opacity: 0.4;
+	margin-right: 5px;
+}
+
+p.cool-information::before {
+	content: '\2605';
+	color: orange;
+}
+
+p.anthology::before {
+	content: '\1F4D5';
+	color: brown;
+}
+
+p.single-author::before {
+	content: '\1F464';
+	color: #336600;
+}
+
+div.additional-info {
+}
+
+p.recommendation-number, p.cool-information, p.anthology, p.single-author {
+
+}
+
+p.cool-information, p.anthology, p.single-author {
+	text-align: right;
+}
+
+p.recommendation-number.story {
+	margin-top: 5px;
+	margin-right: 2px;
+}
+
+/*hr#after-work {
+	margin: 25px 0px 25px 25px;
+}*/
+
+// div.hr-wrapper{
+// 	margin: 0 auto;
+// 	width: 100%;
+// }
+
+/*-------PORTFOLIO---------*/
+
+
+div.portfolio {
+	min-height: 100vh;
+	/*height: 60px;*/
+	/*background-color: salmon;*/
+	/*background-color: rgba(0,0,0,0.75);*/
+}
+
+div.portfolio:focus {
+	outline: none;
+}
+
+
+div.work-container {
+
+	height: 65%;
+}
+
+div.work-information-container {
+
+}
+
+div.work-information-inner {
+
+}
+
+/*---VISUAL PIECES--*/
+
+img.select, img.small {
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	border: 1px solid rgba(0,0,0,0.2);
+	border-radius: 6px;
+	margin: 0 auto;
+}
+
+button.comment {
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+}
+
+button.comment::before {
+	font-family: 'Entypo';
+	content: '\2712';
+	font-size: 50px;
+}
+
+/*----MAGNIFIER----*/
+
+.magnify {
+	max-width: 75%;
+	width: auto;
+	margin: 0 auto;
+	position: relative;
+
+}
+
+.large {
+	width: 175px; height: 175px;
+	cursor: none;
+	position: absolute;
+	border-radius: 100%;
+
+	/*Multiple box shadows to achieve the glass effect*/
+	box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85),
+	0 0 7px 7px rgba(0, 0, 0, 0.25),
+	inset 0 0 40px 2px rgba(0, 0, 0, 0.25);
+
+	/*Lets load up the large image first*/
+	/*background: url('../images/street.jpg') no-repeat;*/
+
+	/*hide the glass by default*/
+	display: none;
+}
+
+/*To solve overlap bug at the edges during magnification
+.small { display: block; }
+*/
+
+/*------PORTFOLIO NAV------*/
+
+.nav {
+	background-color: white;
+	opacity: 1;
+}
+
+.nav ul {
+	background-color: white;
+	opacity: 1;
+}
+
+.profile-nav {
+	position: fixed;
+	top: 1%;
+	right: 2%;
+	opacity: 1;
+}
+
+.portfolio-nav {
+	position: fixed;
+	top: 1%;
+	left: 2%;
+	opacity: 1;
+	max-width: 100%;
+}
+
+
+.nav ul li {
+	display: inline;
+}
+
+ul.work-selector {
+	list-style-type: none;
+}
+
+.nav li{
+	cursor: pointer;
+	font-family: 'Lato', sans-serif;
+	font-size: 14px;
+	font-weight: 300;
+	list-style: none;
+	line-height: 32px;
+	color: #b3b2b5;
+}
+
+ul li.active {
+	color: black;
+}
+
+ul li::after {
+	content: "  ·  ";
+}
+
+ul li:last-child::after {
+	content: "";
+}
+
+/*---TEXT-PIECES----*/
+
+div.text-work {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10%;
+	/*margin-top: 800%;*/
+	font-family: 'Merriweather', serif;
+	font-weight: 300;
+	/*font-weight: 400;*/
+
+}
+
+div.text-wrapper {
+	margin-left: 5%;
+	margin-right: 5%
+}
+
+p.work-paragraph {
+	margin-bottom: 30px;
+	margin-right: 20%;
+	margin-left: 20%;
+	letter-spacing: 0.01rem;
+	font-style: normal;
+	font-size: 20px;
+	line-height: 1.8em;
+}
+
+div.first p.work-paragraph:first-child:first-letter {
+	float: left;
+	font-size: 69px;
+	line-height: 60px;
+	padding-top: 9px;
+	padding-right: 8px;
+	padding-left: 0px;
+}
+
+div.first p.work-paragraph::first-line {
+	font-variant: small-caps;
+	font-weight: 400;
+	letter-spacing: 0.05rem;
+}
+
+/*WORK FOOTER FOR COMMENTS N SHIT */
+
+div.work-footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	margin: 0 auto;
+	height: 3.6em;
+	background-color: rgba(128, 128, 128, 0.1);
+	/*background-color: #CCFFFF;*/
+	/*background-color: darkblue;*/
+	background-color: red;
+	opacity: 1;
+	/*background-color: white;*/
+	/*opacity: 1;*/
+}
+
+.new-collection-footer, .new-collection-footer:hover{
+	display: block;
+	width: 25%;
+	font-family: Lato, sans-serif;
+	font-weight: 400;
+	margin: 0 auto 40px auto;
+	background: none;
+	border: 1px solid rgba(0,0,0,0.4);
+	border-radius: 50px;
+	text-align: center;
+	font-size: 15px;
+	text-decoration: none;
+	color: rgba(0,0,0,0.4);
+}
+
+/*------------MEDIA QUERIES------------*/
+
+@media only screen and (max-width: 960px) {
+
+	div.summary {
+		min-height: 100%;
+	}
+
+	div.summary-column {
+		min-height: 100%;
+	}
+
+	div.profile-options {
+		display: none;
+	}
+
+	p.short-bio, p.network, p.organisations, p.featured-in {
+		font-size: 10px;
+		width: 165%;
+
+	}
+
+
+}
+

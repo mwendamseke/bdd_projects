@@ -1,0 +1,15 @@
+- @section = :rsvps
+- @page_title = "Event #{@event.name} rsvps"
+
+%h1= pluralize(@rsvps.length, "RSVP")
+
+%ul#rsvps
+  - for rsvp in @rsvps
+    %li
+      %strong
+        %a{:href => user_path(rsvp.user)}
+          =h rsvp.user.nick_name
+      %span
+        = "(#{h rsvp.user.full_name})"
+      %em
+        %a{:href => "mailto:#{rsvp.user.email}"}= rsvp.user.email

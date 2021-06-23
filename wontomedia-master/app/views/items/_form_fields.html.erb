@@ -1,0 +1,77 @@
+<%
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see "http://www.gnu.org/licenses/".
+%>
+
+
+<p class="inputpara" style="position: relative;">
+  <span style="font-size: 120%; font-weight: bold;"><%=
+    f.label :title -%></span>
+  <%= popup_help_icon "Help for title", "Help:Popup/ItemTitle" %>
+  <%= image_tag "blank_error_icon.png", :id=>"title_error_icon", :alt=>"",
+        :size=>"16x16" -%>
+  <span style="position: absolute; left: 10em; top: 0.3ex; height: 1ex; white-space: nowrap;">
+    <i>for example:</i> "<%= h @example.title -%>"
+  </span>
+  <br />
+  <%= f.text_field :title, :tabindex => "120", :style => "width: 75%;" %>
+</p><p class="directions">
+  <span id="title_required">Required.</span>
+  <span id="title_multi_line">One line only</span>
+    (any text).
+  <span id="title_too_long">No more than 255 characters.</span>
+  Portions in parentheses will be hidden when Title is displayed
+  in small spaces.
+</p>
+
+<p class="inputpara" style="position: relative;">
+  <span style="font-size: 120%; font-weight: bold;"><%= f.label :name %></span>
+  <%= popup_help_icon "Help for name", "Help:Popup/ItemName" %>
+  <%= image_tag "blank_error_icon.png", :id=>"name_error_icon", :alt=>"",
+        :size=>"16x16" %>
+  <%= image_tag "blank_status_icon.png", :id=>"name_status_icon", :alt=>"",
+        :size=>"32x16" %>
+  <span style="position: absolute; left: 10em; top: 0.3ex;">
+    <i>for example:</i> "<%= h @example.name -%>"
+  </span>
+  <br />
+  <%= f.text_field :name, :tabindex => "130", :style => "width: 55%;" %>
+</p><p class="directions">
+  <span id="name_required">Required.</span>
+  <span id="name_start_char">Start with a letter.</span>
+  <span id="name_nth_char">Letters, numbers, - and _ are OK.</span>
+  <span id="name_too_long">No more than 80 characters.</span>
+  <span id="name_must_be_unique">Must be unique for every item.</span>
+  <span id="name_is_unique" class="confirmationTextInvisible">
+    'Name' is unique!</span>
+</p>
+
+<p class="inputpara">
+  <span style="font-size: 120%; font-weight: bold;"><%=
+    f.label :description -%></span>
+  <%= popup_help_icon "Help for description", "Help:Popup/ItemDescription" %>
+  <%= image_tag "blank_error_icon.png", :id=>"description_error_icon", :alt=>"",
+        :size=>"16x16" %>
+  <br />
+  <%= f.text_area :description, :style => "width: 95%; height: 15em",
+        :tabindex => "140" %>
+</p><p class="directions">
+  Describe what this item represents.
+  <span id="description_recommended">Recommended.</span>
+  <span id="description_too_long">Less than 64K characters.</span>
+  No formatting.
+</p>

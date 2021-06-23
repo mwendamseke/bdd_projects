@@ -1,0 +1,60 @@
+- @section = :events
+- @page_title = "Event: #{h(@event.name)}"
+
+
+- content_for :section_menu do
+  %ul.actions
+    %li= link_to "Edit", edit_admin_event_path(@event)
+    %li= button_to "Delete", admin_event_path(@event), :method => :delete, :confirm => "Yo sure?"
+    %li= link_to "Proposals", admin_event_proposals_path(@event)
+    %li= link_to "Jams", admin_event_jams_path(@event)
+    %li= link_to "RSVPs"
+
+%h1
+  Event:
+  =h @event.name
+
+%ul
+  %li
+    %strong Permalink:
+    = link_to event_path(@event), event_path(@event)
+  %li
+    %strong Name:
+    =h @event.name
+  %li
+    %strong Tag:
+    =h @event.tag
+  %li
+    %strong Held At:
+    =h @event.held_at
+  %li
+    %strong Location
+    =h @event.location
+  %li
+    %strong Address
+    =h @event.address
+  %li
+    %strong Timezone:
+    =h @event.timezone
+  %li
+    %strong RSVP limit:
+    =h @event.rsvp_limit
+  %li
+    %strong Proposals close at:
+    = @event.proposals_close_at
+  %li
+    %strong Hype (used on homepage and event page):
+    =h @event.hype
+  %li
+    %strong Map:
+    =h @event.map_iframe_url
+    = render :partial => "shared/map", :locals => {:src => @event.map_iframe_url} if @event.map_iframe_url?
+  %li
+    %strong Map URL:
+    %a{ :href => @event.map_url }=h @event.map_url
+  %li
+    %strong Campaign Monitor RSVP List ID
+    =h @event.campaign_monitor_list_id
+  %li
+    %strong Published:
+    =h @event.published_at || "Not yet"

@@ -1,0 +1,95 @@
+
+<div class="profile-wrapper" ng-controller="ProfileCtrl as profile">
+
+<!------------------ PROFILE COVER ------------------------------------>
+	<% if @user == current_user %>
+	<button ng-click="editable = !editable", class="toggle-edit"><p>Toggle Edit</p></button>
+	<% end %>
+	<div class="body-wrapper section">
+	<div class="summary row" id="summary-section">
+		<div class="col-md-6 left-hand-side">
+			<div class="col-md-4"></div>
+			<div class="profile-info summary-column col-md-5 col-md-offset-1">
+				<div class="info-wrapper row col-md-12">
+					<div class="picture-options row col-md-12">
+						<div class="change-profile-pic" ng-show="editable">
+							<%= form_for @user, html: {multipart: true} do |f| %>
+							<div class="file-field profile-image">
+								<%= f.file_field :avatar, data: {:"ng-file-select" => "onFileSelect($files)"} %>
+								<img ng-show="editable" class="profile-pic editable-pic" id="profile-pic" ng-src="{{imageSrc || user.userImage}}">
+							</div>
+							<%= f.submit class: 'image-submit' %>
+							<% end %>
+						</div>
+						<div class="pic-wrapper" ng-hide="editable">
+							<% if current_user.avatar.present? %>
+							<img class="profile-pic" ng-hide="editable || imageSrc" id="profile-pic" ng-src="{{user.userImage}}">
+							<% end %>
+							<img ng-show="imageSrc" class="profile-pic" id="profile-pic" ng-src="{{imageSrc}}">
+						</div>
+					</div>
+					<div class="text-inputs row text-center">
+						<%= render "information" %>
+					</div>
+						<p ng-repeat="membership in user.memberships" class="organisations">{{membership.organisationRole}} of <a href="/organisations/{{membership.organisationId}}/">{{membership.organisation}}</a>
+						</p>
+						<!-- <button class="btn btn-default">Follow</button> -->
+					</div>
+				</div>
+			<div class="col-md-4"></div>
+		</div>
+
+
+<!-- </div> -->
+
+			<!-- </div> end of .profile-info -->
+
+		<div class="col-md-6 right-hand-side">
+			<div class="col-md-1"></div>
+			<div class="profile-preview summary-column col-md-8">
+				<div class="work-preview-header row">
+					<h3 class="col-md-12 text-center" id="selections">Selections of {{user.name}}'s Work</h3>
+				</div>
+
+				<div class="work-wrapper row" ng-repeat="work in user.workSelection">
+
+					<div class="work-preview-info col-md-8" ng-class="{ 'story': profile.selection == storyPreview }">
+						<div id="info">
+							<h1 class="preview-title">
+								<a href="/users/{{user.id}}/collections/{{work.collectionId}}/#/{{work.indexInCollection}}">{{work.title}}</a>
+							</h1>
+											from <a href="/users/{{user.id}}/collections/{{work.collectionId}}">{{work.collection}}</a>
+							<p class="short-description">{{work.caption}}</p>
+							<!-- <div class="additional-info">
+								<p class="recommendation-number" ng-class="{ 'story': profile.selection == storyPreview }">{{work.recommendations}}</p>
+								<p ng-class="{ 'cool-information' : work.commissionedOrFeatured, 'anthology' : work.anthology, 'single-author' : work.singleAuthor}">{{work.additionalInformation}}</p>
+							</div> -->
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="preview-pic pic-wrapper">
+							<img class="selection" id="profile-pic" ng-src="{{work.image}}">
+						</div>
+						</div>
+<!-- 						<div class="hr-wrapper"><hr id="after-work" ng-show="!$last">
+ -->					</div>
+
+				</div>
+			</div>	<!-- end of .profile-preview and col-md-6 -->
+			<div class="col-md-2"></div>
+		</div>
+	</div> <!-- end of .summary .row -->
+
+</div>
+</div>
+<!-- ---------------PORTFOLIO----------- -->
+
+<div ng-controller="PortfolioSectionCtrl" class="portfolio" id="work-section" ng-keydown="togglePortfolio($event)" tabindex="0">
+
+		<div ng-include="url"></div>
+
+
+	</div>
+</div>
+

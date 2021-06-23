@@ -1,0 +1,9 @@
+Hey <%= @rsvp.user.full_name %>,
+
+Thanks for RSVP'ing to come to <%= @rsvp.event.name %>.
+
+Doors open at <%= @rsvp.event.local_held_at.to_datetime.to_s(:time_12hr).downcase %> on <%= @rsvp.event.local_held_at.to_date.to_s(:long_ordinal) %>.
+
+For more info, check out the event's page: http://webjam.com.au/<%= @rsvp.event.tag %>
+
+-- The Webjam Team

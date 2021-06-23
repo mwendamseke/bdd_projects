@@ -1,0 +1,283 @@
+# WontoMedia - a wontology web application
+# Copyright (C) 2011 - Glen E. Ivey
+#    www.wontology.com
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License version
+# 3 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program in the file COPYING and/or LICENSE.  If not,
+# see <http://www.gnu.org/licenses/>.
+
+
+# most basic item, used by item model unit tests
+one:
+  name: aItem
+  title: My first item
+  description: This item could be anything
+  sti_type: IndividualItem
+  flags: 0
+
+two:
+  name: bItem
+  title: A second item
+  description: This category could contain anything
+  sti_type: CategoryItem
+  flags: 0
+
+
+testContainer:
+  name: testContainer
+  title: testContainer
+  sti_type: CategoryItem
+  flags: 0
+
+testIndividual:
+  name: testIndividual
+  title: testIndividual
+  sti_type: IndividualItem
+  flags: 0
+
+testCategory:
+  name: testCategory
+  title: testCategory
+  sti_type: CategoryItem
+  flags: 0
+
+testClass:
+  name: testClass
+  title: testClass
+  sti_type: CategoryItem
+  flags: 0
+
+testProperty:
+  name: testProperty
+  title: testProperty
+  sti_type: PropertyItem
+  flags: 0
+
+testValueProperty:
+  name: testValueProperty
+  title: testValueProperty
+  sti_type: PropertyItem
+  flags: 0
+
+testInstance:
+  name: testInstance
+  title: testInstance
+  sti_type: IndividualItem
+  flags: 0
+
+connection_one:
+  name: testIndividual.one_of.testCategory
+  title: a title
+  sti_type: QualifiedItem
+  flags: 0
+
+testSubcategory:
+  name: testSubcategory
+  title: testSubcategory
+  sti_type: CategoryItem
+  flags: 0
+
+isAssigned:
+  name: isAssigned
+  title: isAssigned
+  sti_type: PropertyItem
+  flags: 0
+
+
+
+# group of items used for testing sub_property_of relationship traversal
+# desired structure is:
+#   A spo B spo C spo D spo E
+#         |    spo M spo (same "Y" as below)
+#        spo Z spo Y spo X
+A:
+  name: A
+  title: A
+  sti_type: PropertyItem
+  flags: 0
+  description: A description for A
+
+B:
+  name: B
+  title: B
+  sti_type: PropertyItem
+  flags: 0
+
+C:
+  name: C
+  title: C
+  sti_type: PropertyItem
+  flags: 0
+
+D:
+  name: D
+  title: D
+  sti_type: PropertyItem
+  flags: 0
+
+E:
+  name: E
+  title: E
+  sti_type: PropertyItem
+  flags: 0
+
+M:
+  name: M
+  title: M
+  sti_type: PropertyItem
+  flags: 0
+
+X:
+  name: X
+  title: X
+  sti_type: PropertyItem
+  flags: 0
+
+Y:
+  name: Y
+  title: Y
+  sti_type: PropertyItem
+  flags: 0
+
+Z:
+  name: Z
+  title: Z
+  sti_type: PropertyItem
+  flags: 0
+
+fu:
+  name: fu
+  title: fu
+  sti_type: PropertyItem
+  flags: 0
+
+bar:
+  name: bar
+  title: bar
+  sti_type: PropertyItem
+  flags: 0
+
+sn:
+  name: sn
+  title: sn
+  sti_type: PropertyItem
+  flags: 0
+
+afu:
+  name: afu
+  title: afu
+  sti_type: PropertyItem
+  flags: 0
+
+
+
+# group of items for testing display/sorting of connections on item pages
+itemUsedFrequentlyAsSubject:
+  name: itemUsedFrequentlyAsSubject
+  title: itemUsedFrequentlyAsSubject
+  sti_type: CategoryItem
+  flags: 0
+
+itemUsedFrequentlyAsObject:
+  name: itemUsedFrequentlyAsObject
+  title: itemUsedFrequentlyAsObject
+  sti_type: CategoryItem
+  flags: 0
+
+veryBusyItem:
+  name: veryBusyItem
+  title: veryBusyItem
+  sti_type: CategoryItem
+  flags: 0
+
+anotherClass:
+  name: anotherClass
+  title: anotherClass
+  sti_type: CategoryItem
+  flags: 0
+
+impliedClass:
+  name: impliedClass
+  title: impliedClass
+  sti_type: CategoryItem
+  flags: 0
+
+anotherInstance:
+  name: anotherInstance
+  title: anotherInstance
+  description: This category item is also an instance of a class.
+  sti_type: CategoryItem
+  flags: 0
+
+
+###########################################################################
+## connections for testing ConnectionHelper.compare (sort order)
+
+sortItem1:
+  name: sortItem1
+  title: item #1 for connection comparison/sort order tests
+  description: >-
+    Description same as title: item #1 for connection comparison/sort
+    order tests
+  sti_type: IndividualItem
+  flags: 0
+
+sortItem2:
+  name: sortItem2
+  title: item #2 for connection comparison/sort order tests
+  description: >-
+    Description same as title: item #2 for connection comparison/sort
+    order tests
+  sti_type: IndividualItem
+  flags: 0
+
+sortItem3:
+  name: sortItem3
+  title: item #3 for connection comparison/sort order tests
+  description: >-
+    Description same as title: item #3 for connection comparison/sort
+    order tests
+  sti_type: IndividualItem
+  flags: 0
+
+sortClassItem:
+  name: sortClassItem
+  title: a class for connection comparison/sort order tests
+  description: >-
+    Description same as title: a class for connection comparison/sort
+    order tests
+  sti_type: CategoryItem
+  flags: 0
+
+sortPropertyX:
+  name: sortPropertyX
+  title: sortPropertyX
+  sti_type: PropertyItem
+  flags: 0
+
+sortPropertyY:
+  name: sortPropertyY
+  title: sortPropertyY
+  sti_type: PropertyItem
+  flags: 0
+
+sortProperty1:
+  name: sortProperty1
+  title: sortProperty1
+  sti_type: PropertyItem
+  flags: 0
+
+sortProperty4:
+  name: sortProperty4
+  title: sortProperty4
+  sti_type: PropertyItem
+  flags: 0
